@@ -1,0 +1,145 @@
+<!-- Bottom Scripts -->
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/TweenMax.min.js"></script>
+<script src="assets/js/resizeable.js"></script>
+<script src="assets/js/joinable.js"></script>
+<script src="assets/js/xenon-api.js"></script>
+<script src="assets/js/xenon-toggles.js"></script>
+<!-- JavaScripts initializations and stuff -->
+<script src="assets/js/xenon-custom.js"></script>
+<!-- Add your site or application content here -->
+<nav class="navbar horizontal-menu " ng-controller="HeaderCtrl" bs-navbar><!-- set fixed position by adding class "navbar-fixed-top" -->
+<div class="navbar-inner">
+  
+  <!-- Navbar Brand -->
+  <div class="navbar-brand">
+    <a href="/" class="logo">
+      <!-- <img src="assets/images/logo-white-bg@2x.png" width="80" alt="" class="hidden-xs" /> -->
+      <!-- <img src="assets/images/logo@2x.png" width="80" alt="" class="visible-xs" /> -->
+
+      Skills Observatory
+
+    </a>
+    <a href="" data-toggle="settings-pane" data-animate="true" onClick="alert('Go To Admin Page!')">
+      <i class="fa fa-sign-in"></i>
+    </a>
+  </div>
+  
+  <!-- Mobile Toggles Links -->
+  <div class="nav navbar-mobile">
+    
+    <!-- This will toggle the mobile menu and will be visible only on mobile devices -->
+    <div class="mobile-menu-toggle">
+      <!-- This will open the popup with user profile settings, you can use for any purpose, just be creative -->
+      <a href="" data-toggle="settings-pane" data-animate="true">
+        <i class="linecons-cog"></i>
+      </a>
+      
+      <a href="" data-toggle="user-info-menu-horizontal">
+        <i class="fa-bell-o"></i>
+        <span class="badge badge-success">7</span>
+      </a>
+      
+      <!-- data-toggle="mobile-menu-horizontal" will show horizontal menu links only -->
+      <!-- data-toggle="mobile-menu" will show sidebar menu links only -->
+      <!-- data-toggle="mobile-menu-both" will show sidebar and horizontal menu links -->
+      <a href="" data-toggle="mobile-menu-horizontal">
+        <i class="fa-bars"></i>
+      </a>
+    </div>
+    
+  </div>
+  
+  <div class="navbar-mobile-clear"></div>
+  
+  <!-- main menu -->
+  <ul class="navbar-nav">
+    <li data-match-route="/students">
+      <a href="#/students">
+        <i class="fa fa-users"></i>
+        <span class="title">{{'MENU_TITLE_PARENTSSTUDENTS' | translate}}</span>
+      </a>
+      <ul>
+        <li data-match-route="/students/secondary">
+          <a href="#/students/secondary">
+            <span class="title">{{'MENU_SECONDARY' | translate}}</span>
+          </a>
+        </li>
+        <li data-match-route="/students/postsecondary">
+          <a href="#/students/postsecondary">
+            <span class="title">{{'MENU_POST_SECONDARY' | translate}}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li data-match-route="/investors">
+      <a href="#/investors">
+        <i class="fa fa-briefcase"></i>
+        <span class="title">{{'MENU_TITLE_INVESTORS' | translate}}</span>
+      </a>
+      <ul>
+        <li data-match-route="/investors/programs">
+          <a href="#/investors/programs">
+            <span class="title">{{'MENU_PROGRAMS' | translate}}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li data-match-route="/researchers">
+      <a href="#/researchers">
+        <i class="fa fa-cogs"></i>
+        <span class="title">{{'MENU_TITLE_RESEARCHERS' | translate}}</span>
+      </a>
+      <ul>
+        <li data-match-route="/researchers/secondary">
+          <a href="#/researchers/secondary">
+            <span class="title">{{'MENU_SECONDARY' | translate}}</span>
+          </a>
+        </li>
+        <li data-match-route="/researchers/postsecondary">
+          <a href="#/researchers/postsecondary">
+            <span class="title">{{'MENU_POST_SECONDARY' | translate}}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <ul class="nav navbar-nav nav-userinfo navbar-right">
+    
+    <!-- Added in v1.2 -->
+<!--     <li class="dropdown hover-line language-switcher">
+      <a href="" class="dropdown-toggle" data-toggle="dropdown">
+        <img ng-src="assets/images/flags/{{Languages[active].img}}" alt="flag-mk" width="18px"/>
+        {{Languages[active].name}}
+      </a>
+      <ul class="dropdown-menu languages">
+        <li ng-repeat="language in Languages">
+          <a href="" ng-click="changeLang($index)">
+            <img ng-src="assets/images/flags/{{language.img}}" alt="flag-mk" width="18px"/>
+            {{language.name}}
+          </a>
+        </li>
+      </ul>
+    </li> -->
+            <li class="dropdown user-profile">
+          <a href="#" data-toggle="dropdown">
+            <img ng-src="assets/images/flags/{{Languages[active].img}}" alt="flag-mk" width="18px"/>
+            <span>
+              {{Languages[active].name}}
+              <i class="fa-angle-down"></i>
+            </span>
+          </a>
+          
+          <ul class="dropdown-menu user-profile-menu list-unstyled">
+            <li ng-repeat="language in Languages">
+              <a href="" ng-click="changeLang($index)">
+                <img ng-src="assets/images/flags/{{language.img}}" alt="flag-mk" width="18px"/>
+                {{language.name}}
+              </a>
+            </li>
+          </ul>
+        </li>
+  </ul>
+  
+</div>
+</nav>
