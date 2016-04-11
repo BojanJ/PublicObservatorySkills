@@ -1,44 +1,179 @@
-      <div class="row">
-      
-        <div class="col-md-12">
-          {{activeTab}}
-          <ul class="nav nav-tabs nav-tabs-justified" >
-            <li ng-class="{ 'active': activeTab }" ng-click="setactiveTab(true)">
-              <a href="#home-3" data-toggle="tab" >
-                <span class="visible-xs"><i class="fa-home"></i></span>
-                <span class="hidden-xs">Home</span>
-              </a>
-            </li>
-            <li ng-class="{ 'active': !activeTab }" ng-click="setActiveTab(false)">
-              <a href="#profile-3" data-toggle="tab" >
-                <span class="visible-xs"><i class="fa-user"></i></span>
-                <span class="hidden-xs">Profile</span>
-              </a>
-            </li>
-          </ul>
-          
-          <div class="tab-content">
-            <div class="tab-pane active" id="home-3">
-              
-              <div>
-                
-                <p>Carriage quitting securing be appetite it declared. High eyes kept so busy feel call in. Would day nor ask walls known. But preserved advantage are but and certainty earnestly enjoyment. Passage weather as up am exposed. And natural related man subject. Eagerness get situation his was delighted. </p>
-          
-                <p>Fulfilled direction use continual set him propriety continued. Saw met applauded favourite deficient engrossed concealed and her. Concluded boy perpetual old supposing. Farther related bed and passage comfort civilly. Dashwoods see frankness objection abilities the. As hastened oh produced prospect formerly up am. Placing forming nay looking old married few has. Margaret disposed add screened rendered six say his striking confined. </p>
-                
-              </div>
-              
-            </div>
-            <div class="tab-pane" id="profile-3">
-              
-              <p>Fulfilled direction use continual set him propriety continued. Saw met applauded favourite deficient engrossed concealed and her. Concluded boy perpetual old supposing. Farther related bed and passage comfort civilly. Dashwoods see frankness objection abilities the. As hastened oh produced prospect formerly up am. Placing forming nay looking old married few has. Margaret disposed add screened rendered six say his striking confined. </p>
-              
-              <p>When be draw drew ye. Defective in do recommend suffering. House it seven in spoil tiled court. Sister others marked fat missed did out use. Alteration possession dispatched collecting instrument travelling he or on. Snug give made at spot or late that mr. </p>
-                
-            </div>
-            
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel-group" ng-model="vm.questions.activeTab" role="tablist" aria-multiselectable="true" bs-collapse>
+      <!-- General Report 1 -->
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" ng-click="vm.questions.activeQuestion = 1;">
+          <h4 class="panel-title">
+          <a bs-collapse-toggle>
+            {{ 'GPR_1' | translate}}
+          </a>
+          </h4>
+        </div>
+        <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+          <div class="panel-body">
+            <table ng-table="vm.gpr1Table" class="table table-bordered table-striped table-condensed table-hover">
+              <thead>
+                <tr>
+                  <th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
+                  <th>{{'GPR_1_TH_MUNICI'| translate}}</th>
+                  <th>{{'GPR_1_TH_SCHOOL_YEAR'| translate}}</th>
+                  <th>{{'GPR_1_TH_TYPE'| translate}}</th>
+                  <th>{{'GPR_1_TH_APPLIED'| translate}}</th>
+                  <th>{{'GPR_1_TH_ENROLLED'| translate}}</th>
+                  <th>{{'%'| translate}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="school in $data">
+                  <td>{{school.schoolName}}</td>
+                  <td>{{school.municipalityName | capitalize}}</td>
+                  <td>{{school.schoolYear}}</td>
+                  <td>{{school.type}}</td>
+                  <td>{{school.studentsApplied}}</td>
+                  <td>{{school.studentsEnrolled}}</td>
+                  <td ng-if="school.studentsApplied != null">{{(school.studentsEnrolled * 100)/(school.studentsApplied)}}</td>
+                  <td ng-if="school.studentsApplied == null">100</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          
-          
         </div>
       </div>
+      <!-- General Report 3 -->
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" ng-click="vm.questions.activeQuestion = 3;">
+          <h4 class="panel-title">
+          <a bs-collapse-toggle>
+            {{ 'GPR_3' | translate}}
+          </a>
+          </h4>
+        </div>
+        <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+          <div class="panel-body">
+            <table ng-table="vm.gpr1Table" class="table table-bordered table-striped table-condensed table-hover">
+              <thead>
+                <tr>
+                  <th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
+                  <th>{{'GPR_1_TH_MUNICI'| translate}}</th>
+                  <th>{{'GPR_1_TH_SCHOOL_YEAR'| translate}}</th>
+                  <th>{{'GPR_1_TH_TYPE'| translate}}</th>
+                  <th>{{'GPR_1_TH_APPLIED'| translate}}</th>
+                  <th>{{'GPR_1_TH_ENROLLED'| translate}}</th>
+                  <th>{{'%'| translate}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="school in $data">
+                  <td>{{school.schoolName}}</td>
+                  <td>{{school.municipalityName | capitalize}}</td>
+                  <td>{{school.schoolYear}}</td>
+                  <td>{{school.type}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div><!-- General Report 3 -->
+      <!-- General Report 5 -->
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" ng-click="vm.questions.activeQuestion = 5;">
+          <h4 class="panel-title">
+          <a bs-collapse-toggle>
+            {{ 'GPR_5' | translate}}
+          </a>
+          </h4>
+        </div>
+        <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+          <div class="panel-body">
+           <table ng-table="vm.gpr5Table" class="table table-bordered table-striped table-condensed table-hover">
+              <thead>
+                <tr>
+                  <th rowspan="2">{{'GPR_1_TH_SCHOOL'| translate}}</th>
+                  <th rowspan="2">{{'GPR_1_TH_MUNICI'| translate}}</th>
+                  <th rowspan="2">{{'GPR_1_TH_SCHOOL_YEAR'| translate}}</th>
+                  <th rowspan="2">{{'GPR_1_TH_TYPE'| translate}}</th>
+                  <th colspan="2">{{'GPR_5_TH_GENDER'| translate}}</th>
+                </tr>
+                <tr>
+                  <th>{{'GPR_5_TH_MALE'| translate}}</th>
+                  <th>{{'GPR_5_TH_FEMALE'| translate}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="school in $data">
+                  <td>{{school.schoolName}}</td>
+                  <td>{{school.municipalityName | capitalize}}</td>
+                  <td>{{school.schoolYear}}</td>
+                  <td>{{school.type}}</td>
+                  <td>{{school.maleEnroled}}</td>
+                  <td>{{school.femaleEnroled}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div><!-- General Report 5 -->
+      <!-- General Report 7 -->
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab">
+          <h4 class="panel-title">
+          <a bs-collapse-toggle>
+            {{ 'GPR_7' | translate}}
+          </a>
+          </h4>
+        </div>
+        <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+          <div class="panel-body">
+           
+          </div>
+        </div>
+      </div><!-- General Report 7 -->
+      <!-- General Report 9 -->
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab">
+          <h4 class="panel-title">
+          <a bs-collapse-toggle>
+            {{ 'GPR_9' | translate}}
+          </a>
+          </h4>
+        </div>
+        <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+          <div class="panel-body">
+           
+          </div>
+        </div>
+      </div><!-- General Report 9 -->
+      <!-- General Report 11 -->
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab">
+          <h4 class="panel-title">
+          <a bs-collapse-toggle>
+            {{ 'GPR_11' | translate}}
+          </a>
+          </h4>
+        </div>
+        <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+          <div class="panel-body">
+           
+          </div>
+        </div>
+      </div><!-- General Report 11 -->
+      <!-- General Report 13 -->
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab">
+          <h4 class="panel-title">
+          <a bs-collapse-toggle>
+            {{ 'GPR_13' | translate}}
+          </a>
+          </h4>
+        </div>
+        <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+          <div class="panel-body">
+           
+          </div>
+        </div>
+      </div><!-- General Report 13 -->
+    </div>
+  </div>
+</div>
