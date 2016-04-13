@@ -11,39 +11,58 @@ angular.module('skillsApp')
     .factory("utility", function($http) {
         return {
 
-        	//GET ALL NATIONALITIES
+            //GET ALL NATIONALITIES
             getNationality: function() {
 
+                return $http.get('http://sdis-upload.grabit.mk/api/nationalities').then(function(result) {
+                    return result.data;
+                });
 
-                // $http.get('http://sdis-upload.grabit.mk/api/nationalities').
-                // success(function(data, status, headers, config) {
-                //     return data;
-                // }).
-                // error(function(data, status, headers, config) {
-
-                // });
-
-                return [{
-                    nationalityId: 1,
-                    name: 'Македонска'
-                }, {
-                    nationalityId: 2,
-                    name: 'Албанска'
-                }];
             },
-
 
             //GET ALL MUNICIPALITIES
             getMunicipality: function() {
 
+                return $http.get('http://sdis-upload.grabit.mk/api/municipalities').then(function(result) {
+                    return result.data;
+                });
+
+            },
+
+            //GET ALL INSTITUTIONS
+            getInstitution: function() {
+
+                return $http.get('http://sdis-upload.grabit.mk/api/municipalities').then(function(result) {
+                    return result.data;
+                });
+
+            },
+
+            getInstitutionByMunicipality: function(municipalityId) {
+                //NEED TO BE UPDATED
                 return [{
-                    municipalityId: 1,
-                    name: 'Аеродром'
+                    "name":"ГУЦ",
+                    "id": "1"
                 }, {
-                    municipalityId: 2,
-                    name: 'Бутел'
+                    "name":"ОРЦЕ НИКОЛОВ",
+                    "id": "2"
                 }];
 
+            },
+
+            getYears: function() {
+                //NEED TO BE UPDATED
+                return [{
+                    "name":"2015",
+                    "year": "2015"
+                }, {
+                    "name":"2016",
+                    "year": "2016"
+                }, {
+                    "name":"2017",
+                    "year": "2017"
+                }, ];
             }
+
         }
     });

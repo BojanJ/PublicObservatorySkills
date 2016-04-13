@@ -9,17 +9,60 @@
 			<div class="panel-body">
 				
 				<div class="row">
-					<div class="col-md-4">
-						<label>Националност</label>
-						<ui-select ng-model="selected.value">
+					<div class="col-md-3">
+						<label>Општина</label>
+						<ui-select ng-model="filter.municipality" ng-change="test()">
 						<ui-select-match>
 						<span ng-bind="$select.selected.name"></span>
 						</ui-select-match>
-						<ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.nationalityId">
+						<ui-select-choices repeat="item in (municipalities | filter: $select.search)">
 						<span ng-bind="item.name"></span>
 						</ui-select-choices>
 						</ui-select>
 					</div>
+					<div class="col-md-3">
+						<label>Институции</label>
+						<ui-select ng-model="filter.institution">
+						<ui-select-match>
+						<span ng-bind="$select.selected.name"></span>
+						</ui-select-match>
+						<ui-select-choices repeat="item in (institutions | filter: $select.search)">
+						<span ng-bind="item.name"></span>
+						</ui-select-choices>
+						</ui-select>
+					</div>
+					<div class="col-md-2">
+						<label>Година</label>
+						  <ui-select multiple ng-model="filter.year" close-on-select="true" title="Choose a color">
+						    <ui-select-match placeholder="Select colors...">{{$item.name}}</ui-select-match>
+						    <ui-select-choices repeat="item in years | filter:$select.search">
+						      <small>{{item.name}}</small>
+						    </ui-select-choices>
+						  </ui-select>
+						<!-- <ui-select ng-model="year.value">
+						<ui-select-match>
+						<span ng-bind="$select.selected.name"></span>
+						</ui-select-match>
+						<ui-select-choices repeat="item in (years | filter: $select.search)">
+						<span ng-bind="item.name"></span>
+						</ui-select-choices>
+						</ui-select> -->
+					</div>
+					<div class="col-md-12">
+						<label>Прашање</label>
+						<ui-select ng-model="year.value">
+						<ui-select-match>
+						<span ng-bind="$select.year.value"></span>
+						</ui-select-match>
+						<ui-select-choices repeat="item in (years | filter: $select.search)">
+						<span ng-bind="item.year"></span>
+						</ui-select-choices>
+						</ui-select>
+					</div>
+				</div>
+
+				<div class="row">
+					<button class="btn btn-success pull-right">Зачувај</button>
 				</div>
 				
 			</div>
@@ -70,7 +113,7 @@
 							<tbody>
 								<tr>
 									<th>GOOG <span class="co-name">Google Inc.</span></th>
-									<td>597.74</td>
+									<td>{{'597.74' | number}}</td>
 									<td>12:12PM</td>
 									<td>14.81 (2.54%)</td>
 									<td>582.93</td>
