@@ -9,60 +9,31 @@
 			<div class="panel-body">
 				
 				<div class="row">
-					<div class="col-md-3">
-						<label>Општина</label>
-						<ui-select ng-model="filter.municipality" ng-change="test()">
-						<ui-select-match>
-						<span ng-bind="$select.selected.name"></span>
-						</ui-select-match>
-						<ui-select-choices repeat="item in (municipalities | filter: $select.search)">
-						<span ng-bind="item.name"></span>
-						</ui-select-choices>
-						</ui-select>
-					</div>
-					<div class="col-md-3">
-						<label>Институции</label>
-						<ui-select ng-model="filter.institution">
-						<ui-select-match>
-						<span ng-bind="$select.selected.name"></span>
-						</ui-select-match>
-						<ui-select-choices repeat="item in (institutions | filter: $select.search)">
-						<span ng-bind="item.name"></span>
-						</ui-select-choices>
-						</ui-select>
-					</div>
-					<div class="col-md-2">
+					<div class="col-md-4">
 						<label>Година</label>
-						  <ui-select multiple ng-model="filter.year" close-on-select="true" title="Choose a color">
-						    <ui-select-match placeholder="Select colors...">{{$item.name}}</ui-select-match>
-						    <ui-select-choices repeat="item in years | filter:$select.search">
-						      <small>{{item.name}}</small>
-						    </ui-select-choices>
-						  </ui-select>
-						<!-- <ui-select ng-model="year.value">
-						<ui-select-match>
-						<span ng-bind="$select.selected.name"></span>
-						</ui-select-match>
-						<ui-select-choices repeat="item in (years | filter: $select.search)">
-						<span ng-bind="item.name"></span>
-						</ui-select-choices>
-						</ui-select> -->
+						<div ng-dropdown-multiselect="" search-filter="yearFilter" options="years" selected-model="filter.year" extra-settings="yearSettings" translation-texts="yearSettingsText"></div>
+					</div>
+					<div class="col-md-4">
+						<label>Општина</label>
+						<div ng-dropdown-multiselect="" search-filter="municipalityFilter" options="municipalities" selected-model="filter.municipality" extra-settings="municipalitySettings" onItemSelect="test();" translation-texts="municipalitySettingsText"></div>
+					</div>
+					<div class="col-md-4">
+						<label>Институции</label>
+						<div ng-dropdown-multiselect="" search-filter="institutionFilter" options="institutions" selected-model="filter.institution" extra-settings="institutionSettings" translation-texts="institutionSettingsText"></div>
 					</div>
 					<div class="col-md-12">
 						<label>Прашање</label>
-						<ui-select ng-model="year.value">
-						<ui-select-match>
-						<span ng-bind="$select.year.value"></span>
-						</ui-select-match>
-						<ui-select-choices repeat="item in (years | filter: $select.search)">
-						<span ng-bind="item.year"></span>
+						
+						<ui-select ng-model="filter.question" title="Изберете прашање...">
+						<ui-select-match placeholder="Изберете прашање...">{{$select.selected.name}}</ui-select-match>
+						<ui-select-choices repeat="item in questions | filter: $select.search">
+						<span ng-bind-html="item.name | highlight: $select.search"></span>
 						</ui-select-choices>
 						</ui-select>
 					</div>
 				</div>
-
 				<div class="row">
-					<button class="btn btn-success pull-right">Зачувај</button>
+					<button class="btn btn-success pull-right" ng-click="getData(filter);">Зачувај</button>
 				</div>
 				
 			</div>
@@ -451,20 +422,20 @@
 </div>
 </div>
 <div class="row">
-	<div class="col-md-12">
-		<!-- Default panel -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				Панел за дополнителни информации
+<div class="col-md-12">
+	<!-- Default panel -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			Панел за дополнителни информации
+		</div>
+		
+		<div class="panel-body">
+			
+			<div class="row">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas modi accusamus reprehenderit fuga explicabo, assumenda officia sunt laudantium recusandae quae qui ratione amet accusantium exercitationem, esse, voluptatum natus iure quo.
 			</div>
 			
-			<div class="panel-body">
-				
-				<div class="row">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas modi accusamus reprehenderit fuga explicabo, assumenda officia sunt laudantium recusandae quae qui ratione amet accusantium exercitationem, esse, voluptatum natus iure quo.
-				</div>
-				
-			</div>
 		</div>
 	</div>
+</div>
 </div>

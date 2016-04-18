@@ -23,6 +23,7 @@ angular
         'ui.select',
         'chart.js',
         'ngTable',
+        'angularjs-dropdown-multiselect',
     ])
     .config(function($routeProvider) {
         $routeProvider
