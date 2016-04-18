@@ -36,6 +36,7 @@ module.exports = function(config) {
       'bower_components/ui-select/dist/select.js',
       'bower_components/Chart.js/Chart.js',
       'bower_components/angular-chart.js/dist/angular-chart.js',
+      'bower_components/ng-table/dist/ng-table.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

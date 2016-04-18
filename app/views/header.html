@@ -16,9 +16,7 @@
     <a href="/" class="logo">
       <!-- <img src="assets/images/logo-white-bg@2x.png" width="80" alt="" class="hidden-xs" /> -->
       <!-- <img src="assets/images/logo@2x.png" width="80" alt="" class="visible-xs" /> -->
-
       Skills Observatory
-
     </a>
     <a href="" data-toggle="settings-pane" data-animate="true" onClick="alert('Go To Admin Page!')">
       <i class="fa fa-sign-in"></i>
@@ -107,7 +105,7 @@
   <ul class="nav navbar-nav nav-userinfo navbar-right">
     
     <!-- Added in v1.2 -->
-<!--     <li class="dropdown hover-line language-switcher">
+    <!--     <li class="dropdown hover-line language-switcher">
       <a href="" class="dropdown-toggle" data-toggle="dropdown">
         <img ng-src="assets/images/flags/{{Languages[active].img}}" alt="flag-mk" width="18px"/>
         {{Languages[active].name}}
@@ -121,24 +119,24 @@
         </li>
       </ul>
     </li> -->
-            <li class="dropdown user-profile">
-          <a href="#" data-toggle="dropdown">
-            <img ng-src="assets/images/flags/{{Languages[active].img}}" alt="flag-mk" width="18px"/>
-            <span>
-              {{Languages[active].name}}
-              <i class="fa-angle-down"></i>
-            </span>
+    <li class="dropdown user-profile">
+      <a href="" data-toggle="dropdown">
+        <img ng-src="assets/images/flags/{{Languages[active].img}}" alt="flag-mk" width="18px"/>
+        <span>
+          {{Languages[active].name}}
+          <i class="fa-angle-down"></i>
+        </span>
+      </a>
+      
+      <ul class="dropdown-menu user-profile-menu list-unstyled">
+        <li ng-repeat="language in Languages">
+          <a href="" ng-click="changeLang($index)">
+            <img ng-src="assets/images/flags/{{language.img}}" alt="flag-mk" width="18px"/>
+            {{language.name}}
           </a>
-          
-          <ul class="dropdown-menu user-profile-menu list-unstyled">
-            <li ng-repeat="language in Languages">
-              <a href="" ng-click="changeLang($index)">
-                <img ng-src="assets/images/flags/{{language.img}}" alt="flag-mk" width="18px"/>
-                {{language.name}}
-              </a>
-            </li>
-          </ul>
         </li>
+      </ul>
+    </li>
   </ul>
   
 </div>

@@ -1,3 +1,23 @@
 .pointer {
 	cursor: pointer;
 }
+.question-header {
+	display: inline-block;
+}
+.question-header > a:before {
+	content: "" !important;
+}
+
+/*The following two classes are shorthening the menu */
+/*Comment them for returning to initial position     */ 
+.navbar.horizontal-menu,
+.navbar.horizontal-menu .navbar-inner .navbar-brand
+ {
+	height: 50px !important;
+}
+
+.navbar.horizontal-menu .navbar-inner .navbar-nav>li,
+.navbar.horizontal-menu .navbar-inner .navbar-nav>li>a
+{
+	line-height: 50px !important;
+}
