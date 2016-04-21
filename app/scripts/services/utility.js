@@ -32,7 +32,7 @@ angular.module('skillsApp')
             //GET ALL INSTITUTIONS
             getInstitution: function() {
 
-                return $http.get('http://sdis-upload.grabit.mk/api/faculty').then(function(result) {
+                return $http.get('http://sdis-upload.grabit.mk/api/institution').then(function(result) {
                     return result.data;
                 });
 
