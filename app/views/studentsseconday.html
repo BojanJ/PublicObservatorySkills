@@ -15,16 +15,16 @@
 					</div>
 					<div class="col-md-4">
 						<label>Општина</label>
-						<div ng-dropdown-multiselect="" search-filter="municipalityFilter" options="municipalities" selected-model="filter.municipality" extra-settings="municipalitySettings" onItemSelect="test();" translation-texts="municipalitySettingsText"></div>
+						<div ng-dropdown-multiselect="" search-filter="municipalityFilter" options="municipalities" selected-model="filter.municipality" extra-settings="municipalitySettings" events="municipalityEvents" translation-texts="municipalitySettingsText"></div>
 					</div>
 					<div class="col-md-4">
 						<label>Институции</label>
-						<div ng-dropdown-multiselect="" search-filter="institutionFilter" options="institutions" selected-model="filter.institution" extra-settings="institutionSettings" translation-texts="institutionSettingsText"></div>
+						<div ng-dropdown-multiselect="" search-filter="institutionFilter" options="institutionsF" selected-model="filter.institution" extra-settings="institutionSettings" translation-texts="institutionSettingsText"></div>
 					</div>
 					<div class="col-md-12">
 						<label>Прашање</label>
 						
-						<ui-select ng-model="filter.question" title="Изберете прашање...">
+						<ui-select ng-model="filter.question" ng-change="getData(filter)" title="Изберете прашање...">
 						<ui-select-match placeholder="Изберете прашање...">{{$select.selected.name}}</ui-select-match>
 						<ui-select-choices repeat="item in questions | filter: $select.search">
 						<span ng-bind-html="item.name | highlight: $select.search"></span>
@@ -67,375 +67,64 @@
 			<div class="tab-content">
 				
 				<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 1}">
-					<div class="table-responsive" data-pattern="priority-columns" data-focus-btn-icon="fa-asterisk" data-sticky-table-header="true" data-add-display-all-btn="true" data-add-focus-btn="true">
-						
-						<table cellspacing="0" class="table table-small-font table-bordered table-striped">
-							<thead>
-								<tr>
-									<th>Company</th>
-									<th data-priority="1">Last Trade</th>
-									<th data-priority="3">Trade Time</th>
-									<th data-priority="1">Change</th>
-									<th data-priority="3">Prev Close</th>
-									<th data-priority="3">Open</th>
-									<th data-priority="6">Bid</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th>GOOG <span class="co-name">Google Inc.</span></th>
-									<td>{{'597.74' | number}}</td>
-									<td>12:12PM</td>
-									<td>14.81 (2.54%)</td>
-									<td>582.93</td>
-									<td>597.95</td>
-									<td>597.73 x 100</td>
-								</tr>
-								<tr>
-									<th>AAPL <span class="co-name">Apple Inc.</span></th>
-									<td>378.94</td>
-									<td>12:22PM</td>
-									<td>5.74 (1.54%)</td>
-									<td>373.20</td>
-									<td>381.02</td>
-									<td>378.92 x 300</td>
-								</tr>
-								<tr>
-									<th>AMZN <span class="co-name">Amazon.com Inc.</span></th>
-									<td>191.55</td>
-									<td>12:23PM</td>
-									<td>3.16 (1.68%)</td>
-									<td>188.39</td>
-									<td>194.99</td>
-									<td>191.52 x 300</td>
-								</tr>
-								<tr>
-									<th>ORCL <span class="co-name">Oracle Corporation</span></th>
-									<td>31.15</td>
-									<td>12:44PM</td>
-									<td>1.41 (4.72%)</td>
-									<td>29.74</td>
-									<td>30.67</td>
-									<td>31.14 x 6500</td>
-								</tr>
-								<tr>
-									<th>MSFT <span class="co-name">Microsoft Corporation</span></th>
-									<td>25.50</td>
-									<td>12:27PM</td>
-									<td>0.66 (2.67%)</td>
-									<td>24.84</td>
-									<td>25.37</td>
-									<td>25.50 x 71100</td>
-								</tr>
-								<tr>
-									<th>CSCO <span class="co-name">Cisco Systems, Inc.</span></th>
-									<td>18.65</td>
-									<td>12:45PM</td>
-									<td>0.97 (5.49%)</td>
-									<td>17.68</td>
-									<td>18.23</td>
-									<td>18.65 x 10300</td>
-								</tr>
-								<tr>
-									<th>YHOO <span class="co-name">Yahoo! Inc.</span></th>
-									<td>15.81</td>
-									<td>12:25PM</td>
-									<td>0.11 (0.67%)</td>
-									<td>15.70</td>
-									<td>15.94</td>
-									<td>15.79 x 6100</td>
-								</tr>
-								<!-- Repeat -->
-								<tr>
-									<th>GOOG <span class="co-name">Google Inc.</span></th>
-									<td>597.74</td>
-									<td>12:12PM</td>
-									<td>14.81 (2.54%)</td>
-									<td>582.93</td>
-									<td>597.95</td>
-									<td>597.73 x 100</td>
-								</tr>
-								<tr>
-									<th>AAPL <span class="co-name">Apple Inc.</span></th>
-									<td>378.94</td>
-									<td>12:22PM</td>
-									<td>5.74 (1.54%)</td>
-									<td>373.20</td>
-									<td>381.02</td>
-									<td>378.92 x 300</td>
-								</tr>
-								<tr>
-									<th>AMZN <span class="co-name">Amazon.com Inc.</span></th>
-									<td>191.55</td>
-									<td>12:23PM</td>
-									<td>3.16 (1.68%)</td>
-									<td>188.39</td>
-									<td>194.99</td>
-									<td>191.52 x 300</td>
-								</tr>
-								<tr>
-									<th>ORCL <span class="co-name">Oracle Corporation</span></th>
-									<td>31.15</td>
-									<td>12:44PM</td>
-									<td>1.41 (4.72%)</td>
-									<td>29.74</td>
-									<td>30.67</td>
-									<td>31.14 x 6500</td>
-								</tr>
-								<tr>
-									<th>MSFT <span class="co-name">Microsoft Corporation</span></th>
-									<td>25.50</td>
-									<td>12:27PM</td>
-									<td>0.66 (2.67%)</td>
-									<td>24.84</td>
-									<td>25.37</td>
-									<td>25.50 x 71100</td>
-								</tr>
-								<tr>
-									<th>CSCO <span class="co-name">Cisco Systems, Inc.</span></th>
-									<td>18.65</td>
-									<td>12:45PM</td>
-									<td>0.97 (5.49%)</td>
-									<td>17.68</td>
-									<td>18.23</td>
-									<td>18.65 x 10300</td>
-								</tr>
-								<tr>
-									<th>YHOO <span class="co-name">Yahoo! Inc.</span></th>
-									<td>15.81</td>
-									<td>12:25PM</td>
-									<td>0.11 (0.67%)</td>
-									<td>15.70</td>
-									<td>15.94</td>
-									<td>15.79 x 6100</td>
-								</tr>
-								<!-- Repeat -->
-								<tr>
-									<th>GOOG <span class="co-name">Google Inc.</span></th>
-									<td>597.74</td>
-									<td>12:12PM</td>
-									<td>14.81 (2.54%)</td>
-									<td>582.93</td>
-									<td>597.95</td>
-									<td>597.73 x 100</td>
-								</tr>
-								<tr>
-									<th>AAPL <span class="co-name">Apple Inc.</span></th>
-									<td>378.94</td>
-									<td>12:22PM</td>
-									<td>5.74 (1.54%)</td>
-									<td>373.20</td>
-									<td>381.02</td>
-									<td>378.92 x 300</td>
-								</tr>
-								<tr>
-									<th>AMZN <span class="co-name">Amazon.com Inc.</span></th>
-									<td>191.55</td>
-									<td>12:23PM</td>
-									<td>3.16 (1.68%)</td>
-									<td>188.39</td>
-									<td>194.99</td>
-									<td>191.52 x 300</td>
-								</tr>
-								<tr>
-									<th>ORCL <span class="co-name">Oracle Corporation</span></th>
-									<td>31.15</td>
-									<td>12:44PM</td>
-									<td>1.41 (4.72%)</td>
-									<td>29.74</td>
-									<td>30.67</td>
-									<td>31.14 x 6500</td>
-								</tr>
-								<tr>
-									<th>MSFT <span class="co-name">Microsoft Corporation</span></th>
-									<td>25.50</td>
-									<td>12:27PM</td>
-									<td>0.66 (2.67%)</td>
-									<td>24.84</td>
-									<td>25.37</td>
-									<td>25.50 x 71100</td>
-								</tr>
-								<tr>
-									<th>CSCO <span class="co-name">Cisco Systems, Inc.</span></th>
-									<td>18.65</td>
-									<td>12:45PM</td>
-									<td>0.97 (5.49%)</td>
-									<td>17.68</td>
-									<td>18.23</td>
-									<td>18.65 x 10300</td>
-								</tr>
-								<tr>
-									<th>YHOO <span class="co-name">Yahoo! Inc.</span></th>
-									<td>15.81</td>
-									<td>12:25PM</td>
-									<td>0.11 (0.67%)</td>
-									<td>15.70</td>
-									<td>15.94</td>
-									<td>15.79 x 6100</td>
-								</tr>
-								<!-- Repeat -->
-								<tr>
-									<th>GOOG <span class="co-name">Google Inc.</span></th>
-									<td>597.74</td>
-									<td>12:12PM</td>
-									<td>14.81 (2.54%)</td>
-									<td>582.93</td>
-									<td>597.95</td>
-									<td>597.73 x 100</td>
-								</tr>
-								<tr>
-									<th>AAPL <span class="co-name">Apple Inc.</span></th>
-									<td>378.94</td>
-									<td>12:22PM</td>
-									<td>5.74 (1.54%)</td>
-									<td>373.20</td>
-									<td>381.02</td>
-									<td>378.92 x 300</td>
-								</tr>
-								<tr>
-									<th>AMZN <span class="co-name">Amazon.com Inc.</span></th>
-									<td>191.55</td>
-									<td>12:23PM</td>
-									<td>3.16 (1.68%)</td>
-									<td>188.39</td>
-									<td>194.99</td>
-									<td>191.52 x 300</td>
-								</tr>
-								<tr>
-									<th>ORCL <span class="co-name">Oracle Corporation</span></th>
-									<td>31.15</td>
-									<td>12:44PM</td>
-									<td>1.41 (4.72%)</td>
-									<td>29.74</td>
-									<td>30.67</td>
-									<td>31.14 x 6500</td>
-								</tr>
-								<tr>
-									<th>MSFT <span class="co-name">Microsoft Corporation</span></th>
-									<td>25.50</td>
-									<td>12:27PM</td>
-									<td>0.66 (2.67%)</td>
-									<td>24.84</td>
-									<td>25.37</td>
-									<td>25.50 x 71100</td>
-								</tr>
-								<tr>
-									<th>CSCO <span class="co-name">Cisco Systems, Inc.</span></th>
-									<td>18.65</td>
-									<td>12:45PM</td>
-									<td>0.97 (5.49%)</td>
-									<td>17.68</td>
-									<td>18.23</td>
-									<td>18.65 x 10300</td>
-								</tr>
-								<tr>
-									<th>YHOO <span class="co-name">Yahoo! Inc.</span></th>
-									<td>15.81</td>
-									<td>12:25PM</td>
-									<td>0.11 (0.67%)</td>
-									<td>15.70</td>
-									<td>15.94</td>
-									<td>15.79 x 6100</td>
-								</tr>
-								<!-- Repeat -->
-								<tr>
-									<th>GOOG <span class="co-name">Google Inc.</span></th>
-									<td>597.74</td>
-									<td>12:12PM</td>
-									<td>14.81 (2.54%)</td>
-									<td>582.93</td>
-									<td>597.95</td>
-									<td>597.73 x 100</td>
-								</tr>
-								<tr>
-									<th>AAPL <span class="co-name">Apple Inc.</span></th>
-									<td>378.94</td>
-									<td>12:22PM</td>
-									<td>5.74 (1.54%)</td>
-									<td>373.20</td>
-									<td>381.02</td>
-									<td>378.92 x 300</td>
-								</tr>
-								<tr>
-									<th>AMZN <span class="co-name">Amazon.com Inc.</span></th>
-									<td>191.55</td>
-									<td>12:23PM</td>
-									<td>3.16 (1.68%)</td>
-									<td>188.39</td>
-									<td>194.99</td>
-									<td>191.52 x 300</td>
-								</tr>
-								<tr>
-									<th>ORCL <span class="co-name">Oracle Corporation</span></th>
-									<td>31.15</td>
-									<td>12:44PM</td>
-									<td>1.41 (4.72%)</td>
-									<td>29.74</td>
-									<td>30.67</td>
-									<td>31.14 x 6500</td>
-								</tr>
-								<tr>
-									<th>MSFT <span class="co-name">Microsoft Corporation</span></th>
-									<td>25.50</td>
-									<td>12:27PM</td>
-									<td>0.66 (2.67%)</td>
-									<td>24.84</td>
-									<td>25.37</td>
-									<td>25.50 x 71100</td>
-								</tr>
-								<tr>
-									<th>CSCO <span class="co-name">Cisco Systems, Inc.</span></th>
-									<td>18.65</td>
-									<td>12:45PM</td>
-									<td>0.97 (5.49%)</td>
-									<td>17.68</td>
-									<td>18.23</td>
-									<td>18.65 x 10300</td>
-								</tr>
-								<tr>
-									<th>YHOO <span class="co-name">Yahoo! Inc.</span></th>
-									<td>15.81</td>
-									<td>12:25PM</td>
-									<td>0.11 (0.67%)</td>
-									<td>15.70</td>
-									<td>15.94</td>
-									<td>15.79 x 6100</td>
-								</tr>
-							</tbody>
-						</table>
-						
-					</div>
+					<table ng-table="gpr2Table" class="table table-bordered table-striped table-condensed table-hover" ng-show="hasData && filter.question.gpr == 2">
+						<thead>
+							<tr>
+								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
+								<th>Запишани студенти по програма</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="school in tableData">
+								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
+								<td>
+									<div ng-repeat="year in school.years">
+										<p class="text-center"> За учебна година: {{year.schoolYear}} </p>
+										<table class="table table-bordered table-striped table-condensed table-hover">
+											<thead>
+												<tr>
+													<th> Програма </th>
+													<th width="90px"> Запишани студенти</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="program in year.programmes">
+													<td> {{program.programmeName}} </td>
+													<td class="text-center"> {{program.studentsEnrolled}} </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
+					<spinner ng-show="isLoading"></spinner>
 				</div>
 				
 				<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
-					
-					<canvas id="line" class="chart chart-line" chart-data="data"
-					chart-labels="labels" chart-legend="true" chart-series="series"
-					chart-click="onClick" >
-					</canvas>
+					<div class="col-md-4">
+						<label>{{'GPR_1_TH_SCHOOL'|translate}}</label>
+						<ui-select ng-model="gpr2.selectedSchool" ng-change="chartGpr2()">
+						<ui-select-match>
+						<span ng-bind="$select.selected.name"></span>
+						</ui-select-match>
+						<ui-select-choices repeat="item in (filter.institution | filter: $select.search)">
+						<span ng-bind="item.name"></span>
+						</ui-select-choices>
+						</ui-select>
+					</div>
+					<div class="col-md-8">
+						<canvas id="line" class="chart chart-line" chart-data="gpr2.data"
+						chart-labels="gpr2.labels" chart-legend="true" chart-series="gpr2.series" >
+						</canvas>
+					</div>
 				</div>
 				
 			</div>
 		</div>
 	</div>
 	
-</div>
-</div>
-<div class="row">
-<div class="col-md-12">
-	<!-- Default panel -->
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			Панел за дополнителни информации
-		</div>
-		
-		<div class="panel-body">
-			
-			<div class="row">
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas modi accusamus reprehenderit fuga explicabo, assumenda officia sunt laudantium recusandae quae qui ratione amet accusantium exercitationem, esse, voluptatum natus iure quo.
-			</div>
-			
-		</div>
-	</div>
 </div>
 </div>

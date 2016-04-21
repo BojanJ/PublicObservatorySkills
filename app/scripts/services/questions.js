@@ -14,9 +14,11 @@ angular.module('skillsApp')
         //
 
         "apisecondary": [{
+            "gpr": "1",
             "url": "/apisecondary/gpr/1",
             "name": "Programs per school"
         }, {
+            "gpr": "2",
             "url": "/apisecondary/gpr/2",
             "name": "Number of enrolled students per program per school year"
         }], 
