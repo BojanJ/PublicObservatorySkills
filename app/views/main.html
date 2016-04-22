@@ -214,16 +214,64 @@
       </div><!-- General Report 7 -->
       <!-- General Report 9 -->
       <div class="panel panel-default">
-        <div class="panel-heading" role="tab">
+        <div class="panel-heading" role="tab" ng-click="vm.questions.activeQuestion = 9;">
+          <div class="xe-icon question-header">
+            <i class="linecons-doc"></i>
+          </div>
           <h4 class="panel-title pointer question-header">
-          <a bs-collapse-toggle>
-            {{ 'GPR_9' | translate}}
-          </a>
+            <a bs-collapse-toggle>
+              {{ 'GPR_9' | translate}}
+            </a>
           </h4>
+          <div class="panel-options" ng-show="vm.questions.activeTab == 4;">
+            <ul class="nav nav-tabs">
+              <li ng-class="{'active': vm.questions.q9.tab == 1}">
+                <a href="" ng-click="vm.questions.q9.tab = 1">{{'GPR_TABLE'|translate}}</a>
+              </li>
+              <li ng-class="{'active': vm.questions.q9.tab == 2}">
+                <a href="" ng-click="vm.questions.q9.tab = 2">{{'GPR_CHART'|translate}}</a>
+              </li>
+            </ul>
+          </div>
         </div>
         <div class="panel-collapse" role="tabpanel" bs-collapse-target>
           <div class="panel-body">
-           
+            <div class="tab-content">
+              <div class="tab-pane" ng-class="{'active': vm.questions.q9.tab == 1}">    
+                <table ng-table="vm.gpr9Table" class="table table-bordered table-striped table-condensed table-hover">
+                  <thead>
+                    <tr>
+                      <th>{{'GPR_9_TH_UNI'| translate}}</th>
+                      <th>{{'GPR_9_TH_FAX'| translate}}</th>
+                      <th>{{'GPR_1_TH_MUNICI'| translate}}</th>
+                      <th>{{'GPR_9_TH_YEAR'| translate}}</th>
+                      <!-- <th>{{'GPR_9_TH_CYCLE'| translate}}</th> -->
+                      <th>{{'GPR_1_TH_APPLIED'| translate}}</th>
+                      <th>{{'GPR_1_TH_ENROLLED'| translate}}</th>
+                      <th>%</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat-start="university in $data">
+                      <td rowspan="{{university.faculty.length*2 + 1}}">{{university.universityName.replace("Универзитет", "")}}</td>
+                    </tr>
+                    <tr ng-repeat-start="faculty in university.faculty">
+                      <td rowspan="{{faculty.years.length + 1}}">{{faculty.facultyName| capitalize}}</td>
+                      <td rowspan="{{faculty.years.length + 1}}">{{faculty.municipalityName | capitalize}}</td>
+                    </tr>
+                    <tr ng-repeat-end ng-repeat="year in faculty.years">
+                      <td>{{year.academicYear}}</td>
+                      <td>{{year.studentsApplied}}</td>
+                      <td>{{year.studentsEnrolled}}</td>
+                      <td>{{(year.studentsEnrolled * 100)/(year.studentsApplied) | number : 0}}</td>
+                    </tr>
+                    <tr ng-repeat-end></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane" ng-class="{'active': vm.questions.q9.tab == 2}">
+              </div>
+            </div>
           </div>
         </div>
       </div><!-- General Report 9 -->
@@ -246,10 +294,20 @@
       <div class="panel panel-default">
         <div class="panel-heading" role="tab">
           <h4 class="panel-title pointer question-header">
-          <a bs-collapse-toggle>
-            {{ 'GPR_13' | translate}}
-          </a>
+            <a bs-collapse-toggle>
+              {{ 'GPR_13' | translate}}
+            </a>
           </h4>
+          <div class="panel-options" ng-show="vm.questions.activeTab == 1;">
+            <ul class="nav nav-tabs">
+              <li ng-class="{'active': vm.questions.q3.tab == 1}">
+                <a href="" ng-click="vm.questions.q3.tab = 1">{{'GPR_TABLE'|translate}}</a>
+              </li>
+              <li ng-class="{'active': vm.questions.q3.tab == 2}">
+                <a href="" ng-click="vm.questions.q3.tab = 2">{{'GPR_CHART'|translate}}</a>
+              </li>
+            </ul>
+          </div>
         </div>
         <div class="panel-collapse" role="tabpanel" bs-collapse-target>
           <div class="panel-body">

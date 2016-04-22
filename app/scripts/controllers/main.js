@@ -12,7 +12,9 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
     vm.reportData = {
         q1: null,
         q3: null,
-        q5: null
+        q5: null,
+        q7: null,
+        q9: null
     };
     vm.questions = {
         q1: {
@@ -30,6 +32,12 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
             data:[]
         },
         q5: {
+            tab: 1,
+            labels: [],
+            series: [$translate.instant("GPR_5_TH_MALE"), $translate.instant("GPR_5_TH_FEMALE")],
+            data:[[],[]]
+        },
+        q9: {
             tab: 1,
             labels: [],
             series: [$translate.instant("GPR_5_TH_MALE"), $translate.instant("GPR_5_TH_FEMALE")],
@@ -59,6 +67,11 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
                     } else vm.activeQuestion = 2;
                     break;
                 case 7:
+                    break;
+                case 9:
+                    if (vm.reportData.q9 == null) {
+                        vm.getQuestion9();
+                    } else vm.activeQuestion = 4;
                     break;
                 default:
                     break;
@@ -244,6 +257,37 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
             vm.questions.q5.data[1].push(school.femaleEnroled);
             vm.questions.q5.labels.push(school.schoolName.substr(0, 15) + "...");
         }
+    };
+
+
+    vm.getQuestion9 = function() {
+        $http.get('http://sdis-upload.grabit.mk/apiuniversity/gpr/9').
+        success(function(data, status, headers, config) {
+            vm.reportData.q9 = data = data.response[0].university;
+            var result = [];
+
+            vm.gpr9Table = new ngTableParams({
+                page: 1,
+                count: 10
+            }, {
+                total: vm.reportData.q9.length,
+                getData: function($defer, params) {
+                    var filter = params.filter();
+                    var sorting = params.sorting();
+                    var count = params.count();
+                    var page = params.page();
+                    $defer.resolve(data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                }
+            });
+            vm.setActiveQuestion = 4;
+        }).
+        error(function(data, status, headers, config) {
+
+        });
+    };
+
+    vm.setQuestion9Chart = function() {
+
     };
 
     vm.getQuestion1();
