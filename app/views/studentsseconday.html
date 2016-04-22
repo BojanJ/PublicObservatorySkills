@@ -72,35 +72,38 @@
 					<table ng-table="gpr2Table" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 1">
 						<thead>
 							<tr>
-								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th> 
-								<th>{{'GPR_1_TH_MUNICI' | translate}}</th>
-								<th>{{'GPR_1_TH_TYPE' | translate}}</th>
-								<th>{{'GPR_1_TH_SCHOOL_YEAR'| translate}}</th>
+								<th class="col-md-3">{{'GPR_1_TH_SCHOOL'| translate}}</th> 
+								<th >{{'GPR_1_TH_MUNICI' | translate}}</th>
+								<th class="col-md-2">{{'GPR_1_TH_TYPE' | translate}}</th>
+								<th>{{'GPR_1_TH_STUDENTS'| translate}}</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="school in vm.tableData">
-								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
+								<td>{{school.schoolName}}</td>
 								<td>{{school.municipalityName}}</td>
 								<td>{{school.type}}</td>
 								<td>
-									<div ng-repeat="year in school.years">
-										<p class="text-center"> {{'FOR_SCHOOL_YEAR' | translate}} {{year.schoolYear}} </p>
-										<table class="table table-bordered table-striped table-condensed table-hover">
-											<thead>
-												<tr>
-													<th> {{'GPR_1_TH_APPLIED' |translate}} </th>
-													<th width="90px">{{'STUDENTS_ENROLLED' | translate}}</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr ng-repeat="program in year.programmes">
-													<td> {{program.studentsEnrolled}} </td>
-													<td class="text-center"> {{program.studentsEnrolled}} </td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
+									<table class="table table-bordered table-striped table-condensed table-hover">
+										<thead>
+											<tr>
+												<th>{{'GPR_1_TH_SCHOOL_YEAR' |translate}} </th>
+												<th> {{'GPR_1_TH_APPLIED' |translate}} </th>
+												<th>{{'GPR_1_TH_ENROLLED' | translate}}</th>
+												<th>{{'GPR_1_TH_PERCENT' | translate}}</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr  ng-repeat="year in school.years">
+												<td class="text-center"> {{year.schoolYear}} </td>
+												<td class="text-center" ng-show="year.schoostudentsApplied != null"> {{year.schoostudentsApplied}} </td>
+												<td class="text-center" ng-show="year.schoostudentsApplied == null"> {{year.studentsEnrolled}} </td>
+												<td class="text-center"> {{year.studentsEnrolled}} </td>
+												<td class="text-center" ng-show="year.schoostudentsApplied != null"> {{vm.calcPercent(year.schoostudentsApplied,year.studentsEnrolled)}} 
+												</td>
+												<td class="text-center" ng-show="year.schoostudentsApplied == null">100</td>
+										</tbody>
+									</table>
 								</td>
 							</tr>
 						</tbody>
@@ -113,12 +116,14 @@
 						<thead>
 							<tr>
 								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
+								<th class="col-md-2">{{'GPR_1_TH_TYPE'| translate}}</th>
 								<th>{{'STUDENTS_PER_PROGRAM' | translate}}</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="school in vm.tableData">
-								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
+								<td>{{school.schoolName}}</td>
+								<td>{{school.type}}</td>
 								<td>
 									<div ng-repeat="year in school.years">
 										<p class="text-center"> {{'FOR_SCHOOL_YEAR' | translate}} {{year.schoolYear}} </p>
@@ -126,7 +131,7 @@
 											<thead>
 												<tr>
 													<th> {{'PROGRAM' |translate}} </th>
-													<th width="90px">{{'STUDENTS_ENROLLED' | translate}}</th>
+													<th width="90px">{{'GPR_1_TH_ENROLLED' | translate}}</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -148,31 +153,33 @@
 						<thead>
 							<tr>
 								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
-								<th>{{'STUDENTS_PER_PROGRAM' | translate}}</th>
+								<th>{{'GPR_1_TH_TYPE'| translate}}</th>
+								<th>{{'GPR_1_TH_STUDENTS'| translate}}</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="school in vm.tableData">
-								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
-								<!-- <td>
+								<td class="col-md-4">{{school.schoolName}} <br> <small> {{school.municipalityName}} </small></td>
+								<td class="col-md-4">{{school.type}}</td>
+								<td>
 									<div ng-repeat="year in school.years">
 										<p class="text-center"> {{'FOR_SCHOOL_YEAR' | translate}} {{year.schoolYear}} </p>
 										<table class="table table-bordered table-striped table-condensed table-hover">
 											<thead>
 												<tr>
-													<th> {{'PROGRAM' |translate}} </th>
-													<th width="90px">{{'STUDENTS_ENROLLED' | translate}}</th>
+													<th> {{'GPR_3_TH_NATIONALITY' |translate}} </th>
+													<th width="90px">{{'GPR_1_TH_ENROLLED' | translate}}</th>
 												</tr>
 											</thead>
 											<tbody>
-												<tr ng-repeat="program in year.programmes">
-													<td> {{program.programmeName}} </td>
-													<td class="text-center"> {{program.studentsEnrolled}} </td>
+												<tr ng-repeat="nationality in year.nationality">
+													<td> {{nationality.nationalityName}} </td>
+													<td class="text-center"> {{nationality.studentsEnrolled}} </td>
 												</tr>
 											</tbody>
 										</table>
 									</div>
-								</td> -->
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -184,31 +191,49 @@
 						<thead>
 							<tr>
 								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
-								<th>{{'STUDENTS_PER_PROGRAM' | translate}}</th>
+								<th>{{'GPR_4_STUDENTS_NATIONALITY' | translate}}</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="school in vm.tableData">
 								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
-								<!-- <td>
+								<td>
 									<div ng-repeat="year in school.years">
 										<p class="text-center"> {{'FOR_SCHOOL_YEAR' | translate}} {{year.schoolYear}} </p>
 										<table class="table table-bordered table-striped table-condensed table-hover">
 											<thead>
 												<tr>
 													<th> {{'PROGRAM' |translate}} </th>
-													<th width="90px">{{'STUDENTS_ENROLLED' | translate}}</th>
+													<th> {{'GPR_3_TH_NATIONALITY' |translate}} </th>
+													<th> {{'GPR_1_TH_ENROLLED' |translate}} </th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr ng-repeat="program in year.programmes">
-													<td> {{program.programmeName}} </td>
-													<td class="text-center"> {{program.studentsEnrolled}} </td>
+													<td>{{program.programmeName}}</td>
+													<td>
+														<table class="table table-striped table-condensed table-hover">
+															<tbody>
+																<tr ng-repeat="nationality in program.nationality">
+																	<td> {{nationality.nationalityName}} </td>
+																</tr>
+															</tbody>
+														</table>
+													</td>
+													<td>
+														<table class="table table-striped table-condensed table-hover">
+															<tbody>
+																<tr ng-repeat="nationality in program.nationality">
+																	<td class="text-center"> {{nationality.studentsEnrolled}} </td>
+																</tr>
+															</tbody>
+														</table>
+													</td>
 												</tr>
 											</tbody>
 										</table>
 									</div>
-								</td> -->
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -220,31 +245,32 @@
 						<thead>
 							<tr>
 								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
-								<th>{{'STUDENTS_PER_PROGRAM' | translate}}</th>
+								<th>{{'GPR_1_TH_TYPE'| translate}}</th>
+								<th>{{'GPR_5_STUDENTS_GENDER'| translate}}</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="school in vm.tableData">
-								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
-								<!-- <td>
-									<div ng-repeat="year in school.years">
-										<p class="text-center"> {{'FOR_SCHOOL_YEAR' | translate}} {{year.schoolYear}} </p>
-										<table class="table table-bordered table-striped table-condensed table-hover">
-											<thead>
-												<tr>
-													<th> {{'PROGRAM' |translate}} </th>
-													<th width="90px">{{'STUDENTS_ENROLLED' | translate}}</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr ng-repeat="program in year.programmes">
-													<td> {{program.programmeName}} </td>
-													<td class="text-center"> {{program.studentsEnrolled}} </td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</td> -->
+								<td>{{school.schoolName}} <br></td>
+								<td>{{school.type}}</td>
+								<td>
+									<table class="table table-bordered table-striped table-condensed table-hover">
+										<thead>
+											<tr>
+												<th>{{'GPR_1_TH_SCHOOL_YEAR' |translate}} </th>
+												<th> {{'GPR_5_TH_FEMALE' |translate}} </th>
+												<th>{{'GPR_5_TH_MALE' | translate}}</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr  ng-repeat="year in school.years">
+												<td class="text-center"> {{year.schoolYear}} </td>
+												<td class="text-center"> {{year.gender[0].studentsEnrolled}} </td>
+												<td class="text-center"> {{year.gender[1].studentsEnrolled}} </td>
+												</td>
+										</tbody>
+									</table>
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -256,31 +282,33 @@
 						<thead>
 							<tr>
 								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
-								<th>{{'STUDENTS_PER_PROGRAM' | translate}}</th>
+								<th>{{'GPR_5_STUDENTS_GENDER' | translate}}</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="school in vm.tableData">
 								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
-								<!-- <td>
+								<td>
 									<div ng-repeat="year in school.years">
 										<p class="text-center"> {{'FOR_SCHOOL_YEAR' | translate}} {{year.schoolYear}} </p>
 										<table class="table table-bordered table-striped table-condensed table-hover">
 											<thead>
 												<tr>
 													<th> {{'PROGRAM' |translate}} </th>
-													<th width="90px">{{'STUDENTS_ENROLLED' | translate}}</th>
+													<th> {{'GPR_5_TH_FEMALE' |translate}} </th>
+													<th> {{'GPR_5_TH_MALE' |translate}} </th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr ng-repeat="program in year.programmes">
-													<td> {{program.programmeName}} </td>
-													<td class="text-center"> {{program.studentsEnrolled}} </td>
+													<td>{{program.programmeName}}</td>
+													<td class="text-center"> {{program.gender[0].studentsEnrolled}} </td>
+													<td class="text-center"> {{program.gender[1].studentsEnrolled}} </td>
 												</tr>
 											</tbody>
 										</table>
 									</div>
-								</td> -->
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -292,31 +320,35 @@
 						<thead>
 							<tr>
 								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
-								<th>{{'STUDENTS_PER_PROGRAM' | translate}}</th>
+								<th>{{'GPR_1_TH_STUDENTS' | translate}}</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="school in vm.tableData">
-								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
-								<!-- <td>
-									<div ng-repeat="year in school.years">
-										<p class="text-center"> {{'FOR_SCHOOL_YEAR' | translate}} {{year.schoolYear}} </p>
-										<table class="table table-bordered table-striped table-condensed table-hover">
-											<thead>
-												<tr>
-													<th> {{'PROGRAM' |translate}} </th>
-													<th width="90px">{{'STUDENTS_ENROLLED' | translate}}</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr ng-repeat="program in year.programmes">
-													<td> {{program.programmeName}} </td>
-													<td class="text-center"> {{program.studentsEnrolled}} </td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</td> -->
+								<td>{{school.schoolName}}<br> <small>{{school.type}}</small></td>
+								<td>
+									<table class="table table-bordered table-striped table-condensed table-hover">
+										<thead>
+											<tr>
+												<th>{{'GPR_1_TH_SCHOOL_YEAR' |translate}} </th>
+												<th>{{'GPR_7_GRADUATED' |translate}}</th>
+												<th>{{'GPR_7_ENROLLED' | translate}}</th>
+												<th>{{'GPR_7_EMPLOYED' | translate}}</th>
+												<th>{{'GPR_7_UNEMPLOYED' | translate}}</th>
+												<th>{{'GPR_7_UNKNOWN' | translate}}</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr  ng-repeat="year in school.years">
+												<td class="text-center"> {{year.schoolYear}} </td>
+												<td class="text-center"> {{year.GraduatesNumber}} </td>
+												<td class="text-center"> {{year.studentsEnrolled}} </td>
+												<td class="text-center"> {{year.EmployedNumber}} </td>
+												<td class="text-center"> {{year.UnemployedNumber}} </td>
+												<td class="text-center"> {{year.UnknownStatusNumber}} </td>
+										</tbody>
+									</table>
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -328,31 +360,38 @@
 						<thead>
 							<tr>
 								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
-								<th>{{'STUDENTS_PER_PROGRAM' | translate}}</th>
+								<th>{{'GPR_1_TH_STUDENTS' | translate}}</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="school in vm.tableData">
 								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
-								<!-- <td>
+								<td>
 									<div ng-repeat="year in school.years">
 										<p class="text-center"> {{'FOR_SCHOOL_YEAR' | translate}} {{year.schoolYear}} </p>
 										<table class="table table-bordered table-striped table-condensed table-hover">
-											<thead>
-												<tr>
-													<th> {{'PROGRAM' |translate}} </th>
-													<th width="90px">{{'STUDENTS_ENROLLED' | translate}}</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr ng-repeat="program in year.programmes">
-													<td> {{program.programmeName}} </td>
-													<td class="text-center"> {{program.studentsEnrolled}} </td>
-												</tr>
-											</tbody>
-										</table>
+										<thead>
+											<tr>
+												<th class="col-md-3">{{'PROGRAM' |translate}} </th>
+												<th>{{'GPR_7_GRADUATED' |translate}}</th>
+												<th>{{'GPR_7_ENROLLED' | translate}}</th>
+												<th>{{'GPR_7_EMPLOYED' | translate}}</th>
+												<th>{{'GPR_7_UNEMPLOYED' | translate}}</th>
+												<th>{{'GPR_7_UNKNOWN' | translate}}</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr  ng-repeat="program in year.programmes">
+												<td> {{program.programmeName}} </td>
+												<td class="text-center"> {{program.GraduatesNumber}} </td>
+												<td class="text-center"> {{program.studentsEnrolled}} </td>
+												<td class="text-center"> {{program.EmployedNumber}} </td>
+												<td class="text-center"> {{program.UnemployedNumber}} </td>
+												<td class="text-center"> {{program.UnknownStatusNumber}} </td>
+										</tbody>
+									</table>
 									</div>
-								</td> -->
+								</td>
 							</tr>
 						</tbody>
 					</table>

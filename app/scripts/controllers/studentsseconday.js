@@ -204,4 +204,9 @@ angular.module('skillsApp')
 
         }
 
+        vm.calcPercent = function(applied,enrolled){
+            var percent = (100 * enrolled)/applied;
+            return percent;
+        };
+
     });
