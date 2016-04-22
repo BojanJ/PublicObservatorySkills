@@ -28,6 +28,7 @@ angular.module('angularTranslateApp', ['pascalprecht.translate'])
       GPR_1_TH_TYPE:'Тип',
       GPR_1_TH_APPLIED:'Бр. аплицирани',
       GPR_1_TH_ENROLLED:'Бр. запишани',
+      GPR_1_TH_PERCENT: '%',
       GPR_2: '',
       GPR_3: 'Број на запишани ученици по училиште и по националност',
       GPR_3_TH_NATIONALITY: 'Националност',
@@ -37,7 +38,7 @@ angular.module('angularTranslateApp', ['pascalprecht.translate'])
       GPR_5_TH_MALE: 'М',
       GPR_5_TH_FEMALE: 'Ж',
       GPR_6: '',
-      GPR_7: 'Запишани на факултет/вработени/невработени/nне регистрирани по училиште',
+      GPR_7: 'Запишани на факултет/вработени/невработени/не регистрирани по училиште',
       GPR_8: '',
       GPR_9: '% на запишани студенти по факултет',
       GPR_10: '',
@@ -49,6 +50,18 @@ angular.module('angularTranslateApp', ['pascalprecht.translate'])
       GPR_16: '',
       GPR_17: 'Цена на студии',
 
+      // secondary education
+
+      FILTER_INSTITUTION: 'Институции',
+      FILTER_QUESTIONS: 'Прашање',
+      SELECT_QUESTION: 'Изберете прашање...',
+      BTN_SAVE: 'Зачувај',
+      INFO_SHOW: 'Прикажи податоци',
+      FOR_SCHOOL_YEAR: 'За учебна година',
+      STUDENTS_ENROLLED: 'Запишани ученици',
+      STUDENTS_PER_PROGRAM: 'Ученици по програм',
+      PROGRAM: 'Програма',
+      NO_INFO: 'Нема информации за одбраните параметри',
     })
 
 
@@ -91,7 +104,18 @@ angular.module('angularTranslateApp', ['pascalprecht.translate'])
       GPR_15: '',
       GPR_16: '',
       GPR_17: 'Costs of studies',
-      
+
+      //secondary education
+
+      FILTER_INSTITUTION: 'Institutions',
+      FILTER_QUESTIONS: 'Question',
+      SELECT_QUESTION: 'Choose question...',
+      BTN_SAVE: 'Save',
+      INFO_SHOW: 'Show data',
+      FOR_SCHOOL_YEAR: 'For school year',
+      STUDENTS_ENROLLED: 'Students enrolled',
+      PROGRAM: 'Program',
+      NO_INFO: 'There is no data for the selected parameters',
     })
     .translations('sq-SQ', {
       
@@ -132,6 +156,18 @@ angular.module('angularTranslateApp', ['pascalprecht.translate'])
       GPR_15: '',
       GPR_16: '',
       GPR_17: 'Costs of studies',
+
+      //secondary education
+
+      FILTER_INSTITUTION: 'Institutions',
+      FILTER_QUESTIONS: 'Question',
+      SELECT_QUESTION: 'Choose a question...',
+      BTN_SAVE: 'Save',
+      INFO_SHOW: 'Show data',
+      FOR_SCHOOL_YEAR: 'For school year',
+      STUDENTS_ENROLED: 'Students enrolled',
+      PROGRAM: 'Program',
+      NO_INFO: 'There is no data for the selected parameters',
 
     })
     .fallbackLanguage('mk-MK')

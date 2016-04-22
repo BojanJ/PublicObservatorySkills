@@ -10,30 +10,30 @@
 				
 				<div class="row">
 					<div class="col-md-4">
-						<label>Година</label>
-						<div ng-dropdown-multiselect="" search-filter="yearFilter" options="years" selected-model="filter.year" extra-settings="yearSettings" translation-texts="yearSettingsText"></div>
+						<label>{{'GPR_1_TH_SCHOOL_YEAR' | translate}}</label>
+						<div ng-dropdown-multiselect="" search-filter="yearFilter" options="vm.years" selected-model="vm.filter.year" extra-settings="vm.yearSettings" translation-texts="vm.yearSettingsText"></div>
 					</div>
 					<div class="col-md-4">
-						<label>Општина</label>
-						<div ng-dropdown-multiselect="" search-filter="municipalityFilter" options="municipalities" selected-model="filter.municipality" extra-settings="municipalitySettings" events="municipalityEvents" translation-texts="municipalitySettingsText"></div>
+						<label>{{'GPR_1_TH_MUNICI' | translate}}</label>
+						<div ng-dropdown-multiselect="" search-filter="municipalityFilter" options="vm.municipalities" selected-model="vm.filter.municipality" extra-settings="vm.municipalitySettings" events="municipalityEvents" translation-texts="vm.municipalitySettingsText"></div>
 					</div>
 					<div class="col-md-4">
-						<label>Институции</label>
-						<div ng-dropdown-multiselect="" search-filter="institutionFilter" options="institutionsF" selected-model="filter.institution" extra-settings="institutionSettings" translation-texts="institutionSettingsText"></div>
+						<label>{{'FILTER_INSTITUTION' | translate}}</label>
+						<div ng-dropdown-multiselect="" search-filter="institutionFilter" options="vm.institutionsF" selected-model="vm.filter.institution" extra-settings="vm.institutionSettings" translation-texts="vm.institutionSettingsText"></div>
 					</div>
 					<div class="col-md-12">
-						<label>Прашање</label>
+						<label>{{'FILTER_QUESTIONS' | translate}}</label>
 						
-						<ui-select ng-model="filter.question" ng-change="getData(filter)" title="Изберете прашање...">
-						<ui-select-match placeholder="Изберете прашање...">{{$select.selected.name}}</ui-select-match>
-						<ui-select-choices repeat="item in questions | filter: $select.search">
+						<ui-select ng-model="vm.filter.question" ng-change="vm.getData(vm.filter)" title="{{'SELECT_QUESTION' | translate}}">
+						<ui-select-match placeholder="{{'SELECT_QUESTION' | translate}}">{{$select.selected.name}}</ui-select-match>
+						<ui-select-choices repeat="item in vm.questions | filter: $select.search">
 						<span ng-bind-html="item.name | highlight: $select.search"></span>
 						</ui-select-choices>
 						</ui-select>
 					</div>
 				</div>
 				<div class="row">
-					<button class="btn btn-success pull-right" ng-click="getData(filter);">Зачувај</button>
+					<button class="btn btn-success pull-right" ng-click="vm.getData(vm.filter);">{{'BTN_SAVE' | translate}}</button>
 				</div>
 				
 			</div>
@@ -44,18 +44,18 @@
 	<div class="col-md-12">
 		
 		<!-- Tabbed panel -->
-		<div ng-init="tabbed_panel_active = 1;" class="panel panel-default"><!-- Add class "collapsed" to minimize the panel -->
+		<div ng-init="vm.tabbed_panel_active = 1;" class="panel panel-default"><!-- Add class "collapsed" to minimize the panel -->
 		<div class="panel-heading">
-			<h3 class="panel-title">Приказ на информации</h3>
+			<h3 class="panel-title">{{'INFO_SHOW' | translate }}</h3>
 			
 			<div class="panel-options">
 				
 				<ul class="nav nav-tabs">
-					<li ng-class="{'active': tabbed_panel_active == 1}">
-						<a href="" ng-click="tabbed_panel_active = 1">Табелраен</a>
+					<li ng-class="{'active': vm.tabbed_panel_active == 1}">
+						<a href="" ng-click="vm.tabbed_panel_active = 1">{{'GPR_TABLE' | translate}}</a>
 					</li>
-					<li ng-class="{'active': tabbed_panel_active == 2}">
-						<a href="" ng-click="tabbed_panel_active = 2">Графички</a>
+					<li ng-class="{'active': vm.tabbed_panel_active == 2}">
+						<a href="" ng-click="vm.tabbed_panel_active = 2">{{'GPR_CHART' | translate}}</a>
 					</li>
 				</ul>
 				
@@ -66,25 +66,67 @@
 			
 			<div class="tab-content">
 				
-				<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 1}">
-					<table ng-table="gpr2Table" class="table table-bordered table-striped table-condensed table-hover" ng-show="hasData && filter.question.gpr == 2">
+				<div class="tab-pane" ng-class="{'active': vm.tabbed_panel_active == 1}">
+
+				<!-- GPR 1 -->
+					<table ng-table="gpr2Table" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 1">
 						<thead>
 							<tr>
-								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
-								<th>Запишани студенти по програма</th>
+								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th> 
+								<th>{{'GPR_1_TH_MUNICI' | translate}}</th>
+								<th>{{'GPR_1_TH_TYPE' | translate}}</th>
+								<th>{{'GPR_1_TH_SCHOOL_YEAR'| translate}}</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="school in tableData">
+							<tr ng-repeat="school in vm.tableData">
 								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
+								<td>{{school.municipalityName}}</td>
+								<td>{{school.type}}</td>
 								<td>
 									<div ng-repeat="year in school.years">
-										<p class="text-center"> За учебна година: {{year.schoolYear}} </p>
+										<p class="text-center"> {{'FOR_SCHOOL_YEAR' | translate}} {{year.schoolYear}} </p>
 										<table class="table table-bordered table-striped table-condensed table-hover">
 											<thead>
 												<tr>
-													<th> Програма </th>
-													<th width="90px"> Запишани студенти</th>
+													<th> {{'GPR_1_TH_APPLIED' |translate}} </th>
+													<th width="90px">{{'STUDENTS_ENROLLED' | translate}}</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="program in year.programmes">
+													<td> {{program.studentsEnrolled}} </td>
+													<td class="text-center"> {{program.studentsEnrolled}} </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<!-- END OF GPR 1 -->
+
+					<!-- GPR 2 -->
+					<table ng-table="gpr2Table" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 2">
+						<thead>
+							<tr>
+								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
+								<th>{{'STUDENTS_PER_PROGRAM' | translate}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="school in vm.tableData">
+								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
+								<td>
+									<div ng-repeat="year in school.years">
+										<p class="text-center"> {{'FOR_SCHOOL_YEAR' | translate}} {{year.schoolYear}} </p>
+										<table class="table table-bordered table-striped table-condensed table-hover">
+											<thead>
+												<tr>
+													<th> {{'PROGRAM' |translate}} </th>
+													<th width="90px">{{'STUDENTS_ENROLLED' | translate}}</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -99,25 +141,244 @@
 							</tr>
 						</tbody>
 					</table>
-					<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
-					<spinner ng-show="isLoading"></spinner>
+					<!-- END OF GPR 2 -->
+
+					<!-- GPR 3 -->
+					<table ng-table="gpr2Table" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 3">
+						<thead>
+							<tr>
+								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
+								<th>{{'STUDENTS_PER_PROGRAM' | translate}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="school in vm.tableData">
+								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
+								<!-- <td>
+									<div ng-repeat="year in school.years">
+										<p class="text-center"> {{'FOR_SCHOOL_YEAR' | translate}} {{year.schoolYear}} </p>
+										<table class="table table-bordered table-striped table-condensed table-hover">
+											<thead>
+												<tr>
+													<th> {{'PROGRAM' |translate}} </th>
+													<th width="90px">{{'STUDENTS_ENROLLED' | translate}}</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="program in year.programmes">
+													<td> {{program.programmeName}} </td>
+													<td class="text-center"> {{program.studentsEnrolled}} </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</td> -->
+							</tr>
+						</tbody>
+					</table>
+
+					<!-- END OF GPR 3 -->
+
+					<!-- GPR 4 -->
+					<table ng-table="gpr2Table" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 4">
+						<thead>
+							<tr>
+								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
+								<th>{{'STUDENTS_PER_PROGRAM' | translate}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="school in vm.tableData">
+								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
+								<!-- <td>
+									<div ng-repeat="year in school.years">
+										<p class="text-center"> {{'FOR_SCHOOL_YEAR' | translate}} {{year.schoolYear}} </p>
+										<table class="table table-bordered table-striped table-condensed table-hover">
+											<thead>
+												<tr>
+													<th> {{'PROGRAM' |translate}} </th>
+													<th width="90px">{{'STUDENTS_ENROLLED' | translate}}</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="program in year.programmes">
+													<td> {{program.programmeName}} </td>
+													<td class="text-center"> {{program.studentsEnrolled}} </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</td> -->
+							</tr>
+						</tbody>
+					</table>
+
+					<!-- END OF GPR 4 -->
+
+					<!-- GPR 5 -->
+					<table ng-table="gpr2Table" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 5">
+						<thead>
+							<tr>
+								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
+								<th>{{'STUDENTS_PER_PROGRAM' | translate}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="school in vm.tableData">
+								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
+								<!-- <td>
+									<div ng-repeat="year in school.years">
+										<p class="text-center"> {{'FOR_SCHOOL_YEAR' | translate}} {{year.schoolYear}} </p>
+										<table class="table table-bordered table-striped table-condensed table-hover">
+											<thead>
+												<tr>
+													<th> {{'PROGRAM' |translate}} </th>
+													<th width="90px">{{'STUDENTS_ENROLLED' | translate}}</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="program in year.programmes">
+													<td> {{program.programmeName}} </td>
+													<td class="text-center"> {{program.studentsEnrolled}} </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</td> -->
+							</tr>
+						</tbody>
+					</table>
+
+					<!-- END OF GPR 5 -->
+
+					<!-- GPR 6 -->
+					<table ng-table="gpr2Table" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 6">
+						<thead>
+							<tr>
+								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
+								<th>{{'STUDENTS_PER_PROGRAM' | translate}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="school in vm.tableData">
+								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
+								<!-- <td>
+									<div ng-repeat="year in school.years">
+										<p class="text-center"> {{'FOR_SCHOOL_YEAR' | translate}} {{year.schoolYear}} </p>
+										<table class="table table-bordered table-striped table-condensed table-hover">
+											<thead>
+												<tr>
+													<th> {{'PROGRAM' |translate}} </th>
+													<th width="90px">{{'STUDENTS_ENROLLED' | translate}}</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="program in year.programmes">
+													<td> {{program.programmeName}} </td>
+													<td class="text-center"> {{program.studentsEnrolled}} </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</td> -->
+							</tr>
+						</tbody>
+					</table>
+
+					<!-- END OF GPR 6 -->
+
+					<!-- GPR 7 -->
+					<table ng-table="gpr2Table" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 7">
+						<thead>
+							<tr>
+								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
+								<th>{{'STUDENTS_PER_PROGRAM' | translate}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="school in vm.tableData">
+								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
+								<!-- <td>
+									<div ng-repeat="year in school.years">
+										<p class="text-center"> {{'FOR_SCHOOL_YEAR' | translate}} {{year.schoolYear}} </p>
+										<table class="table table-bordered table-striped table-condensed table-hover">
+											<thead>
+												<tr>
+													<th> {{'PROGRAM' |translate}} </th>
+													<th width="90px">{{'STUDENTS_ENROLLED' | translate}}</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="program in year.programmes">
+													<td> {{program.programmeName}} </td>
+													<td class="text-center"> {{program.studentsEnrolled}} </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</td> -->
+							</tr>
+						</tbody>
+					</table>
+
+					<!-- END OF GPR 7 -->
+
+					<!-- GPR 8 -->
+					<table ng-table="gpr2Table" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 8">
+						<thead>
+							<tr>
+								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
+								<th>{{'STUDENTS_PER_PROGRAM' | translate}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="school in vm.tableData">
+								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
+								<!-- <td>
+									<div ng-repeat="year in school.years">
+										<p class="text-center"> {{'FOR_SCHOOL_YEAR' | translate}} {{year.schoolYear}} </p>
+										<table class="table table-bordered table-striped table-condensed table-hover">
+											<thead>
+												<tr>
+													<th> {{'PROGRAM' |translate}} </th>
+													<th width="90px">{{'STUDENTS_ENROLLED' | translate}}</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="program in year.programmes">
+													<td> {{program.programmeName}} </td>
+													<td class="text-center"> {{program.studentsEnrolled}} </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</td> -->
+							</tr>
+						</tbody>
+					</table>
+
+					<!-- END OF GPR 8 -->
+
+
+					<p ng-show="!vm.hasData && !vm.isLoading">{{'NO_INFO' | translate}}</p>
+					<spinner ng-show="vm.isLoading"></spinner>
 				</div>
 				
-				<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
+				<div class="tab-pane" ng-class="{'active': vm.tabbed_panel_active == 2}">
 					<div class="col-md-4">
-						<label>{{'GPR_1_TH_SCHOOL'|translate}}</label>
-						<ui-select ng-model="gpr2.selectedSchool" ng-change="chartGpr2()">
+						<label>{{'GPR_1_TH_SCHOOL'| translate}}</label>
+						<ui-select ng-model="vm.gpr2.selectedSchool" ng-change="vm.chartGpr2()">
 						<ui-select-match>
 						<span ng-bind="$select.selected.name"></span>
 						</ui-select-match>
-						<ui-select-choices repeat="item in (filter.institution | filter: $select.search)">
+						<ui-select-choices repeat="item in (vm.filter.institution | filter: $select.search)">
 						<span ng-bind="item.name"></span>
 						</ui-select-choices>
 						</ui-select>
 					</div>
 					<div class="col-md-8">
-						<canvas id="line" class="chart chart-line" chart-data="gpr2.data"
-						chart-labels="gpr2.labels" chart-legend="true" chart-series="gpr2.series" >
+						<canvas id="line" class="chart chart-line" chart-data="vm.gpr2.data"
+						chart-labels="vm.gpr2.labels" chart-legend="true" chart-series="vm.gpr2.series" >
 						</canvas>
 					</div>
 				</div>
