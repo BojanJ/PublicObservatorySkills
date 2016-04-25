@@ -110,13 +110,14 @@ angular.module('skillsApp')
 
         $scope.questions = QUESTIONS_MK.apiuniversity;
 
-        $scope.filter.question = $scope.questions[0];
+        // $scope.filter.question = $scope.questions[0];
 
 
 
         //
 
         $scope.getData = function(filter) {
+
             $scope.isLoading = true;
             //Селектираното прашање
             $scope.gpr = filter.question.gpr;
@@ -154,7 +155,10 @@ angular.module('skillsApp')
 
                 console.log(data);
 
+
+                //GPR9
                 if ($scope.gpr == 9) {
+
                     $scope.isLoading = false;
 
                     $scope.tableData9 = data.response;
@@ -167,19 +171,142 @@ angular.module('skillsApp')
                         $scope.isLoading = false;
                         $scope.hasData = true;
 
-                        $scope.gpr9Table = new ngTableParams({
-                            page: 1,
-                            count: 10
-                        }, {
-                            total: $scope.tableData9.length,
-                            getData: function($defer, params) {
-                                var filter = params.filter();
-                                var sorting = params.sorting();
-                                var count = params.count();
-                                var page = params.page();
-                                $defer.resolve($scope.tableData9.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-                            }
-                        });
+                    }
+
+                } else if ($scope.gpr == 10) {
+                    
+
+                    $scope.isLoading = false;
+
+                    $scope.tableData10 = data.response;
+
+                    if ($scope.tableData10 == undefined) {
+                        console.log("NO DATA");
+                        $scope.hasData = false;
+                    } else {
+
+                        $scope.isLoading = false;
+                        $scope.hasData = true;
+
+                    }
+
+
+                } else if ($scope.gpr == 11) {
+                    
+
+                    $scope.isLoading = false;
+
+                    $scope.tableData12 = data.response;
+
+                    if ($scope.tableData11 == undefined) {
+                        console.log("NO DATA");
+                        $scope.hasData = false;
+                    } else {
+
+                        $scope.isLoading = false;
+                        $scope.hasData = true;
+
+                    }
+
+                } else if ($scope.gpr == 12) {
+                    
+
+                    $scope.isLoading = false;
+
+                    $scope.tableData12 = data.response;
+
+                    if ($scope.tableData12 == undefined) {
+                        console.log("NO DATA");
+                        $scope.hasData = false;
+                    } else {
+
+                        $scope.isLoading = false;
+                        $scope.hasData = true;
+
+                    }
+
+                } else if ($scope.gpr == 13) {
+                    
+
+                    $scope.isLoading = false;
+
+                    $scope.tableData13 = data.response;
+
+                    if ($scope.tableData13 == undefined) {
+                        console.log("NO DATA");
+                        $scope.hasData = false;
+                    } else {
+
+                        $scope.isLoading = false;
+                        $scope.hasData = true;
+
+                    }
+
+                } else if ($scope.gpr == 14) {
+                    
+
+                    $scope.isLoading = false;
+
+                    $scope.tableData14 = data.response;
+
+                    if ($scope.tableData14 == undefined) {
+                        console.log("NO DATA");
+                        $scope.hasData = false;
+                    } else {
+
+                        $scope.isLoading = false;
+                        $scope.hasData = true;
+
+                    }
+
+                } else if ($scope.gpr == 15) {
+                    
+
+                    $scope.isLoading = false;
+
+                    $scope.tableData15 = data.response;
+
+                    if ($scope.tableData15 == undefined) {
+                        console.log("NO DATA");
+                        $scope.hasData = false;
+                    } else {
+
+                        $scope.isLoading = false;
+                        $scope.hasData = true;
+
+                    }
+
+                } else if ($scope.gpr == 16) {
+                    
+
+                    $scope.isLoading = false;
+
+                    $scope.tableData16 = data.response;
+
+                    if ($scope.tableData16 == undefined) {
+                        console.log("NO DATA");
+                        $scope.hasData = false;
+                    } else {
+
+                        $scope.isLoading = false;
+                        $scope.hasData = true;
+
+                    }
+
+                } else if ($scope.gpr == 17) {
+                    
+
+                    $scope.isLoading = false;
+
+                    $scope.tableData17 = data.response;
+
+                    if ($scope.tableData17 == undefined) {
+                        console.log("NO DATA");
+                        $scope.hasData = false;
+                    } else {
+
+                        $scope.isLoading = false;
+                        $scope.hasData = true;
 
                     }
 
@@ -194,6 +321,22 @@ angular.module('skillsApp')
 
 
             });
+
+
+            $scope.calcPercent = function(a, b) {
+                var res = (a * 100) / (b);
+                return Math.floor(res);
+            }
+
+            $scope.getGender = function(g) {
+            	if (g == "male"){
+            		return "Машки";
+            	} else {
+            		return "Женски";
+            	}
+            }
+
+
 
         }
 
