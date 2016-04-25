@@ -106,6 +106,16 @@ angular.module('skillsApp')
                 return output;
             },
 
+            getDistinctUniversities9: function(array) {
+                var result = [];
+                for(var i in array) {
+                    for(var j in array[i].faculty) {
+                        result.push(array[i].faculty[j]);
+                    }
+                }
+                return result;
+            },
+
             getYears: function() {
                 //NEED TO BE UPDATED
                 return [{
