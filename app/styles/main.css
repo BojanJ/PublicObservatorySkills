@@ -21,3 +21,11 @@
 {
 	line-height: 50px !important;
 }
+
+.ui-select-bootstrap > .ui-select-match > .btn {
+	border: solid 1px #c3c3c3;
+}
+
+.btn-group>.btn:first-child {
+	border: solid 1px #c3c3c3;
+}
