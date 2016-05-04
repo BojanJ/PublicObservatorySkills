@@ -49,6 +49,9 @@ angular.module('angularTranslateApp', ['pascalprecht.translate'])
       GPR_9_TH_FAX: 'Факултет',
       GPR_9_TH_YEAR: 'Академска година',
       GPR_9_TH_CYCLE: 'Циклус',
+      GPR_9_SELECT_UNI: 'Одберете универзитет...',
+      GPR_9_SELECT_FACULTY: 'Одберете факултет...',
+      GPR_9_SELECT_YEAR: 'Одберете академска година за факултетот...',
       GPR_10: '',
       GPR_11: 'Број на запишани студенти по факултет и по националност',
       GPR_12: '',
@@ -58,6 +61,9 @@ angular.module('angularTranslateApp', ['pascalprecht.translate'])
       GPR_16: '',
       GPR_17: 'Цена на студии',
 
+
+      LABEL_INFO: 'Основни информации',
+      WIDGET_UNIVERSITIES: 'Вк. факултети од кои се преземаат податоци',
     })
 
 
@@ -101,6 +107,9 @@ angular.module('angularTranslateApp', ['pascalprecht.translate'])
       GPR_9_TH_FAX: 'Faculty name',
       GPR_9_TH_YEAR: 'Accademic year',
       GPR_9_TH_CYCLE: 'Cycle',
+      GPR_9_SELECT_UNI: 'Select an university...',
+      GPR_9_SELECT_FACULTY: 'Select a faculty...',
+      GPR_9_SELECT_YEAR: 'Selected an accademic year for the faculty...',
       GPR_10: '',
       GPR_11: 'Enrolled students per faculty per Nationality',
       GPR_12: '',
@@ -109,6 +118,9 @@ angular.module('angularTranslateApp', ['pascalprecht.translate'])
       GPR_15: '',
       GPR_16: '',
       GPR_17: 'Costs of studies',
+
+      LABEL_INFO: 'General information',
+      WIDGET_UNIVERSITIES: '',
       
     })
     .translations('sq-SQ', {
@@ -151,6 +163,9 @@ angular.module('angularTranslateApp', ['pascalprecht.translate'])
       GPR_9_TH_FAX: '',
       GPR_9_TH_YEAR: '',
       GPR_9_TH_CYCLE: '',
+      GPR_9_SELECT_UNI: 'Select an university...',
+      GPR_9_SELECT_FACULTY: 'Select a faculty...',
+      GPR_9_SELECT_YEAR: 'Selected an accademic year for the faculty...',
       GPR_10: '',
       GPR_11: 'Enrolled students per faculty per Nationality',
       GPR_12: '',
@@ -159,6 +174,7 @@ angular.module('angularTranslateApp', ['pascalprecht.translate'])
       GPR_15: '',
       GPR_16: '',
       GPR_17: 'Costs of studies',
+      LABEL_INFO: 'General information',
 
     })
     .fallbackLanguage('mk-MK')
