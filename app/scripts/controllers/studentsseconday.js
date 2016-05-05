@@ -160,7 +160,7 @@ angular.module('skillsApp')
 
                     vm.gprTable = new ngTableParams({
                         page: 1,
-                        count: 10
+                        count: 5
                     }, {
                         total: vm.tableData.length,
                         getData: function($defer, params) {

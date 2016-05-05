@@ -69,7 +69,8 @@
 				<div class="tab-pane" ng-class="{'active': vm.tabbed_panel_active == 1}">
 
 				<!-- GPR 1 -->
-					<table ng-table="gprTable" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 1">
+				<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 1">
+					<table ng-table="vm.gprTable" class="table table-bordered table-striped table-condensed table-hover">
 						<thead>
 							<tr>
 								<th class="col-md-3">{{'GPR_1_TH_SCHOOL'| translate}}</th> 
@@ -79,7 +80,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="school in vm.tableData">
+							<tr ng-repeat="school in $data">
 								<td>{{school.schoolName}}</td>
 								<td>{{school.municipalityName}}</td>
 								<td>{{school.type}}</td>
@@ -108,11 +109,13 @@
 							</tr>
 						</tbody>
 					</table>
+				</div>
 
 					<!-- END OF GPR 1 -->
 
 					<!-- GPR 2 -->
-					<table ng-table="gprTable" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 2">
+				<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 2">	
+					<table ng-table="vm.gprTable" class="table table-bordered table-striped table-condensed table-hover">
 						<thead>
 							<tr>
 								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
@@ -121,7 +124,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="school in vm.tableData">
+							<tr ng-repeat="school in $data">
 								<td>{{school.schoolName}}</td>
 								<td>{{school.type}}</td>
 								<td>
@@ -146,10 +149,12 @@
 							</tr>
 						</tbody>
 					</table>
+				</div>	
 					<!-- END OF GPR 2 -->
 
 					<!-- GPR 3 -->
-					<table ng-table="gprTable" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 3">
+				<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 3">	
+					<table ng-table="vm.gprTable" class="table table-bordered table-striped table-condensed table-hover">
 						<thead>
 							<tr>
 								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
@@ -158,7 +163,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="school in vm.tableData">
+							<tr ng-repeat="school in $data">
 								<td class="col-md-4">{{school.schoolName}} <br> <small> {{school.municipalityName}} </small></td>
 								<td class="col-md-4">{{school.type}}</td>
 								<td>
@@ -183,11 +188,12 @@
 							</tr>
 						</tbody>
 					</table>
-
+				</div>
 					<!-- END OF GPR 3 -->
 
 					<!-- GPR 4 -->
-					<table ng-table="gprTable" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 4">
+				<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 4">	
+					<table ng-table="vm.gprTable" class="table table-bordered table-striped table-condensed table-hover">
 						<thead>
 							<tr>
 								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
@@ -195,7 +201,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="school in vm.tableData">
+							<tr ng-repeat="school in $data">
 								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
 								<td>
 									<div ng-repeat="year in school.years">
@@ -237,11 +243,13 @@
 							</tr>
 						</tbody>
 					</table>
+				</div>	
 
 					<!-- END OF GPR 4 -->
 
 					<!-- GPR 5 -->
-					<table ng-table="gprTable" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 5">
+				<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 5">	
+					<table ng-table="vm.gprTable" class="table table-bordered table-striped table-condensed table-hover">
 						<thead>
 							<tr>
 								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
@@ -250,7 +258,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="school in vm.tableData">
+							<tr ng-repeat="school in $data">
 								<td>{{school.schoolName}} <br></td>
 								<td>{{school.type}}</td>
 								<td>
@@ -274,11 +282,12 @@
 							</tr>
 						</tbody>
 					</table>
-
+				</div>
 					<!-- END OF GPR 5 -->
 
 					<!-- GPR 6 -->
-					<table ng-table="gprTable" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 6">
+				<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 6">	
+					<table ng-table="vm.gprTable" class="table table-bordered table-striped table-condensed table-hover">
 						<thead>
 							<tr>
 								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
@@ -286,7 +295,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="school in vm.tableData">
+							<tr ng-repeat="school in $data">
 								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
 								<td>
 									<div ng-repeat="year in school.years">
@@ -312,11 +321,12 @@
 							</tr>
 						</tbody>
 					</table>
-
+				</div>
 					<!-- END OF GPR 6 -->
 
 					<!-- GPR 7 -->
-					<table ng-table="gprTable" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 7">
+				<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 7">	
+					<table ng-table="vm.gprTable" class="table table-bordered table-striped table-condensed table-hover">
 						<thead>
 							<tr>
 								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
@@ -324,7 +334,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="school in vm.tableData">
+							<tr ng-repeat="school in $data">
 								<td>{{school.schoolName}}<br> <small>{{school.type}}</small></td>
 								<td>
 									<table class="table table-bordered table-striped table-condensed table-hover">
@@ -352,11 +362,12 @@
 							</tr>
 						</tbody>
 					</table>
-
+				</div>
 					<!-- END OF GPR 7 -->
 
 					<!-- GPR 8 -->
-					<table ng-table="gprTable" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 8">
+				<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 8">	
+					<table ng-table="vm.gprTable" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 8">
 						<thead>
 							<tr>
 								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
@@ -364,7 +375,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="school in vm.tableData">
+							<tr ng-repeat="school in $data">
 								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
 								<td>
 									<div ng-repeat="year in school.years">
@@ -395,7 +406,7 @@
 							</tr>
 						</tbody>
 					</table>
-
+				</div>
 					<!-- END OF GPR 8 -->
 
 
