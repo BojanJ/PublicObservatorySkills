@@ -255,8 +255,37 @@ angular.module('skillsApp')
             }
         };
 
+        //when user selects a school from the dropdown in the chart tab
+        vm.schoolSelection = function(schoolObj){
+            vm.chart.currentSchool = schoolObj;
+            vm.chart.SelectedYears = null;
+            vm.chart.SelectedProgram = null;
+            //vm.setYearsDropdown(vm.chart.currentSchoolId);
+        };
+        //when user selects a year from the dropdown in the chart tab
+        vm.yearSelection = function(yearObj){
+            vm.chart.currentYear = yearObj;
+            vm.chart.SelectedProgram = null;
+        };
+
         vm.getChart1 = function() {
             vm.chart.schools = null;
+        };
+
+        vm.drawChartQ1 = function(school){
+            vm.chart.labels = [];
+            vm.chart.data = [[]];
+            vm.chart.series=[$translate.instant("CHART_PERCENT_ENROLLED")];
+            for(var i=0; i < school.years.length; i++){
+                vm.chart.labels.push(school.years[i].schoolYear);
+
+                if(school.years[i].studentsApplied == null)
+                    vm.chart.data[0].push([100]);
+                else
+                    vm.chart.data[0].push(school.years[i].studentsApplied, school.years[i].studentsEnrolled);
+
+            }
+           
         };
 
         vm.getChart2 = function() {
@@ -286,20 +315,6 @@ angular.module('skillsApp')
             }
             
         };
-
-        //when user selects a school from the dropdown in the chart tab
-        vm.schoolSelection = function(schoolObj){
-            vm.chart.currentSchool = schoolObj;
-            vm.chart.SelectedYears = null;
-            vm.chart.SelectedProgram = null;
-            //vm.setYearsDropdown(vm.chart.currentSchoolId);
-        };
-        //when user selects a year from the dropdown in the chart tab
-        vm.yearSelection = function(yearObj){
-            vm.chart.currentYear = yearObj;
-            vm.chart.SelectedProgram = null;
-        };
-
         /*vm.getYearsPerSchool = function(data, school){
             var item = null;
             for (var i = 0; i < data.length; i++) {

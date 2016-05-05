@@ -407,6 +407,29 @@
 				<div class="tab-pane" ng-class="{'active': vm.tabbed_panel_active == 2}">
 
 
+				<!-- GPR 1 CHART -->
+					<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 1">
+						<div class="col-md-4">
+							<div class="row">
+								<label>{{'GPR_1_TH_SCHOOL'| translate}}</label>
+								<ui-select ng-model="vm.chart.schools" ng-change="vm.drawChartQ1(vm.chart.schools)">
+									<ui-select-match placeholder="Select School">
+										<span ng-bind="$select.selected.schoolName"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="item in (vm.tableData | filter: $select.search)">
+										<span ng-bind="item.schoolName"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-8">
+								<canvas id="line" class="chart-line" chart-data="vm.chart.data" chart-series="vm.chart.series" chart-labels="vm.chart.labels" chart-legend="true">
+								</canvas>
+							</div>
+						</div>	
+					</div>
+
 				<!-- GPR 2 CHART -->
 					<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 2">
 						<div class="col-md-4">
@@ -432,20 +455,9 @@
 									</ui-select-choices>
 								</ui-select>
 							</div>
-							<!-- <div class="row">
-								<label>{{'PROGRAM'| translate}}</label>
-								<ui-select ng-model="vm.chart.SelectedProgram" ng-change="vm.drawChartQ2(vm.chart.SelectedProgram)">
-									<ui-select-match placeholder="Select Program">
-										<span ng-bind="$select.selected.programmeName"></span>
-									</ui-select-match>
-									<ui-select-choices repeat="item in (vm.chart.SelectedYears.programmes | filter: $select.search)">
-										<span ng-bind="item.programmeName"></span>
-									</ui-select-choices>
-								</ui-select>
-							</div> -->
 						</div>
 						<div class="col-md-8">
-							<canvas id="chart5" class="chart chart-doughnut" chart-data="vm.chart.data" chart-labels="vm.chart.labels" chart-legend="true" >
+							<canvas id="chart2" class="chart chart-doughnut" chart-data="vm.chart.data" chart-labels="vm.chart.labels" chart-legend="true" >
 							</canvas>
 						</div>
 					</div>
