@@ -224,6 +224,7 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
     vm.setQuestion3Chart = function() {
         console.log(vm.questions.q3.selectedSchool);
         var school = vm.getSchoolById(vm.questions.q3.selectedSchool.id, vm.reportData.q3);
+        console.log(school);
         var labels = [];
         var data = [];
         for(var n in school.nationalities) {
