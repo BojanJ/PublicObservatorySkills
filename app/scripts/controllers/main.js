@@ -78,8 +78,8 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
             series: [$translate.instant("GPR_5_TH_MALE"), $translate.instant("GPR_5_TH_FEMALE")],
             data:[[],[]]
         },
-        activeTab: 6,
-        activeQuestion: 13
+        activeTab: 0,
+        activeQuestion: 1
     };
 
     $scope.$watch(
@@ -547,5 +547,5 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
         vm.questions.q13.data[0].push(0);
     };
 
-    vm.getQuestion13();
+    vm.getQuestion1();
 });
