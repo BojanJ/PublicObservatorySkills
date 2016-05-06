@@ -196,7 +196,7 @@ angular.module('skillsApp')
 
                     $scope.isLoading = false;
 
-                    $scope.tableData12 = data.response;
+                    $scope.tableData11 = data.response;
 
                     if ($scope.tableData11 == undefined) {
                         console.log("NO DATA");
