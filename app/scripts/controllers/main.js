@@ -12,7 +12,11 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
     vm.reportData = {
         q1: null,
         q3: null,
-        q5: null
+        q5: null,
+        q7: null,
+        q9: null,
+        q11: null,
+        q13: null
     };
     vm.questions = {
         q1: {
@@ -34,6 +38,41 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
             labels: [],
             series: [$translate.instant("GPR_5_TH_MALE"), $translate.instant("GPR_5_TH_FEMALE")],
             data:[[],[]]
+        },
+        q7: {
+            tab: 1,
+            selectedSchool: null,
+            schools: [],
+            labels: [],
+            series: [$translate.instant("GPR_7_TH_GRAD"), 
+            $translate.instant("GPR_7_TH_UNIENROLLED"),
+             $translate.instant("GPR_7_TH_EMPLOYED"),
+             $translate.instant("GPR_7_TH_UNEMPLOYED"), 
+             $translate.instant("GPR_7_TH_UNKNOWN")],
+            data:[[],[],[],[],[]]
+        },
+        q9: {
+            tab: 1,
+            selectedUni: null,
+            universities: [],
+            labels: [],
+            series: [$translate.instant("GPR_1_TH_APPLIED"), $translate.instant("GPR_1_TH_ENROLLED")],
+            data:[[],[]]
+        },
+        q11: {
+            tab: 1,
+            selectedUni: null,
+            universities: [],
+            labels: [],
+            series: [],
+            data:[]
+        },
+        q13: {
+            tab: 1,
+            selectedUni: null,
+            labels: [],
+            series: [],
+            data:[]
         },
         activeTab: 0,
         activeQuestion: 0
@@ -59,6 +98,24 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
                     } else vm.activeQuestion = 2;
                     break;
                 case 7:
+                    if (vm.reportData.q7 == null) {
+                        vm.getQuestion7();
+                    } else vm.activeQuestion = 3;
+                    break;
+                case 9:
+                    if (vm.reportData.q9 == null) {
+                        vm.getQuestion9();
+                    } else vm.activeQuestion = 4;
+                    break;
+                case 11:
+                    if (vm.reportData.q11 == null) {
+                        vm.getQuestion11();
+                    } else vm.activeQuestion = 5;
+                    break;
+                case 13:
+                    if (vm.reportData.q13 == null) {
+                        vm.getQuestion13();
+                    } else vm.activeQuestion = 6;
                     break;
                 default:
                     break;
@@ -246,5 +303,149 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
         }
     };
 
-    vm.getQuestion1();
+    vm.getQuestion7 = function() {
+        $http.get('http://sdis-upload.grabit.mk/apisecondary/gpr/7').
+        success(function(data, status, headers, config) {
+            vm.reportData.q7 = data = data.response;
+            vm.gpr7Table = new ngTableParams({
+                page: 1,
+                count: 10
+            }, {
+                total: data.length,
+                getData: function($defer, params) {
+                    var filter = params.filter();
+                    var sorting = params.sorting();
+                    var count = params.count();
+                    var page = params.page();
+                    $defer.resolve(data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                }
+            });
+            vm.setActiveQuestion = 3;
+        }).
+        error(function(data, status, headers, config) {
+
+        });
+    };
+
+    vm.setQuestion7Chart = function() {
+        console.log(vm.questions.q7.selectedSchool);
+        vm.questions.q7.labels = [""];
+        vm.questions.q7.data[0] = [0];
+        vm.questions.q7.data[1] = [0];
+        vm.questions.q7.data[2] = [0];
+        vm.questions.q7.data[3] = [0];
+        vm.questions.q7.data[4] = [0];
+        for(var i in vm.questions.q7.selectedSchool.years) {
+            var year = vm.questions.q7.selectedSchool.years[i];
+            vm.questions.q7.labels.push(year.schoolYear);
+            vm.questions.q7.data[0].push(year.GraduatesNumber);
+            vm.questions.q7.data[1].push(year.studentsEnrolled);
+            vm.questions.q7.data[2].push(year.EmployedNumber);
+            vm.questions.q7.data[3].push(year.UnemployedNumber);
+            vm.questions.q7.data[4].push(year.UnknownStatusNumber);
+        }
+        vm.questions.q7.labels.push("");
+        vm.questions.q7.data[0].push(0);
+        vm.questions.q7.data[1].push(0);
+        vm.questions.q7.data[2].push(0);
+        vm.questions.q7.data[3].push(0);
+        vm.questions.q7.data[4].push(0);
+    };
+
+    vm.getQuestion9 = function() {
+        $http.get('http://sdis-upload.grabit.mk/apiuniversity/gpr/9').
+        success(function(data, status, headers, config) {
+            vm.reportData.q9 = data = data.response[0].university;
+            var result = [];
+
+            vm.gpr9Table = new ngTableParams({
+                page: 1,
+                count: 10
+            }, {
+                total: vm.reportData.q9.length,
+                getData: function($defer, params) {
+                    var filter = params.filter();
+                    var sorting = params.sorting();
+                    var count = params.count();
+                    var page = params.page();
+                    $defer.resolve(data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                }
+            });
+
+            vm.questions.q9.universities = utility.getDistinctUniversities9(data);
+            vm.setActiveQuestion = 4;
+        }).
+        error(function(data, status, headers, config) {
+
+        });
+    };
+
+    vm.setQuestion9Chart = function() {
+        console.log(vm.questions.q9.selectedUni);
+        vm.questions.q9.labels = [];
+        vm.questions.q9.data[0] = [];
+        vm.questions.q9.data[1] = [];
+        for(var i in vm.questions.q9.selectedUni.years) {
+            var year = vm.questions.q9.selectedUni.years[i];
+            vm.questions.q9.labels.push(year.academicYear);
+            vm.questions.q9.data[0].push(year.studentsApplied);
+            vm.questions.q9.data[1].push(year.studentsEnrolled);
+        }
+    };
+
+    vm.getQuestion11 = function() {
+       $http.get('http://sdis-upload.grabit.mk/apiuniversity/gpr/11').
+       success(function(data, status, headers, config) {
+            vm.reportData.q11 = data = data.response[0].university;
+            var totalRowSpan = 1;
+
+            for(var i in vm.reportData.q11) {
+                var uniRowSpan = 1;
+                var uni = vm.reportData.q11[i];
+                for(var j in uni.faculty) {
+                    var fax = uni.faculty[j];
+                    var faxRowSpan = 1;
+                    for(var k in fax.years) {
+                        var year = fax.years[k];
+                        var yearRowSpan = 1;
+                        for(var m in year.cycles) {
+                            var cycle = year.cycles[m];
+                            yearRowSpan += cycle.nationality.length +1;
+                        }
+                        year.rowSpan = yearRowSpan;
+                        faxRowSpan += yearRowSpan + 1;
+                    }
+                    fax.rowSpan = faxRowSpan;
+                    uniRowSpan += faxRowSpan;
+                }
+                uni.rowSpan = uniRowSpan;
+            }
+
+            vm.gpr11Table = new ngTableParams({
+                page: 1,
+                count: 1
+            }, {
+                total: data.length,
+                getData: function($defer, params) {
+                    var filter = params.filter();
+                    var sorting = params.sorting();
+                    var count = params.count();
+                    var page = params.page();
+                    $defer.resolve(data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                }
+            });
+            vm.setActiveQuestion = 5; 
+            vm.questions.q11.universities = utility.getDistinctUniversities9(data);
+        }).
+        error(function(data, status, headers, config) {
+
+        });
+    };
+
+
+    vm.setQuestion11Chart = function() {
+        console.log(vm.questions.q11.selectedUni);
+    };
+
+    vm.getQuestion11();
 });
