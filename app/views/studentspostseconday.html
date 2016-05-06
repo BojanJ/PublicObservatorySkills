@@ -1,15 +1,875 @@
 <div class="row">
-	<!-- Default panel -->
-	<div class="panel panel-default">
+	<div class="col-md-12">
+		<!-- Default panel -->
+		<div class="panel panel-color panel-warning">
+			<div class="panel-heading">
+				{{'MENU_POST_SECONDARY' | translate}}
+			</div>
+			
+			<div class="panel-body">
+				
+				<div class="row">
+					<div class="col-md-4">
+						<label>Година</label>
+						<div ng-dropdown-multiselect="" search-filter="yearFilter" options="years" selected-model="filter.year" extra-settings="yearSettings" translation-texts="yearSettingsText"></div>
+					</div>
+					<div class="col-md-4">
+						<label>Општина</label>
+						<div ng-dropdown-multiselect="" search-filter="municipalityFilter" options="municipalities" selected-model="filter.municipality" extra-settings="municipalitySettings" events="municipalityEvents" translation-texts="municipalitySettingsText"></div>
+					</div>
+					<div class="col-md-4">
+						<label>Институции</label>
+						<div ng-dropdown-multiselect="" search-filter="institutionFilter" options="institutionsF" selected-model="filter.institution" extra-settings="institutionSettings" translation-texts="institutionSettingsText"></div>
+					</div>
+					<div class="col-md-12">
+						<label>Прашање</label>
+						<ui-select ng-model="filter.question" ng-change="getData(filter)" title="Изберете прашање...">
+						<ui-select-match placeholder="Изберете прашање...">{{$select.selected.name}}</ui-select-match>
+						<ui-select-choices repeat="item in questions | filter: $select.search">
+						<span ng-bind-html="item.name | highlight: $select.search"></span>
+						</ui-select-choices>
+						</ui-select>
+					</div>
+				</div>
+				<div class="row">
+					<!-- <button class="btn btn-success pull-right" ng-click="getData(filter);">Зачувај</button> -->
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		
+		<!-- Tabbed panel -->
+		<div ng-init="tabbed_panel_active = 1;" class="panel panel-color panel-red"><!-- Add class "collapsed" to minimize the panel -->
 		<div class="panel-heading">
-			{{'MENU_POST_SECONDARY' | translate}}
+			<h3 class="panel-title">Приказ на информации</h3>
+			
+			<div class="panel-options">
+				
+				<ul class="nav nav-tabs">
+					<li ng-class="{'active': tabbed_panel_active == 1}">
+						<a href="" ng-click="tabbed_panel_active = 1">Табелраен</a>
+					</li>
+					<li ng-class="{'active': tabbed_panel_active == 2}">
+						<a href="" ng-click="tabbed_panel_active = 2">Графички</a>
+					</li>
+				</ul>
+				
+			</div>
+		</div>
+		
+		<!-- Овој див ќе го менуваме во зависност од прашањето -->
+		<div class="panel-body" ng-if="gpr == 9">
+			
+			<div class="tab-content">
+				
+				<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 1}">
+					
+					<!-- Flat panel -->
+					<div id="panel" class="panel panel-color panel-warning" ng-repeat="item in tableData9"><!-- Add class "collapsed" to minimize the panel -->
+					<div class="">
+						<h3 class="panel-title">
+						<p class="bg-warning">{{item.university[0].universityName}}</p>
+						</h3>
+					</div>
+					
+					<div class="panel-body">
+						
+						<table class="table table-bordered table-striped table-condensed table-hover">
+							<thead>
+								<tr>
+									<th>Факултет</th>
+									<th>Запишани студенти</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="faculty in item.university[0].faculty">
+									<td>{{faculty.facultyName}} <br> <small>{{faculty.municipalityName}}</small> </td>
+									<td>
+										<table class="table table-striped table-condensed">
+											<thead>
+												<tr>
+													<th>Учебна Година</th>
+													<th>Аплицирале</th>
+													<th>Запишани</th>
+													<th>%</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="year in faculty.years">
+													<td>{{year.academicYear}}</td>
+													<td>{{year.studentsApplied}}</td>
+													<td>{{year.studentsEnrolled}}</td>
+													<td>{{calcPercent(year.studentsEnrolled,year.studentsApplied)}}%</td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						
+						
+					</div>
+				</div>
+				<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
+				<spinner ng-show="isLoading"></spinner>
+			</div>
+			
+			<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
+				
+				
+				<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
+				<spinner ng-show="isLoading"></spinner>
+			</div>
+			
+		</div>
+	</div>
+	<!-- ГПР10 -->
+	<div class="panel-body" ng-if="gpr == 10">
+		
+		<div class="tab-content">
+			
+			<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 1}">
+				
+				<!-- Flat panel -->
+				<div id="panel" class="panel panel-color panel-warning" ng-repeat="item in tableData10"><!-- Add class "collapsed" to minimize the panel -->
+				<div class="">
+					<h3 class="panel-title">
+					<p class="bg-warning">{{item.university[0].universityName}}</p>
+					</h3>
+				</div>
+				
+				<div class="panel-body">
+					
+					<table class="table table-bordered table-striped table-condensed table-hover">
+						<thead>
+							<tr>
+								<th>Факултет</th>
+								<th>Запишани студенти</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="faculty in item.university[0].faculty">
+								<td>{{faculty.facultyName}} <br> <small>{{faculty.municipalityName}}</small> </td>
+								<td>
+									<table class="table table-striped table-condensed">
+										<thead>
+											<tr>
+												<th>Учебна Година</th>
+												<th>Циклус на студии</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="year in faculty.years">
+												<td>{{year.academicYear}}</td>
+												<td>
+													<table class="table table-striped table-condensed" ng-repeat="item in year.cycles">
+														<thead>
+															<tr>
+																<th>
+																	{{item.programCycle}}
+																</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td>
+																	<table class="table table-striped table-condensed">
+																		<thead>
+																			<tr>
+																				<th>Програма</th>
+																				<th>Запишани</th>
+																			</tr>
+																		</thead>
+																		<tbody>
+																			<tr ng-repeat="program in item.programmes">
+																				<td>{{program.programmeName}}</td>
+																				<td>{{program.studentsEnrolled}}</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
+			<spinner ng-show="isLoading"></spinner>
+		</div>
+		
+		<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
+			
+			
+			<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
+			<spinner ng-show="isLoading"></spinner>
+		</div>
+		
+	</div>
+</div>
+<!-- gpr11 -->
+<div class="panel-body" ng-if="gpr == 11">
+	
+	<div class="tab-content">
+		
+		<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 1}">
+			
+			<!-- Flat panel -->
+			<div id="panel" class="panel panel-color panel-warning" ng-repeat="item in tableData11"><!-- Add class "collapsed" to minimize the panel -->
+			<div class="">
+				<h3 class="panel-title">
+				<p class="bg-warning">{{item.university[0].universityName}}</p>
+				</h3>
+			</div>
+			
+			<div class="panel-body">
+				
+				<table class="table table-bordered table-striped table-condensed table-hover">
+					<thead>
+						<tr>
+							<th>Факултет</th>
+							<th>Запишани студенти</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="faculty in item.university[0].faculty">
+							<td>{{faculty.facultyName}} <br> <small>{{faculty.municipalityName}}</small> </td>
+							<td>
+								<table class="table table-striped table-condensed">
+									<thead>
+										<tr>
+											<th>Учебна Година</th>
+											<th>Циклус на студии</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="year in faculty.years">
+											<td>{{year.schoolYear}}</td>
+											<td>
+												<table class="table table-striped table-condensed" ng-repeat="item in year.cycles">
+													<thead>
+														<tr>
+															<th>
+																{{item.programCycle}}
+															</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>
+																<table class="table table-striped table-condensed">
+																	<thead>
+																		<tr>
+																			<th>Националност</th>
+																			<th>Запишани</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<tr ng-repeat="nationality in item.nationality">
+																			<td>{{nationality.nationalityName}}</td>
+																			<td>{{nationality.studentsEnrolled}}</td>
+																		</tr>
+																	</tbody>
+																</table>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
+		<spinner ng-show="isLoading"></spinner>
+	</div>
+	
+	<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
+		
+		
+		<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
+		<spinner ng-show="isLoading"></spinner>
+	</div>
+	
+</div>
+</div>
+<!-- gpr12 -->
+<div class="panel-body" ng-if="gpr == 12">
+<div class="tab-content">
+	
+	<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 1}">
+		
+		<!-- Flat panel -->
+		<div id="panel" class="panel panel-color panel-warning" ng-repeat="item in tableData12"><!-- Add class "collapsed" to minimize the panel -->
+		<div class="">
+			<h3 class="panel-title">
+			<p class="bg-warning">{{item.university[0].universityName}}</p>
+			</h3>
 		</div>
 		
 		<div class="panel-body">
 			
-			<p>Folly words widow one downs few age every seven. If miss part by fact he park just shew. Discovered had get considered projection who favourable. Necessary up knowledge it tolerably.</p>
-			<p>Unwilling departure education is be dashwoods or an. Use off agreeable law unwilling sir deficient curiosity instantly. Easy mind life fact with see has bore ten. Parish any chatty can elinor direct for former. Up as meant widow equal an share least.</p>
-			
+			<table class="table table-bordered table-striped table-condensed table-hover">
+				<thead>
+					<tr>
+						<th>Факултет</th>
+						<th>Запишани студенти</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="faculty in item.university[0].faculty">
+						<td width="300px">{{faculty.facultyName}} <br> <small>{{faculty.municipalityName}}</small> </td>
+						<td>
+							<table class="table table-striped table-condensed">
+								<thead>
+									<tr>
+										<th>Учебна Година</th>
+										<th>Циклус на студии</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="year in faculty.years">
+										<td>{{year.academicYear}}</td>
+										<td>
+											<table class="table table-striped table-condensed" ng-repeat="item in year.cycles">
+												<thead>
+													<tr>
+														<th>
+															{{item.programCycle}}
+														</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>
+															<table class="table table-striped table-condensed">
+																<thead>
+																	<tr>
+																		<th>Програми</th>
+																		<th>Националност</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr ng-repeat="program in item.programmes">
+																		<td width="140px">{{program.programmeName}}</td>
+																		<td>
+																			<table class="table table-striped table-condensed">
+																				<thead>
+																					<tr>
+																						<th>Националност</th>
+																						<th>Запишани</th>
+																					</tr>
+																				</thead>
+																				<tbody>
+																					<tr ng-repeat="nationality in program.nationality">
+																						<td>{{nationality.nationalityName}}</td>
+																						<td>{{nationality.studentsEnrolled}}</td>
+																					</tr>
+																				</tbody>
+																			</table>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
+	<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
+	<spinner ng-show="isLoading"></spinner>
+</div>
+<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
+	
+	
+	<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
+	<spinner ng-show="isLoading"></spinner>
+</div>
+</div>
+</div>
+<!-- gpr13 -->
+<div class="panel-body" ng-if="gpr == 13">
+
+<div class="tab-content">
+
+<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 1}">
+	
+	<!-- Flat panel -->
+	<div id="panel" class="panel panel-color panel-warning" ng-repeat="item in tableData13"><!-- Add class "collapsed" to minimize the panel -->
+	<div class="">
+		<h3 class="panel-title">
+		<p class="bg-warning">{{item.university[0].universityName}}</p>
+		</h3>
+	</div>
+	
+	<div class="panel-body">
+		
+		<table class="table table-bordered table-striped table-condensed table-hover">
+			<thead>
+				<tr>
+					<th>Факултет</th>
+					<th>Запишани студенти</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="faculty in item.university[0].faculty">
+					<td>{{faculty.facultyName}} <br> <small>{{faculty.municipalityName}}</small> </td>
+					<td>
+						<table class="table table-striped table-condensed">
+							<thead>
+								<tr>
+									<th>Учебна Година</th>
+									<th>Циклус на студии</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="year in faculty.years">
+									<td>{{year.academicYear}}</td>
+									<td>
+										<table class="table table-striped table-condensed" ng-repeat="item in year.cycles">
+											<thead>
+												<tr>
+													<th>
+														{{item.programCycle}}
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>
+														<table class="table table-striped table-condensed">
+															<thead>
+																<tr>
+																	<th>Пол</th>
+																	<th>Запишани</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr ng-repeat="g in item.gender">
+																	<td>{{getGender(g.gender)}}</td>
+																	<td>{{g.studentsEnrolled}}</td>
+																</tr>
+															</tbody>
+														</table>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
+<spinner ng-show="isLoading"></spinner>
+</div>
+
+<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
+
+
+<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
+<spinner ng-show="isLoading"></spinner>
+</div>
+
+</div>
+</div>
+<!-- gpr14 -->
+<div class="panel-body" ng-if="gpr == 14">
+<div class="tab-content">
+
+<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 1}">
+
+<!-- Flat panel -->
+<div id="panel" class="panel panel-color panel-warning" ng-repeat="item in tableData14"><!-- Add class "collapsed" to minimize the panel -->
+<div class="">
+	<h3 class="panel-title">
+	<p class="bg-warning">{{item.university[0].universityName}}</p>
+	</h3>
+</div>
+
+<div class="panel-body">
+	
+	<table class="table table-bordered table-striped table-condensed table-hover">
+		<thead>
+			<tr>
+				<th>Факултет</th>
+				<th>Запишани студенти</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="faculty in item.university[0].faculty">
+				<td width="300px">{{faculty.facultyName}} <br> <small>{{faculty.municipalityName}}</small> </td>
+				<td>
+					<table class="table table-striped table-condensed">
+						<thead>
+							<tr>
+								<th>Учебна Година</th>
+								<th>Циклус на студии</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="year in faculty.years">
+								<td>{{year.academicYear}}</td>
+								<td>
+									<table class="table table-striped table-condensed" ng-repeat="item in year.cycles">
+										<thead>
+											<tr>
+												<th>
+													{{item.programCycle}}
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>
+													<table class="table table-striped table-condensed">
+														<thead>
+															<tr>
+																<th>Програми</th>
+																<th>Националност</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr ng-repeat="program in item.programmes">
+																<td width="170px">{{program.programmeName}}</td>
+																<td>
+																	<table class="table table-striped table-condensed">
+																		<thead>
+																			<tr>
+																				<th>Пол</th>
+																				<th>Запишани</th>
+																			</tr>
+																		</thead>
+																		<tbody>
+																			<tr ng-repeat="g in program.gender">
+																				<td>{{getGender(g.gender)}}</td>
+																				<td>{{g.studentsEnrolled}}</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</div>
+<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
+<spinner ng-show="isLoading"></spinner>
+</div>
+<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
+
+
+<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
+<spinner ng-show="isLoading"></spinner>
+</div>
+</div>
+</div>
+<!-- gpr15 -->
+<div class="panel-body" ng-if="gpr == 15">
+
+<div class="tab-content">
+
+<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 1}">
+
+<!-- Flat panel -->
+<div id="panel" class="panel panel-color panel-warning" ng-repeat="item in tableData15"><!-- Add class "collapsed" to minimize the panel -->
+<div class="">
+<h3 class="panel-title">
+<p class="bg-warning">{{item.university[0].universityName}}</p>
+</h3>
+</div>
+
+<div class="panel-body">
+
+<table class="table table-bordered table-striped table-condensed table-hover">
+	<thead>
+		<tr>
+			<th>Факултет</th>
+			<th>Запишани студенти</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="faculty in item.university[0].faculty">
+			<td>{{faculty.facultyName}} <br> <small>{{faculty.municipalityName}}</small> </td>
+			<td>
+				<table class="table table-striped table-condensed">
+					<thead>
+						<tr>
+							<th width="80px">Учебна Година</th>
+							<th>Циклус на студии</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="year in faculty.years">
+							<td>{{year.academicYear}}</td>
+							<td>
+								<table class="table table-striped table-condensed" ng-repeat="item in year.cycles">
+									<thead>
+										<tr>
+											<th width="80px;"> Циклус на студии </th>
+											<th> Дипломирани </th>
+											<th> Магистрирани </th>
+											<th> Вработени </th>
+											<th> Невработени </th>
+											<th> Непознато </th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td> {{item.programCycle}} </td>
+											<td> {{item.GraduatesNumber}} </td>
+											<td> {{item.MastersOrPhdEnrolled}} </td>
+											<td> {{item.EmployedNumeber}} </td>
+											<td> {{item.UnemployedNumber}} </td>
+											<td> {{item.UnknownStatusNumber}} </td>
+										</tr>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+</div>
+<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
+<spinner ng-show="isLoading"></spinner>
+</div>
+
+<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
+
+
+<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
+<spinner ng-show="isLoading"></spinner>
+</div>
+
+</div>
+</div>
+
+
+
+<!-- gpr16 -->
+<div class="panel-body" ng-if="gpr == 16">
+
+<div class="tab-content">
+
+<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 1}">
+
+<!-- Flat panel -->
+<div id="panel" class="panel panel-color panel-warning" ng-repeat="item in tableData16"><!-- Add class "collapsed" to minimize the panel -->
+<div class="">
+<h3 class="panel-title">
+<p class="bg-warning">{{item.university[0].universityName}}</p>
+</h3>
+</div>
+
+<div class="panel-body">
+
+<table class="table table-bordered table-striped table-condensed table-hover">
+<thead>
+	<tr>
+		<th>Факултет</th>
+		<th>Запишани студенти</th>
+	</tr>
+</thead>
+<tbody>
+	<tr ng-repeat="faculty in item.university[0].faculty">
+		<td>{{faculty.facultyName}} <br> <small>{{faculty.municipalityName}}</small> </td>
+		<td>
+			<table class="table table-striped table-condensed">
+				<thead>
+					<tr>
+						<th width="80px">Учебна Година</th>
+						<th>Циклус на студии</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="year in faculty.years">
+						<td>{{year.academicYear}}</td>
+						<td>
+							<div ng-repeat="item in year.cycles">
+								<p>{{item.programCycle}}</p>
+								<table class="table table-striped table-condensed">
+									<thead>
+										<tr>
+											<th width="80px;"> Програма </th>
+											<th> Дипломирани </th>
+											<th> Магистрирани </th>
+											<th> Вработени </th>
+											<th> Невработени </th>
+											<th> Непознато </th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="p in item.programmes">
+											<td> {{p.programmeName}} </td>
+											<td> {{p.GraduatesNumber}} </td>
+											<td> {{p.MastersOrPhdEnrolled}} </td>
+											<td> {{p.EmployedNumeber}} </td>
+											<td> {{p.UnemployedNumber}} </td>
+											<td> {{p.UnknownStatusNumber}} </td>
+										</tr>
+									</tbody>
+								</table>
+								
+							</div>
+							
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</td>
+	</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
+<spinner ng-show="isLoading"></spinner>
+</div>
+
+<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
+
+
+<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
+<spinner ng-show="isLoading"></spinner>
+</div>
+
+</div>
+</div>
+
+<!-- gpr17 -->
+<div class="panel-body" ng-if="gpr == 17">
+
+<div class="tab-content">
+
+<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 1}">
+
+<!-- Flat panel -->
+<div id="panel" class="panel panel-color panel-warning" ng-repeat="item in tableData17"><!-- Add class "collapsed" to minimize the panel -->
+<div class="">
+<h3 class="panel-title">
+<p class="bg-warning">{{item.university[0].universityName}}</p>
+</h3>
+</div>
+
+<div class="panel-body">
+
+<table class="table table-bordered table-striped table-condensed table-hover">
+<thead>
+	<tr>
+		<th>Факултет</th>
+		<th>Запишани студенти</th>
+	</tr>
+</thead>
+<tbody>
+	<tr ng-repeat="faculty in item.university[0].faculty">
+		<td>{{faculty.facultyName}} <br> <small>{{faculty.municipalityName}}</small> </td>
+		<td>
+			<table class="table table-striped table-condensed">
+				<thead>
+					<tr>
+						<th width="80px">Учебна Година</th>
+						<th>Циклус на студии</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="year in faculty.years">
+						<td>{{year.academicYear}}</td>
+						<td>
+							<div ng-repeat="item in year.cycles">
+								<p>{{item.programCycle}}</p>
+								<table class="table table-striped table-condensed">
+									<thead>
+										<tr>
+											<th> Програма </th>
+											<th> Државна квота</th>
+											<th> Приватна квота</th>
+											<th> Слободни места </th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="p in item.programmes">
+											<td> {{p.programmeName}} </td>
+											<td> {{p.StateQuoteCost}} </td>
+											<td> {{p.PrivateQuoteCost}} </td>
+											<td> {{p.AvailableSpots}} </td>
+										</tr>
+									</tbody>
+								</table>
+								
+							</div>
+							
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</td>
+	</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
+<spinner ng-show="isLoading"></spinner>
+</div>
+
+<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
+
+
+<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
+<spinner ng-show="isLoading"></spinner>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
 </div>
