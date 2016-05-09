@@ -73,6 +73,8 @@ angular.module('angularTranslateApp', ['pascalprecht.translate'])
       WIDGET_UNIVERSITIES: 'Вк. факултети од кои се преземаат податоци',
       // secondary education
 
+      FILTER_YEAR: 'Година',
+      FILTER_MUNICIPALITY: 'Општина',
       FILTER_INSTITUTION: 'Институции',
       FILTER_QUESTIONS: 'Прашање',
       SELECT_QUESTION: 'Изберете прашање...',
@@ -150,6 +152,8 @@ angular.module('angularTranslateApp', ['pascalprecht.translate'])
       WIDGET_UNIVERSITIES: '',
       //secondary education
 
+      FILTER_YEAR: 'Year',
+      FILTER_MUNICIPALITY: 'Municipality',
       FILTER_INSTITUTION: 'Institutions',
       FILTER_QUESTIONS: 'Question',
       SELECT_QUESTION: 'Choose question...',
@@ -223,7 +227,8 @@ angular.module('angularTranslateApp', ['pascalprecht.translate'])
       LABEL_INFO: 'General information',
 
       //secondary education
-
+      FILTER_YEAR: 'Year',
+      FILTER_MUNICIPALITY: 'Municipality',
       FILTER_INSTITUTION: 'Institutions',
       FILTER_QUESTIONS: 'Question',
       SELECT_QUESTION: 'Choose a question...',

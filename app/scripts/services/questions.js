@@ -128,35 +128,35 @@ angular.module('skillsApp')
         "apiuniversity": [{
             "gpr": "9",
             "url": "/apiuniversity/gpr/9",
-            "name": "% of enrolled students per faculty"
+            "name": "Процент на запишани студенти по факултет"
         }, {
             "gpr": "10",
             "url": "/apiuniversity/gpr/10",
-            "name": "% of enrolled students per Program"
+            "name": "Процент на запишани студенти по програма"
         }, {
             "gpr": "11",
             "url": "/apiuniversity/gpr/11",
-            "name": "Enrolled students per faculty per Nationality"
+            "name": "Број на запишани студенти по факултет по националност"
         }, {
             "gpr": "12",
             "url": "/apiuniversity/gpr/12",
-            "name": "Enrolled students per Program per Nationality"
+            "name": "Број на запишани студенти по програма по националност"
         }, {
             "gpr": "13",
             "url": "/apiuniversity/gpr/13",
-            "name": "Enrolled students per faculty per Gender"
+            "name": "Број на запишани студенти по факултет по пол"
         }, {
             "gpr": "14",
             "url": "/apiuniversity/gpr/14",
-            "name": "Enrolled students per Program per Gender"
+            "name": "Број на запишани студенти по програма по пол"
         }, {
             "gpr": "15",
             "url": "/apiuniversity/gpr/15",
-            "name": "University enrolled/employed/unemployed/not registered per school"
+            "name": "Запишани на универзитет/вработени/невработени/нерегистрирани по училиште"
         }, {
             "gpr": "16",
             "url": "/apiuniversity/gpr/16",
-            "name": "University enrolled/employed/unemployed/not registered per school per Program"
+            "name": "Запишани на универзитет/вработени/невработени/нерегистрирани по училиште по програма"
         }, {
             "gpr": "17",
             "url": "/apiuniversity/gpr/17",
