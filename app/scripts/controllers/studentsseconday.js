@@ -8,7 +8,7 @@
  * Controller of the skillsApp
  */
 angular.module('skillsApp')
-    .controller('StudentssecondayCtrl', function($scope, $http, utility, $filter, QUESTIONS_MK, ngTableParams,$translate) {
+    .controller('StudentssecondayCtrl', function($scope, $http, utility, $filter, QUESTIONS_MK, QUESTIONS_EN, ngTableParams,$translate) {
         var vm = this;
 
         vm.hasData = false;
@@ -105,7 +105,14 @@ angular.module('skillsApp')
 
         //Прашања
 
-        vm.questions = QUESTIONS_MK.apisecondary;
+        if($translate.use() == 'mk-MK'){
+            vm.questions = QUESTIONS_MK.apisecondary;
+        } else if ($translate.use() == 'en-US') {
+            vm.questions = QUESTIONS_EN.apisecondary;        
+        } else {
+            vm.questions = QUESTIONS_MK.apisecondary;            
+        }
+        
         vm.filter.question = vm.questions[0];
 
         vm.getData = function(filters) {
