@@ -85,6 +85,7 @@ angular.module('angularTranslateApp', ['pascalprecht.translate'])
       STUDENTS_PER_PROGRAM: 'Ученици по програм',
       PROGRAM: 'Програма',
       NO_INFO: 'Нема информации за одбраните параметри',
+      CHART_PERCENT_ENROLLED: 'Процент на запишани',
     })
 
 
@@ -163,6 +164,7 @@ angular.module('angularTranslateApp', ['pascalprecht.translate'])
       STUDENTS_ENROLLED: 'Students enrolled',
       PROGRAM: 'Program',
       NO_INFO: 'There is no data for the selected parameters',
+      CHART_PERCENT_ENROLLED: 'Percent enrolled',
     })
     .translations('sq-SQ', {
       
@@ -238,6 +240,7 @@ angular.module('angularTranslateApp', ['pascalprecht.translate'])
       STUDENTS_ENROLED: 'Students enrolled',
       PROGRAM: 'Program',
       NO_INFO: 'There is no data for the selected parameters',
+      CHART_PERCENT_ENROLLED: 'Percent enrolled',
 
     })
     .fallbackLanguage('mk-MK')

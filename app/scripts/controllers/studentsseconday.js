@@ -9,12 +9,25 @@
  */
 angular.module('skillsApp')
     .controller('StudentssecondayCtrl', function($scope, $http, utility, $filter, QUESTIONS_MK, QUESTIONS_EN, ngTableParams,$translate) {
+        
         var vm = this;
 
         vm.hasData = false;
         vm.isLoading = false;
         vm.tableData = null;
 
+        //Chart models
+        vm.chart = {
+            currentQuestion : null,
+            currentSchool : null,
+            currentSchoolId : '',
+            currentYear: null,
+            labels: [],
+            data: [],
+            series : [],
+            schools :null,
+            years: []
+        };
         vm.filter = {};
 
         //Институции
@@ -153,9 +166,9 @@ angular.module('skillsApp')
 
                     vm.hasData = true;
 
-                    vm.gpr2Table = new ngTableParams({
+                    vm.gprTable = new ngTableParams({
                         page: 1,
-                        count: 10
+                        count: 5
                     }, {
                         total: vm.tableData.length,
                         getData: function($defer, params) {
@@ -178,31 +191,31 @@ angular.module('skillsApp')
 
         }
 
+        //za charts od boki - moze ne treba ovoj del
+        vm.gpr = [];
+        vm.gpr.selectedSchool = vm.filter.institution[0];
+        vm.chartgpr = function() {
 
-        vm.gpr2 = [];
-        vm.gpr2.selectedSchool = vm.filter.institution[0];
-        vm.chartGpr2 = function() {
-
-            vm.gpr2.labels = [];
-            vm.gpr2.series = [];
-            vm.gpr2.data = [];
+            vm.gpr.labels = [];
+            vm.gpr.series = [];
+            vm.gpr.data = [];
 
             for (var i = vm.tableData.length - 1; i >= 0; i--) {
-                if (vm.tableData[i].schoolId == vm.gpr2.selectedSchool.id) {
-                    // vm.gpr2.data.push()
+                if (vm.tableData[i].schoolId == vm.gpr.selectedSchool.id) {
+                    // vm.gpr.data.push()
 
                     for (var j = vm.tableData[i].years.length - 1; j >= 0; j--) {
 
-                        vm.gpr2.series.push(vm.tableData[i].years[j].schoolYear);
+                        vm.gpr.series.push(vm.tableData[i].years[j].schoolYear);
                         var tmp = [];
 
                         for (var k = vm.tableData[i].years[j].programmes.length - 1; k >= 0; k--) {
 
-                            vm.gpr2.labels.push(vm.tableData[i].years[j].programmes[k].programmeName);
+                            vm.gpr.labels.push(vm.tableData[i].years[j].programmes[k].programmeName);
                             tmp.push(vm.tableData[i].years[j].programmes[k].studentsEnrolled);
 
                         }
-                        vm.gpr2.data.push(tmp);
+                        vm.gpr.data.push(tmp);
 
                     }
 
@@ -212,8 +225,195 @@ angular.module('skillsApp')
         }
 
         vm.calcPercent = function(applied,enrolled){
-            var percent = (100 * enrolled)/applied;
-            return percent;
+            return (100 * enrolled)/applied;
         };
 
+
+        //charts
+
+        //function for getting chart
+        vm.getChart = function() {
+            switch(vm.filter.question) {
+                case 1:
+                    vm.getChart1();
+                    break;
+                case 2:
+                    vm.getChart2();
+                    break;
+                case 3:
+                    vm.getChart3();
+                    break;
+                case 4:
+                    vm.getChart4();
+                    break;
+                case 5:
+                    vm.getChart5();
+                    break;
+                case 6:
+                    vm.getChart6();
+                    break;
+                case 7:
+                    vm.getChart7();
+                    break;
+                case 8:
+                    vm.getChart8();
+                    break;
+                default:
+                    break;
+            }
+        };
+
+        //when user selects a school from the dropdown in the chart tab
+        vm.schoolSelection = function(schoolObj){
+            vm.chart.currentSchool = schoolObj;
+            vm.chart.SelectedYears = null;
+            vm.chart.SelectedProgram = null;
+            //vm.setYearsDropdown(vm.chart.currentSchoolId);
+        };
+        //when user selects a year from the dropdown in the chart tab
+        vm.yearSelection = function(yearObj){
+            vm.chart.currentYear = yearObj;
+            vm.chart.SelectedProgram = null;
+        };
+
+        vm.getChart1 = function() {
+            vm.chart.schools = null;
+        };
+
+        vm.drawChartQ1 = function(school){
+            vm.chart.labels = [];
+            vm.chart.data = [[]];
+            vm.chart.series=[$translate.instant("CHART_PERCENT_ENROLLED")];
+            for(var i=0; i < school.years.length; i++){
+                vm.chart.labels.push(school.years[i].schoolYear);
+
+                if(school.years[i].studentsApplied == null)
+                    vm.chart.data[0].push([100]);
+                else
+                    vm.chart.data[0].push(school.years[i].studentsApplied, school.years[i].studentsEnrolled);
+
+            }
+           
+        };
+
+        vm.getChart2 = function() {
+            vm.chart.schools = null;
+        };
+
+        vm.drawChartQ2 = function(schoolYear){
+            vm.chart.labels = [];
+            vm.chart.data = [];
+            for (var i = 0; i < schoolYear.programmes.length; i++) {
+                vm.chart.labels.push(schoolYear.programmes[i].programmeName);
+                vm.chart.data.push(schoolYear.programmes[i].studentsEnrolled);
+            }
+            
+        };
+
+        vm.getChart3 = function() {
+            vm.chart.schools = null;
+        };
+
+        vm.drawChartQ3 = function(schoolYear){
+            vm.chart.labels = [];
+            vm.chart.data = [];
+            for (var i = 0; i < schoolYear.nationality.length; i++) {
+                vm.chart.labels.push(schoolYear.nationality[i].nationalityName);
+                vm.chart.data.push(schoolYear.nationality[i].studentsEnrolled);
+            }
+            
+        };
+        /*vm.getYearsPerSchool = function(data, school){
+            var item = null;
+            for (var i = 0; i < data.length; i++) {
+                if(data[i].schoolName == school){
+                    item = data[i];
+                    break;
+                }
+            }
+            return item;
+        };*/
+        vm.getChart4 = function() {
+            vm.chart.schools = null;
+        };
+
+        vm.drawChartQ4 = function(program){
+            vm.chart.labels = [];
+            vm.chart.data = [];
+            for (var i = 0; i < program.nationality.length; i++) {
+                vm.chart.labels.push(program.nationality[i].nationalityName);
+                vm.chart.data.push(program.nationality[i].studentsEnrolled);
+            }
+        };
+
+        vm.getChart5 = function() {
+            vm.chart.schools = null;
+        };
+
+        vm.drawChartQ5 = function(schoolYear){
+            vm.chart.data = [];
+            vm.chart.labels = [$translate.instant("GPR_5_TH_FEMALE"), $translate.instant("GPR_5_TH_MALE")];
+            vm.chart.series = [$translate.instant("GPR_5_TH_FEMALE"), $translate.instant("GPR_5_TH_MALE")];
+            if (schoolYear.gender.length < 2){
+                if(schoolYear.gender[0].gender == 'male'){
+                    vm.chart.data = [0, schoolYear.gender[0].studentsEnrolled];
+                }
+                else {
+                    vm.chart.data = [schoolYear.gender[0].studentsEnrolled, 0];
+                }
+
+            }
+        };
+
+        vm.getChart6 = function() {
+            vm.chart.schools = null;
+            vm.chart.data = [];
+        };
+
+        vm.drawChartQ6 = function(program){
+            vm.chart.data = [];
+            vm.chart.labels = [$translate.instant("GPR_5_TH_FEMALE"), $translate.instant("GPR_5_TH_MALE")];
+            vm.chart.series = [$translate.instant("GPR_5_TH_FEMALE"), $translate.instant("GPR_5_TH_MALE")];
+            if (program.gender.length < 2){
+                if(program.gender[0].gender == 'male'){
+                    vm.chart.data = [0, program.gender[0].studentsEnrolled];
+                }
+                else {
+                    vm.chart.data = [program.gender[0].studentsEnrolled, 0];
+                }
+
+            }
+            else {
+                vm.chart.data = [program.gender[0].studentsEnrolled, program.gender[1].studentsEnrolled];
+            }
+        };
+
+
+        vm.getChart7 = function() {
+            vm.chart.schools = null;
+            vm.chart.data = [];
+        };
+
+        vm.drawChartQ7 = function(schoolYear){
+            vm.chart.data = [ schoolYear.GraduatesNumber, schoolYear.studentsEnrolled , schoolYear.EmployedNumber, 
+            schoolYear.UnemployedNumber, schoolYear.UnknownStatusNumber];
+            vm.chart.series = vm.chart.labels = [$translate.instant("GPR_7_GRADUATED"), $translate.instant("GPR_7_ENROLLED"),$translate.instant("GPR_7_EMPLOYED"),
+             $translate.instant("GPR_7_UNEMPLOYED"), $translate.instant("GPR_7_UNKNOWN")];
+
+        };
+
+
+        vm.getChart8 = function() {
+            vm.chart.data = [];
+            vm.chart.schools = null;
+        };
+
+
+        vm.drawChartQ8 = function(program){
+            vm.chart.data = [ program.GraduatesNumber, program.studentsEnrolled , program.EmployedNumber, 
+            program.UnemployedNumber, program.UnknownStatusNumber];
+            vm.chart.series = vm.chart.labels = [$translate.instant("GPR_7_GRADUATED"), $translate.instant("GPR_7_ENROLLED"),$translate.instant("GPR_7_EMPLOYED"),
+             $translate.instant("GPR_7_UNEMPLOYED"), $translate.instant("GPR_7_UNKNOWN")];
+
+        };
     });
