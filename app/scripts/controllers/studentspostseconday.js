@@ -164,7 +164,7 @@ angular.module('skillsApp')
             $http.get(url).
             success(function(data, status, headers, config) {
 
-                console.log('ova',data);
+                console.log('ova', data);
 
 
                 //GPR9
@@ -178,6 +178,18 @@ angular.module('skillsApp')
                         console.log("NO DATA");
                         $scope.hasData = false;
                     } else {
+
+                        $scope.graphInstitution = [];
+                        for (var i = $scope.tableData9.length - 1; i >= 0; i--) {
+
+                            for (var j = $scope.tableData9[i].university.length - 1; j >= 0; j--) {
+                                $scope.graphInstitution = $scope.graphInstitution.concat($scope.tableData9[i].university[j].faculty);
+                            }
+
+                        }
+
+
+                        console.log("final",$scope.graphInstitution, "da");
 
                         $scope.isLoading = false;
                         $scope.hasData = true;
@@ -337,9 +349,37 @@ angular.module('skillsApp')
             $scope.chart = {
                 "institution": ""
             };
-            $scope.setChart = function(gpr){
+            $scope.setChart = function(gpr) {
                 console.log(gpr);
                 console.log($scope.chart.institution);
+
+                if (gpr == '9') {
+
+                    $scope.chart.labels = [];
+                    $scope.chart.data = [
+                        []
+                    ];
+                    $scope.chart.series = [$translate.instant("CHART_PERCENT_ENROLLED")];
+
+                    //
+
+                    for (var i = 0; i < $scope.chart.institution.years.length; i++) {
+
+                            $scope.chart.labels.push($scope.chart.institution.years[i].academicYear);
+
+                        if ($scope.chart.institution.years[i].studentsApplied == null)
+                            $scope.chart.data[0].push([0]);
+                        else
+                            $scope.chart.data[0].push($scope.chart.institution.years[i].studentsApplied, $scope.chart.institution.years[i].studentsEnrolled);
+
+                        
+                    }
+
+
+                console.log($scope.chart);
+
+                }
+
             }
 
 

@@ -122,18 +122,23 @@
 			<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
 				
 				<div class="row">
-
-						<div class="col-md-4">
-							<label>{{'FILTER_INSTITUTION' | translate}}</label>
-							<ui-select ng-model="chart.institution" ng-change="setChart(9)">
-							<ui-select-match>
-							<span ng-bind="$select.selected.name"></span>
-							</ui-select-match>
-							<ui-select-choices repeat="item in (institutions | filter: $select.search) track by item.id">
-							<span ng-bind="item.name"></span>
-							</ui-select-choices>
-							</ui-select>
-						</div>
+					<div class="col-md-4">
+						<label>{{'FILTER_INSTITUTION' | translate}}</label>
+						<ui-select ng-model="chart.institution" ng-change="setChart(9)">
+						<ui-select-match>
+						<span ng-bind="$select.selected.facultyName"></span>
+						</ui-select-match>
+						<ui-select-choices repeat="item in (graphInstitution | filter: $select.search) track by item.facultyName">
+						<span ng-bind="item.facultyName"></span>
+						</ui-select-choices>
+						</ui-select>
+					</div>
+					<div class="col-md-8">
+						<canvas id="line" class="chart chart-line" chart-data="chart.data"
+						chart-labels="chart.labels" chart-legend="true" chart-series="chart.series"
+						chart-click="onClick" >
+						</canvas>
+					</div>
 				</div>
 				
 				<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
