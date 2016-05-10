@@ -10,21 +10,21 @@
 				
 				<div class="row">
 					<div class="col-md-4">
-						<label>Година</label>
+						<label>{{'FILTER_YEAR	' | translate}}</label>
 						<div ng-dropdown-multiselect="" search-filter="yearFilter" options="years" selected-model="filter.year" extra-settings="yearSettings" translation-texts="yearSettingsText"></div>
 					</div>
 					<div class="col-md-4">
-						<label>Општина</label>
+						<label>{{'FILTER_MUNICIPALITY' | translate}}</label>
 						<div ng-dropdown-multiselect="" search-filter="municipalityFilter" options="municipalities" selected-model="filter.municipality" extra-settings="municipalitySettings" events="municipalityEvents" translation-texts="municipalitySettingsText"></div>
 					</div>
 					<div class="col-md-4">
-						<label>Институции</label>
+						<label>{{'FILTER_INSTITUTION' | translate}}</label>
 						<div ng-dropdown-multiselect="" search-filter="institutionFilter" options="institutionsF" selected-model="filter.institution" extra-settings="institutionSettings" translation-texts="institutionSettingsText"></div>
 					</div>
 					<div class="col-md-12">
-						<label>Прашање</label>
-						<ui-select ng-model="filter.question" ng-change="getData(filter)" title="Изберете прашање...">
-						<ui-select-match placeholder="Изберете прашање...">{{$select.selected.name}}</ui-select-match>
+						<label>{{'FILTER_QUESTIONS' | translate}}</label>
+						<ui-select ng-model="filter.question" ng-click="getQuestions()"  ng-change="getData(filter)" title="Изберете прашање...">
+						<ui-select-match placeholder="{{'SELECT_QUESTION' | translate}}">{{$select.selected.name}}</ui-select-match>
 						<ui-select-choices repeat="item in questions | filter: $select.search">
 						<span ng-bind-html="item.name | highlight: $select.search"></span>
 						</ui-select-choices>
@@ -121,6 +121,25 @@
 			
 			<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
 				
+				<div class="row">
+					<div class="col-md-4">
+						<label>{{'FILTER_INSTITUTION' | translate}}</label>
+						<ui-select ng-model="chart.institution" ng-change="setChart(9)">
+						<ui-select-match>
+						<span ng-bind="$select.selected.facultyName"></span>
+						</ui-select-match>
+						<ui-select-choices repeat="item in (graphInstitution | filter: $select.search) track by item.facultyName">
+						<span ng-bind="item.facultyName"></span>
+						</ui-select-choices>
+						</ui-select>
+					</div>
+					<div class="col-md-8">
+						<canvas id="line" class="chart chart-line" chart-data="chart.data"
+						chart-labels="chart.labels" chart-legend="true" chart-series="chart.series"
+						chart-click="onClick" >
+						</canvas>
+					</div>
+				</div>
 				
 				<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
 				<spinner ng-show="isLoading"></spinner>
@@ -233,7 +252,6 @@
 				<p class="bg-warning">{{item.university[0].universityName}}</p>
 				</h3>
 			</div>
-			
 			<div class="panel-body">
 				
 				<table class="table table-bordered table-striped table-condensed table-hover">
@@ -415,9 +433,7 @@
 </div>
 <!-- gpr13 -->
 <div class="panel-body" ng-if="gpr == 13">
-
 <div class="tab-content">
-
 <div class="tab-pane" ng-class="{'active': tabbed_panel_active == 1}">
 	
 	<!-- Flat panel -->
@@ -494,22 +510,16 @@
 <p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
 <spinner ng-show="isLoading"></spinner>
 </div>
-
 <div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
-
-
 <p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
 <spinner ng-show="isLoading"></spinner>
 </div>
-
 </div>
 </div>
 <!-- gpr14 -->
 <div class="panel-body" ng-if="gpr == 14">
 <div class="tab-content">
-
 <div class="tab-pane" ng-class="{'active': tabbed_panel_active == 1}">
-
 <!-- Flat panel -->
 <div id="panel" class="panel panel-color panel-warning" ng-repeat="item in tableData14"><!-- Add class "collapsed" to minimize the panel -->
 <div class="">
@@ -517,7 +527,6 @@
 	<p class="bg-warning">{{item.university[0].universityName}}</p>
 	</h3>
 </div>
-
 <div class="panel-body">
 	
 	<table class="table table-bordered table-striped table-condensed table-hover">
@@ -600,8 +609,6 @@
 <spinner ng-show="isLoading"></spinner>
 </div>
 <div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
-
-
 <p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
 <spinner ng-show="isLoading"></spinner>
 </div>
@@ -609,11 +616,8 @@
 </div>
 <!-- gpr15 -->
 <div class="panel-body" ng-if="gpr == 15">
-
 <div class="tab-content">
-
 <div class="tab-pane" ng-class="{'active': tabbed_panel_active == 1}">
-
 <!-- Flat panel -->
 <div id="panel" class="panel panel-color panel-warning" ng-repeat="item in tableData15"><!-- Add class "collapsed" to minimize the panel -->
 <div class="">
@@ -621,9 +625,7 @@
 <p class="bg-warning">{{item.university[0].universityName}}</p>
 </h3>
 </div>
-
 <div class="panel-body">
-
 <table class="table table-bordered table-striped table-condensed table-hover">
 	<thead>
 		<tr>
@@ -681,26 +683,16 @@
 <p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
 <spinner ng-show="isLoading"></spinner>
 </div>
-
 <div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
-
-
 <p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
 <spinner ng-show="isLoading"></spinner>
 </div>
-
 </div>
 </div>
-
-
-
 <!-- gpr16 -->
 <div class="panel-body" ng-if="gpr == 16">
-
 <div class="tab-content">
-
 <div class="tab-pane" ng-class="{'active': tabbed_panel_active == 1}">
-
 <!-- Flat panel -->
 <div id="panel" class="panel panel-color panel-warning" ng-repeat="item in tableData16"><!-- Add class "collapsed" to minimize the panel -->
 <div class="">
@@ -708,9 +700,7 @@
 <p class="bg-warning">{{item.university[0].universityName}}</p>
 </h3>
 </div>
-
 <div class="panel-body">
-
 <table class="table table-bordered table-striped table-condensed table-hover">
 <thead>
 	<tr>
@@ -773,24 +763,16 @@
 <p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
 <spinner ng-show="isLoading"></spinner>
 </div>
-
 <div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
-
-
 <p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
 <spinner ng-show="isLoading"></spinner>
 </div>
-
 </div>
 </div>
-
 <!-- gpr17 -->
 <div class="panel-body" ng-if="gpr == 17">
-
 <div class="tab-content">
-
 <div class="tab-pane" ng-class="{'active': tabbed_panel_active == 1}">
-
 <!-- Flat panel -->
 <div id="panel" class="panel panel-color panel-warning" ng-repeat="item in tableData17"><!-- Add class "collapsed" to minimize the panel -->
 <div class="">
@@ -798,60 +780,58 @@
 <p class="bg-warning">{{item.university[0].universityName}}</p>
 </h3>
 </div>
-
 <div class="panel-body">
-
 <table class="table table-bordered table-striped table-condensed table-hover">
 <thead>
-	<tr>
-		<th>Факултет</th>
-		<th>Запишани студенти</th>
-	</tr>
+<tr>
+	<th>Факултет</th>
+	<th>Запишани студенти</th>
+</tr>
 </thead>
 <tbody>
-	<tr ng-repeat="faculty in item.university[0].faculty">
-		<td>{{faculty.facultyName}} <br> <small>{{faculty.municipalityName}}</small> </td>
-		<td>
-			<table class="table table-striped table-condensed">
-				<thead>
-					<tr>
-						<th width="80px">Учебна Година</th>
-						<th>Циклус на студии</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="year in faculty.years">
-						<td>{{year.academicYear}}</td>
-						<td>
-							<div ng-repeat="item in year.cycles">
-								<p>{{item.programCycle}}</p>
-								<table class="table table-striped table-condensed">
-									<thead>
-										<tr>
-											<th> Програма </th>
-											<th> Државна квота</th>
-											<th> Приватна квота</th>
-											<th> Слободни места </th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr ng-repeat="p in item.programmes">
-											<td> {{p.programmeName}} </td>
-											<td> {{p.StateQuoteCost}} </td>
-											<td> {{p.PrivateQuoteCost}} </td>
-											<td> {{p.AvailableSpots}} </td>
-										</tr>
-									</tbody>
-								</table>
-								
-							</div>
+<tr ng-repeat="faculty in item.university[0].faculty">
+	<td>{{faculty.facultyName}} <br> <small>{{faculty.municipalityName}}</small> </td>
+	<td>
+		<table class="table table-striped table-condensed">
+			<thead>
+				<tr>
+					<th width="80px">Учебна Година</th>
+					<th>Циклус на студии</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="year in faculty.years">
+					<td>{{year.academicYear}}</td>
+					<td>
+						<div ng-repeat="item in year.cycles">
+							<p>{{item.programCycle}}</p>
+							<table class="table table-striped table-condensed">
+								<thead>
+									<tr>
+										<th> Програма </th>
+										<th> Државна квота</th>
+										<th> Приватна квота</th>
+										<th> Слободни места </th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="p in item.programmes">
+										<td> {{p.programmeName}} </td>
+										<td> {{p.StateQuoteCost}} </td>
+										<td> {{p.PrivateQuoteCost}} </td>
+										<td> {{p.AvailableSpots}} </td>
+									</tr>
+								</tbody>
+							</table>
 							
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</td>
-	</tr>
+						</div>
+						
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -859,17 +839,12 @@
 <p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
 <spinner ng-show="isLoading"></spinner>
 </div>
-
 <div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
-
-
 <p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
 <spinner ng-show="isLoading"></spinner>
 </div>
-
 </div>
 </div>
-
 </div>
 </div>
 </div>

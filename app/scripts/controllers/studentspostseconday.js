@@ -8,7 +8,7 @@
  * Controller of the skillsApp
  */
 angular.module('skillsApp')
-    .controller('StudentspostsecondayCtrl', function($scope, $http, utility, $filter, QUESTIONS_MK, ngTableParams) {
+    .controller('StudentspostsecondayCtrl', function($scope, $http, utility, $filter, QUESTIONS_MK, QUESTIONS_EN, ngTableParams, $translate) {
 
 
         $scope.hasData = false;
@@ -106,13 +106,25 @@ angular.module('skillsApp')
 
         }
 
+
         //Прашања
 
-        $scope.questions = QUESTIONS_MK.apiuniversity;
+        $scope.getQuestions = function() {
+
+            if ($translate.use() == 'mk-MK') {
+                $scope.questions = QUESTIONS_MK.apiuniversity;
+            } else if ($translate.use() == 'en-US') {
+                $scope.questions = QUESTIONS_EN.apiuniversity;
+            } else {
+                $scope.questions = QUESTIONS_MK.apiuniversity;
+            }
+
+        }
+
+        $scope.getQuestions();
+
 
         // $scope.filter.question = $scope.questions[0];
-
-
 
         //
 
@@ -122,7 +134,6 @@ angular.module('skillsApp')
             //Селектираното прашање
             $scope.gpr = filter.question.gpr;
 
-            $scope.isLoading = true;
 
             //http://sdis-upload.grabit.mk/apisecondary/gpr/1?institutionId[]=1133&institutionId[]=1246&institutionId[]=1152&years[]=3&years[]=4&years[]=6&years[]=2
 
@@ -153,7 +164,7 @@ angular.module('skillsApp')
             $http.get(url).
             success(function(data, status, headers, config) {
 
-                console.log(data);
+                console.log('ova', data);
 
 
                 //GPR9
@@ -168,17 +179,30 @@ angular.module('skillsApp')
                         $scope.hasData = false;
                     } else {
 
+                        $scope.graphInstitution = [];
+                        for (var i = $scope.tableData9.length - 1; i >= 0; i--) {
+
+                            for (var j = $scope.tableData9[i].university.length - 1; j >= 0; j--) {
+                                $scope.graphInstitution = $scope.graphInstitution.concat($scope.tableData9[i].university[j].faculty);
+                            }
+
+                        }
+
+
+                        console.log("final",$scope.graphInstitution, "da");
+
                         $scope.isLoading = false;
                         $scope.hasData = true;
 
                     }
 
                 } else if ($scope.gpr == 10) {
-                    
+
 
                     $scope.isLoading = false;
 
                     $scope.tableData10 = data.response;
+
 
                     if ($scope.tableData10 == undefined) {
                         console.log("NO DATA");
@@ -192,7 +216,7 @@ angular.module('skillsApp')
 
 
                 } else if ($scope.gpr == 11) {
-                    
+
 
                     $scope.isLoading = false;
 
@@ -209,7 +233,7 @@ angular.module('skillsApp')
                     }
 
                 } else if ($scope.gpr == 12) {
-                    
+
 
                     $scope.isLoading = false;
 
@@ -226,7 +250,7 @@ angular.module('skillsApp')
                     }
 
                 } else if ($scope.gpr == 13) {
-                    
+
 
                     $scope.isLoading = false;
 
@@ -243,7 +267,7 @@ angular.module('skillsApp')
                     }
 
                 } else if ($scope.gpr == 14) {
-                    
+
 
                     $scope.isLoading = false;
 
@@ -260,7 +284,7 @@ angular.module('skillsApp')
                     }
 
                 } else if ($scope.gpr == 15) {
-                    
+
 
                     $scope.isLoading = false;
 
@@ -277,7 +301,6 @@ angular.module('skillsApp')
                     }
 
                 } else if ($scope.gpr == 16) {
-                    
 
                     $scope.isLoading = false;
 
@@ -294,7 +317,7 @@ angular.module('skillsApp')
                     }
 
                 } else if ($scope.gpr == 17) {
-                    
+
 
                     $scope.isLoading = false;
 
@@ -323,17 +346,54 @@ angular.module('skillsApp')
             });
 
 
+            $scope.chart = {
+                "institution": ""
+            };
+            $scope.setChart = function(gpr) {
+                console.log(gpr);
+                console.log($scope.chart.institution);
+
+                if (gpr == '9') {
+
+                    $scope.chart.labels = [];
+                    $scope.chart.data = [
+                        []
+                    ];
+                    $scope.chart.series = [$translate.instant("CHART_PERCENT_ENROLLED")];
+
+                    //
+
+                    for (var i = 0; i < $scope.chart.institution.years.length; i++) {
+
+                            $scope.chart.labels.push($scope.chart.institution.years[i].academicYear);
+
+                        if ($scope.chart.institution.years[i].studentsApplied == null)
+                            $scope.chart.data[0].push([0]);
+                        else
+                            $scope.chart.data[0].push($scope.chart.institution.years[i].studentsApplied, $scope.chart.institution.years[i].studentsEnrolled);
+
+                        
+                    }
+
+
+                console.log($scope.chart);
+
+                }
+
+            }
+
+
             $scope.calcPercent = function(a, b) {
                 var res = (a * 100) / (b);
                 return Math.floor(res);
             }
 
             $scope.getGender = function(g) {
-            	if (g == "male"){
-            		return "Машки";
-            	} else {
-            		return "Женски";
-            	}
+                if (g == "male") {
+                    return "Машки";
+                } else {
+                    return "Женски";
+                }
             }
 
 

@@ -62,7 +62,9 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
         q11: {
             tab: 1,
             selectedUni: null,
-            universities: [],
+            selectedFax: null,
+            selectedYear: null,
+            faculties: [],
             labels: [],
             series: [],
             data:[]
@@ -70,12 +72,14 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
         q13: {
             tab: 1,
             selectedUni: null,
+            selectedFax: null,
+            selectedYear: null,
             labels: [],
-            series: [],
-            data:[]
+            series: [$translate.instant("GPR_5_TH_MALE"), $translate.instant("GPR_5_TH_FEMALE")],
+            data:[[],[]]
         },
         activeTab: 0,
-        activeQuestion: 0
+        activeQuestion: 1
     };
 
     $scope.$watch(
@@ -397,12 +401,12 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
     vm.getQuestion11 = function() {
        $http.get('http://sdis-upload.grabit.mk/apiuniversity/gpr/11').
        success(function(data, status, headers, config) {
-            vm.reportData.q11 = data = data.response[0].university;
+            vm.reportData.q11 = data = data.response;
             var totalRowSpan = 1;
 
             for(var i in vm.reportData.q11) {
                 var uniRowSpan = 1;
-                var uni = vm.reportData.q11[i];
+                var uni = vm.reportData.q11[i].university[0];
                 for(var j in uni.faculty) {
                     var fax = uni.faculty[j];
                     var faxRowSpan = 1;
@@ -421,6 +425,7 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
                 }
                 uni.rowSpan = uniRowSpan;
             }
+            console.log(data);
 
             vm.gpr11Table = new ngTableParams({
                 page: 1,
@@ -436,17 +441,112 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
                 }
             });
             vm.setActiveQuestion = 5; 
-            vm.questions.q11.universities = utility.getDistinctUniversities9(data);
         }).
         error(function(data, status, headers, config) {
 
         });
     };
 
-
-    vm.setQuestion11Chart = function() {
-        console.log(vm.questions.q11.selectedUni);
+    vm.q11UniChange = function() {
+        vm.questions.q11.faculties = vm.questions.q11.selectedUni.university[0].faculty;
     };
 
-    vm.getQuestion11();
+    vm.setQuestion11Chart = function() {
+        console.log(vm.questions.q11.selectedYear);
+        vm.questions.q11.labels = [""];
+        vm.questions.q11.series = [];
+        vm.questions.q11.data = [[]];
+        for(var i in vm.questions.q11.selectedYear.cycles) {
+            var cycle = vm.questions.q11.selectedYear.cycles[i];
+            vm.questions.q11.labels.push(cycle.programCycle);
+            for(var j in cycle.nationality) {
+                vm.questions.q11.data[0].push(0);
+                vm.questions.q11.data.push([0]);
+            }
+            for(var j in cycle.nationality) {
+                console.log("NAT J: " + j);
+                vm.questions.q11.series.push(cycle.nationality[j].nationalityName);
+                vm.questions.q11.data[parseInt(j)+1].push(cycle.nationality[j].studentsEnrolled);
+            }
+        }
+        vm.questions.q11.data.push([]);
+        vm.questions.q11.labels.push("");
+        console.log(vm.questions.q11);
+    };
+
+    vm.getQuestion13 = function() {
+        $http.get('http://sdis-upload.grabit.mk/apiuniversity/gpr/13').
+        success(function(data, status, headers, config) {
+            vm.reportData.q13 = data = data.response;
+            var totalRowSpan = 1;
+
+            for(var i in vm.reportData.q13) {
+                var uniRowSpan = 1;
+                var uni = vm.reportData.q13[i].university[0];
+                for(var j in uni.faculty) {
+                    var fax = uni.faculty[j];
+                    var faxRowSpan = 1;
+                    for(var k in fax.years) {
+                        var year = fax.years[k];
+                        var yearRowSpan = 1;
+                        for(var m in year.cycles) {
+                            var cycle = year.cycles[m];
+                            yearRowSpan += cycle.gender.length +1;
+                        }
+                        year.rowSpan = yearRowSpan;
+                        faxRowSpan += yearRowSpan + 1;
+                    }
+                    fax.rowSpan = faxRowSpan;
+                    uniRowSpan += faxRowSpan;
+                }
+                uni.rowSpan = uniRowSpan;
+            }
+
+            vm.gpr13Table = new ngTableParams({
+                page: 1,
+                count: 10
+            }, {
+                total: data.length,
+                getData: function($defer, params) {
+                    var filter = params.filter();
+                    var sorting = params.sorting();
+                    var count = params.count();
+                    var page = params.page();
+                    $defer.resolve(vm.reportData.q13.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                }
+            });
+            vm.setActiveQuestion = 5; 
+        }).
+        error(function(data, status, headers, config) {
+
+        });
+    };
+
+    vm.q13UniChange = function() {
+        vm.questions.q13.faculties = vm.questions.q13.selectedUni.university[0].faculty;
+    };
+
+    vm.setQuestion13Chart = function() {
+        vm.questions.q13.data = [[0],[0]];
+        vm.questions.q13.labels = [""];
+        for(var i in vm.questions.q13.selectedYear.cycles) {
+            var cycle = vm.questions.q13.selectedYear.cycles[i];
+            //This check is made because the order of the series is 1: Male; 2: Female
+            if(cycle.gender[0].gender == "female") {
+                vm.questions.q13.data[1].push(cycle.gender[0].studentsEnrolled);
+                vm.questions.q13.data[0].push(cycle.gender[1].studentsEnrolled);
+            }
+            else {
+                vm.questions.q13.data[0].push(cycle.gender[0].studentsEnrolled);
+                vm.questions.q13.data[1].push(cycle.gender[1].studentsEnrolled);
+            }
+            vm.questions.q13.labels.push(cycle.programCycle);
+        }
+
+        vm.questions.q13.labels.push("");
+        vm.questions.q13.data[1].push(0);
+        vm.questions.q13.data[0].push(0);
+    };
+
+    vm.getQuestion1();
 });
