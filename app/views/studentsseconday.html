@@ -523,10 +523,10 @@
 								<label>{{'GPR_1_TH_SCHOOL_YEAR'| translate}}</label>
 								<ui-select ng-model="vm.chart.SelectedYears" ng-change="vm.yearSelection(vm.chart.SelectedYears)">
 									<ui-select-match placeholder="Select Year">
-										<span ng-bind="$select.selected.schoolYear"></span>
+										<span ng-bind="$select.selected.academicYear"></span>
 									</ui-select-match>
 									<ui-select-choices repeat="item in (vm.chart.schools.years | filter: $select.search)">
-										<span ng-bind="item.schoolYear"></span>
+										<span ng-bind="item.academicYear"></span>
 									</ui-select-choices>
 								</ui-select>
 							</div>

@@ -9,19 +9,19 @@
 			<div class="panel-body">
 				
 				<div class="row">
-					<div class="col-md-4">
+					<div class="col-md-2">
 						<label>{{'FILTER_YEAR	' | translate}}</label>
 						<div ng-dropdown-multiselect="" search-filter="yearFilter" options="years" selected-model="filter.year" extra-settings="yearSettings" translation-texts="yearSettingsText"></div>
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-2">
 						<label>{{'FILTER_MUNICIPALITY' | translate}}</label>
 						<div ng-dropdown-multiselect="" search-filter="municipalityFilter" options="municipalities" selected-model="filter.municipality" extra-settings="municipalitySettings" events="municipalityEvents" translation-texts="municipalitySettingsText"></div>
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-2">
 						<label>{{'FILTER_INSTITUTION' | translate}}</label>
 						<div ng-dropdown-multiselect="" search-filter="institutionFilter" options="institutionsF" selected-model="filter.institution" extra-settings="institutionSettings" translation-texts="institutionSettingsText"></div>
 					</div>
-					<div class="col-md-12">
+					<div class="col-md-6">
 						<label>{{'FILTER_QUESTIONS' | translate}}</label>
 						<ui-select ng-model="filter.question" ng-click="getQuestions()"  ng-change="getData(filter)" title="Изберете прашање...">
 						<ui-select-match placeholder="{{'SELECT_QUESTION' | translate}}">{{$select.selected.name}}</ui-select-match>
@@ -134,7 +134,7 @@
 						</ui-select>
 					</div>
 					<div class="col-md-8">
-						<canvas id="line" class="chart chart-line" chart-data="chart.data"
+						<canvas id="chart9" class="chart chart-line" chart-data="chart.data"
 						chart-labels="chart.labels" chart-legend="true" chart-series="chart.series"
 						chart-click="onClick" >
 						</canvas>
@@ -231,6 +231,46 @@
 		
 		<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
 			
+			<div class="col-md-4">
+				<div class="row">
+					<label>{{'GPR_1_TH_SCHOOL'| translate}}</label>
+					<ui-select ng-model="chart.institution" ng-change="chart.year = []; chart.cycle = [];">
+					<ui-select-match placeholder="Select School">
+					<span ng-bind="$select.selected.facultyName"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (graphInstitution | filter: $select.search)">
+					<span ng-bind="item.facultyName"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="row">
+					<label>{{'GPR_1_TH_SCHOOL_YEAR'| translate}}</label>
+					<ui-select ng-model="chart.year" ng-change="chart.cycle = [];">
+					<ui-select-match placeholder="Select Year">
+					<span ng-bind="$select.selected.academicYear"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (chart.institution.years | filter: $select.search)">
+					<span ng-bind="item.academicYear"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="row">
+					<label>{{'GPR_1_TH_CYCLE'| translate}}</label>
+					<ui-select ng-model="chart.cycle" ng-change="setChart(10)">
+					<ui-select-match placeholder="Select Cycle">
+					<span ng-bind="$select.selected.programCycle"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (chart.year.cycles | filter: $select.search)">
+					<span ng-bind="item.programCycle"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+			</div>
+
+			<div class="col-md-8">
+				<canvas id="chart10" class="chart chart-doughnut" chart-data="chart.data" chart-labels="chart.labels" chart-legend="true" >
+							</canvas>
+			</div>
 			
 			<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
 			<spinner ng-show="isLoading"></spinner>
@@ -321,6 +361,46 @@
 	
 	<div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
 		
+		<div class="col-md-4">
+				<div class="row">
+					<label>{{'GPR_1_TH_SCHOOL'| translate}}</label>
+					<ui-select ng-model="chart.institution" ng-change="chart.year = []; chart.cycle = [];">
+					<ui-select-match placeholder="Select School">
+					<span ng-bind="$select.selected.facultyName"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (graphInstitution | filter: $select.search)">
+					<span ng-bind="item.facultyName"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="row">
+					<label>{{'GPR_1_TH_SCHOOL_YEAR'| translate}}</label>
+					<ui-select ng-model="chart.year" ng-change="chart.cycle = [];">
+					<ui-select-match placeholder="Select Year">
+					<span ng-bind="$select.selected.schoolYear"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (chart.institution.years | filter: $select.search)">
+					<span ng-bind="item.schoolYear"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="row">
+					<label>{{'GPR_1_TH_CYCLE'| translate}}</label>
+					<ui-select ng-model="chart.cycle" ng-change="setChart(11)">
+					<ui-select-match placeholder="Select Cycle">
+					<span ng-bind="$select.selected.programCycle"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (chart.year.cycles | filter: $select.search)">
+					<span ng-bind="item.programCycle"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+			</div>
+
+			<div class="col-md-8">
+				<canvas id="chart11" class="chart chart-doughnut" chart-data="chart.data" chart-labels="chart.labels" chart-legend="true" >
+							</canvas>
+			</div>
 		
 		<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
 		<spinner ng-show="isLoading"></spinner>
@@ -425,6 +505,57 @@
 </div>
 <div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
 	
+	<div class="col-md-4">
+				<div class="row">
+					<label>{{'GPR_1_TH_SCHOOL'| translate}}</label>
+					<ui-select ng-model="chart.institution" ng-change="chart.year = []; chart.cycle = []; chart.program = [];">
+					<ui-select-match placeholder="Select School">
+					<span ng-bind="$select.selected.facultyName"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (graphInstitution | filter: $select.search)">
+					<span ng-bind="item.facultyName"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="row">
+					<label>{{'GPR_1_TH_SCHOOL_YEAR'| translate}}</label>
+					<ui-select ng-model="chart.year" ng-change="chart.cycle = []; chart.program = [];">
+					<ui-select-match placeholder="Select Year">
+					<span ng-bind="$select.selected.academicYear"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (chart.institution.years | filter: $select.search)">
+					<span ng-bind="item.academicYear"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="row">
+					<label>{{'GPR_1_TH_CYCLE'| translate}}</label>
+					<ui-select ng-model="chart.cycle" ng-change="chart.program = [];">
+					<ui-select-match placeholder="Select Cycle">
+					<span ng-bind="$select.selected.programCycle"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (chart.year.cycles | filter: $select.search)">
+					<span ng-bind="item.programCycle"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="row">
+					<label>{{'PROGRAM'| translate}}</label>
+					<ui-select ng-model="chart.program" ng-change="setChart(12)">
+					<ui-select-match placeholder="Select Program">
+					<span ng-bind="$select.selected.programmeName"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (chart.cycle.programmes | filter: $select.search)">
+					<span ng-bind="item.programmeName"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+			</div>
+
+			<div class="col-md-8">
+				<canvas id="chart12" class="chart chart-doughnut" chart-data="chart.data" chart-labels="chart.labels" chart-legend="true" >
+							</canvas>
+			</div>
 	
 	<p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
 	<spinner ng-show="isLoading"></spinner>
@@ -511,6 +642,48 @@
 <spinner ng-show="isLoading"></spinner>
 </div>
 <div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
+
+<div class="col-md-4">
+				<div class="row">
+					<label>{{'GPR_1_TH_SCHOOL'| translate}}</label>
+					<ui-select ng-model="chart.institution" ng-change="chart.year = []; chart.cycle = [];">
+					<ui-select-match placeholder="Select School">
+					<span ng-bind="$select.selected.facultyName"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (graphInstitution | filter: $select.search)">
+					<span ng-bind="item.facultyName"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="row">
+					<label>{{'GPR_1_TH_SCHOOL_YEAR'| translate}}</label>
+					<ui-select ng-model="chart.year" ng-change="chart.cycle = [];">
+					<ui-select-match placeholder="Select Year">
+					<span ng-bind="$select.selected.academicYear"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (chart.institution.years | filter: $select.search)">
+					<span ng-bind="item.academicYear"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="row">
+					<label>{{'GPR_1_TH_CYCLE'| translate}}</label>
+					<ui-select ng-model="chart.cycle" ng-change="setChart(13)">
+					<ui-select-match placeholder="Select Cycle">
+					<span ng-bind="$select.selected.programCycle"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (chart.year.cycles | filter: $select.search)">
+					<span ng-bind="item.programCycle"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+			</div>
+
+			<div class="col-md-8">
+				<canvas id="chart13" class="chart chart-doughnut" chart-data="chart.data" chart-labels="chart.labels" chart-legend="true" >
+				</canvas>
+			</div>
+
 <p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
 <spinner ng-show="isLoading"></spinner>
 </div>
@@ -609,6 +782,59 @@
 <spinner ng-show="isLoading"></spinner>
 </div>
 <div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
+
+		<div class="col-md-4">
+				<div class="row">
+					<label>{{'GPR_1_TH_SCHOOL'| translate}}</label>
+					<ui-select ng-model="chart.institution" ng-change="chart.year = []; chart.cycle = []; chart.program = [];">
+					<ui-select-match placeholder="Select School">
+					<span ng-bind="$select.selected.facultyName"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (graphInstitution | filter: $select.search)">
+					<span ng-bind="item.facultyName"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="row">
+					<label>{{'GPR_1_TH_SCHOOL_YEAR'| translate}}</label>
+					<ui-select ng-model="chart.year" ng-change="chart.cycle = []; chart.program = [];">
+					<ui-select-match placeholder="Select Year">
+					<span ng-bind="$select.selected.academicYear"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (chart.institution.years | filter: $select.search)">
+					<span ng-bind="item.academicYear"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="row">
+					<label>{{'GPR_1_TH_CYCLE'| translate}}</label>
+					<ui-select ng-model="chart.cycle" ng-change="chart.program = [];">
+					<ui-select-match placeholder="Select Cycle">
+					<span ng-bind="$select.selected.programCycle"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (chart.year.cycles | filter: $select.search)">
+					<span ng-bind="item.programCycle"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="row">
+					<label>{{'PROGRAM'| translate}}</label>
+					<ui-select ng-model="chart.program" ng-change="setChart(14)">
+					<ui-select-match placeholder="Select Program">
+					<span ng-bind="$select.selected.programmeName"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (chart.cycle.programmes | filter: $select.search)">
+					<span ng-bind="item.programmeName"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+			</div>
+
+			<div class="col-md-8">
+				<canvas id="chart14" class="chart chart-doughnut" chart-data="chart.data" chart-labels="chart.labels" chart-legend="true" >
+				</canvas>
+			</div>
+
 <p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
 <spinner ng-show="isLoading"></spinner>
 </div>
@@ -684,6 +910,48 @@
 <spinner ng-show="isLoading"></spinner>
 </div>
 <div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
+	
+	<div class="col-md-4">
+				<div class="row">
+					<label>{{'GPR_1_TH_SCHOOL'| translate}}</label>
+					<ui-select ng-model="chart.institution" ng-change="chart.year = []; chart.cycle = []; chart.program = [];">
+					<ui-select-match placeholder="Select School">
+					<span ng-bind="$select.selected.facultyName"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (graphInstitution | filter: $select.search)">
+					<span ng-bind="item.facultyName"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="row">
+					<label>{{'GPR_1_TH_SCHOOL_YEAR'| translate}}</label>
+					<ui-select ng-model="chart.year" ng-change="chart.cycle = []; chart.program = [];">
+					<ui-select-match placeholder="Select Year">
+					<span ng-bind="$select.selected.academicYear"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (chart.institution.years | filter: $select.search)">
+					<span ng-bind="item.academicYear"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="row">
+					<label>{{'GPR_1_TH_CYCLE'| translate}}</label>
+					<ui-select ng-model="chart.cycle" ng-change="setChart(15)">
+					<ui-select-match placeholder="Select Cycle">
+					<span ng-bind="$select.selected.programCycle"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (chart.year.cycles | filter: $select.search)">
+					<span ng-bind="item.programCycle"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+			</div>
+
+			<div class="col-md-8">
+				<canvas id="chart15" class="chart chart-doughnut" chart-data="chart.data" chart-labels="chart.labels" chart-legend="true" >
+				</canvas>
+			</div>
+
 <p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
 <spinner ng-show="isLoading"></spinner>
 </div>
@@ -764,6 +1032,59 @@
 <spinner ng-show="isLoading"></spinner>
 </div>
 <div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
+
+		<div class="col-md-4">
+				<div class="row">
+					<label>{{'GPR_1_TH_SCHOOL'| translate}}</label>
+					<ui-select ng-model="chart.institution" ng-change="chart.year = []; chart.cycle = []; chart.program = [];">
+					<ui-select-match placeholder="Select School">
+					<span ng-bind="$select.selected.facultyName"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (graphInstitution | filter: $select.search)">
+					<span ng-bind="item.facultyName"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="row">
+					<label>{{'GPR_1_TH_SCHOOL_YEAR'| translate}}</label>
+					<ui-select ng-model="chart.year" ng-change="chart.cycle = []; chart.program = [];">
+					<ui-select-match placeholder="Select Year">
+					<span ng-bind="$select.selected.academicYear"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (chart.institution.years | filter: $select.search)">
+					<span ng-bind="item.academicYear"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="row">
+					<label>{{'GPR_1_TH_CYCLE'| translate}}</label>
+					<ui-select ng-model="chart.cycle" ng-change="chart.program = [];">
+					<ui-select-match placeholder="Select Cycle">
+					<span ng-bind="$select.selected.programCycle"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (chart.year.cycles | filter: $select.search)">
+					<span ng-bind="item.programCycle"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="row">
+					<label>{{'PROGRAM'| translate}}</label>
+					<ui-select ng-model="chart.program" ng-change="setChart(16)">
+					<ui-select-match placeholder="Select Program">
+					<span ng-bind="$select.selected.programmeName"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (chart.cycle.programmes | filter: $select.search)">
+					<span ng-bind="item.programmeName"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+			</div>
+
+			<div class="col-md-8">
+				<canvas id="chart16" class="chart chart-doughnut" chart-data="chart.data" chart-labels="chart.labels" chart-legend="true" >
+				</canvas>
+			</div>
+
 <p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
 <spinner ng-show="isLoading"></spinner>
 </div>
@@ -840,6 +1161,50 @@
 <spinner ng-show="isLoading"></spinner>
 </div>
 <div class="tab-pane" ng-class="{'active': tabbed_panel_active == 2}">
+
+	<div class="col-md-4">
+				<div class="row">
+					<label>{{'GPR_1_TH_SCHOOL'| translate}}</label>
+					<ui-select ng-model="chart.institution" ng-change="chart.year = []; chart.cycle = []; chart.program = [];">
+					<ui-select-match placeholder="Select School">
+					<span ng-bind="$select.selected.facultyName"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (graphInstitution | filter: $select.search)">
+					<span ng-bind="item.facultyName"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="row">
+					<label>{{'GPR_1_TH_SCHOOL_YEAR'| translate}}</label>
+					<ui-select ng-model="chart.year" ng-change="chart.cycle = []; chart.program = [];">
+					<ui-select-match placeholder="Select Year">
+					<span ng-bind="$select.selected.academicYear"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (chart.institution.years | filter: $select.search)">
+					<span ng-bind="item.academicYear"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="row">
+					<label>{{'GPR_1_TH_CYCLE'| translate}}</label>
+					<ui-select ng-model="chart.cycle" ng-change="setChart(17)">
+					<ui-select-match placeholder="Select Cycle">
+					<span ng-bind="$select.selected.programCycle"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="item in (chart.year.cycles | filter: $select.search)">
+					<span ng-bind="item.programCycle"></span>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+			</div>
+
+			<div class="col-md-8">
+				<canvas id="chart17" class="chart chart-line" chart-data="data"
+					  chart-labels="labels" chart-legend="true" chart-series="series"
+					  chart-click="onClick" >
+					</canvas>
+			</div>
+
 <p ng-show="!hasData && !isLoading">Нема информации за избраните параметри</p>
 <spinner ng-show="isLoading"></spinner>
 </div>
