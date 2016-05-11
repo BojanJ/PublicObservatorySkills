@@ -69,7 +69,8 @@
 				<div class="tab-pane" ng-class="{'active': vm.tabbed_panel_active == 1}">
 
 				<!-- GPR 1 -->
-					<table ng-table="gpr2Table" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 1">
+				<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 1">
+					<table ng-table="vm.gprTable" class="table table-bordered table-striped table-condensed table-hover">
 						<thead>
 							<tr>
 								<th class="col-md-3">{{'GPR_1_TH_SCHOOL'| translate}}</th> 
@@ -79,7 +80,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="school in vm.tableData">
+							<tr ng-repeat="school in $data">
 								<td>{{school.schoolName}}</td>
 								<td>{{school.municipalityName}}</td>
 								<td>{{school.type}}</td>
@@ -108,11 +109,13 @@
 							</tr>
 						</tbody>
 					</table>
+				</div>
 
 					<!-- END OF GPR 1 -->
 
 					<!-- GPR 2 -->
-					<table ng-table="gpr2Table" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 2">
+				<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 2">	
+					<table ng-table="vm.gprTable" class="table table-bordered table-striped table-condensed table-hover">
 						<thead>
 							<tr>
 								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
@@ -121,7 +124,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="school in vm.tableData">
+							<tr ng-repeat="school in $data">
 								<td>{{school.schoolName}}</td>
 								<td>{{school.type}}</td>
 								<td>
@@ -146,10 +149,12 @@
 							</tr>
 						</tbody>
 					</table>
+				</div>	
 					<!-- END OF GPR 2 -->
 
 					<!-- GPR 3 -->
-					<table ng-table="gpr2Table" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 3">
+				<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 3">	
+					<table ng-table="vm.gprTable" class="table table-bordered table-striped table-condensed table-hover">
 						<thead>
 							<tr>
 								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
@@ -158,7 +163,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="school in vm.tableData">
+							<tr ng-repeat="school in $data">
 								<td class="col-md-4">{{school.schoolName}} <br> <small> {{school.municipalityName}} </small></td>
 								<td class="col-md-4">{{school.type}}</td>
 								<td>
@@ -183,11 +188,12 @@
 							</tr>
 						</tbody>
 					</table>
-
+				</div>
 					<!-- END OF GPR 3 -->
 
 					<!-- GPR 4 -->
-					<table ng-table="gpr2Table" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 4">
+				<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 4">	
+					<table ng-table="vm.gprTable" class="table table-bordered table-striped table-condensed table-hover">
 						<thead>
 							<tr>
 								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
@@ -195,7 +201,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="school in vm.tableData">
+							<tr ng-repeat="school in $data">
 								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
 								<td>
 									<div ng-repeat="year in school.years">
@@ -237,11 +243,13 @@
 							</tr>
 						</tbody>
 					</table>
+				</div>	
 
 					<!-- END OF GPR 4 -->
 
 					<!-- GPR 5 -->
-					<table ng-table="gpr2Table" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 5">
+				<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 5">	
+					<table ng-table="vm.gprTable" class="table table-bordered table-striped table-condensed table-hover">
 						<thead>
 							<tr>
 								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
@@ -250,7 +258,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="school in vm.tableData">
+							<tr ng-repeat="school in $data">
 								<td>{{school.schoolName}} <br></td>
 								<td>{{school.type}}</td>
 								<td>
@@ -274,11 +282,12 @@
 							</tr>
 						</tbody>
 					</table>
-
+				</div>
 					<!-- END OF GPR 5 -->
 
 					<!-- GPR 6 -->
-					<table ng-table="gpr2Table" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 6">
+				<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 6">	
+					<table ng-table="vm.gprTable" class="table table-bordered table-striped table-condensed table-hover">
 						<thead>
 							<tr>
 								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
@@ -286,7 +295,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="school in vm.tableData">
+							<tr ng-repeat="school in $data">
 								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
 								<td>
 									<div ng-repeat="year in school.years">
@@ -312,11 +321,12 @@
 							</tr>
 						</tbody>
 					</table>
-
+				</div>
 					<!-- END OF GPR 6 -->
 
 					<!-- GPR 7 -->
-					<table ng-table="gpr2Table" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 7">
+				<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 7">	
+					<table ng-table="vm.gprTable" class="table table-bordered table-striped table-condensed table-hover">
 						<thead>
 							<tr>
 								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
@@ -324,7 +334,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="school in vm.tableData">
+							<tr ng-repeat="school in $data">
 								<td>{{school.schoolName}}<br> <small>{{school.type}}</small></td>
 								<td>
 									<table class="table table-bordered table-striped table-condensed table-hover">
@@ -352,11 +362,12 @@
 							</tr>
 						</tbody>
 					</table>
-
+				</div>
 					<!-- END OF GPR 7 -->
 
 					<!-- GPR 8 -->
-					<table ng-table="gpr2Table" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 8">
+				<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 8">	
+					<table ng-table="vm.gprTable" class="table table-bordered table-striped table-condensed table-hover" ng-show="vm.hasData && vm.filter.question.gpr == 8">
 						<thead>
 							<tr>
 								<th>{{'GPR_1_TH_SCHOOL'| translate}}</th>
@@ -364,7 +375,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="school in vm.tableData">
+							<tr ng-repeat="school in $data">
 								<td>{{school.schoolName}} <br> <small>{{school.type}}</small></td>
 								<td>
 									<div ng-repeat="year in school.years">
@@ -395,33 +406,305 @@
 							</tr>
 						</tbody>
 					</table>
-
+				</div>
 					<!-- END OF GPR 8 -->
 
 
 					<p ng-show="!vm.hasData && !vm.isLoading">{{'NO_INFO' | translate}}</p>
 					<spinner ng-show="vm.isLoading"></spinner>
 				</div>
-				
+
+			<!-- CHARTS -->	
 				<div class="tab-pane" ng-class="{'active': vm.tabbed_panel_active == 2}">
-					<div class="col-md-4">
-						<label>{{'GPR_1_TH_SCHOOL'| translate}}</label>
-						<ui-select ng-model="vm.gpr2.selectedSchool" ng-change="vm.chartGpr2()">
-						<ui-select-match>
-						<span ng-bind="$select.selected.name"></span>
-						</ui-select-match>
-						<ui-select-choices repeat="item in (vm.filter.institution | filter: $select.search)">
-						<span ng-bind="item.name"></span>
-						</ui-select-choices>
-						</ui-select>
+
+
+				<!-- GPR 1 CHART -->
+					<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 1">
+						<div class="col-md-4">
+							<div class="row">
+								<label>{{'GPR_1_TH_SCHOOL'| translate}}</label>
+								<ui-select ng-model="vm.chart.schools" ng-change="vm.drawChartQ1(vm.chart.schools)">
+									<ui-select-match placeholder="Select School">
+										<span ng-bind="$select.selected.schoolName"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="item in (vm.tableData | filter: $select.search)">
+										<span ng-bind="item.schoolName"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-8">
+								<canvas id="line" class="chart-line" chart-data="vm.chart.data" chart-series="vm.chart.series" chart-labels="vm.chart.labels" chart-legend="true">
+								</canvas>
+							</div>
+						</div>	
 					</div>
-					<div class="col-md-8">
-						<canvas id="line" class="chart chart-line" chart-data="vm.gpr2.data"
-						chart-labels="vm.gpr2.labels" chart-legend="true" chart-series="vm.gpr2.series" >
-						</canvas>
+
+				<!-- GPR 2 CHART -->
+					<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 2">
+						<div class="col-md-4">
+							<div class="row">
+								<label>{{'GPR_1_TH_SCHOOL'| translate}}</label>
+								<ui-select ng-model="vm.chart.schools" ng-change="vm.schoolSelection(vm.chart.schools)">
+									<ui-select-match placeholder="Select School">
+										<span ng-bind="$select.selected.schoolName"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="item in (vm.tableData | filter: $select.search)">
+										<span ng-bind="item.schoolName"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+							<div class="row">
+								<label>{{'GPR_1_TH_SCHOOL_YEAR'| translate}}</label>
+								<ui-select ng-model="vm.chart.SelectedYears" ng-change="vm.drawChartQ2(vm.chart.SelectedYears)">
+									<ui-select-match placeholder="Select Year">
+										<span ng-bind="$select.selected.schoolYear"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="item in (vm.chart.schools.years | filter: $select.search)">
+										<span ng-bind="item.schoolYear"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<canvas id="chart2" class="chart chart-doughnut" chart-data="vm.chart.data" chart-labels="vm.chart.labels" chart-legend="true" >
+							</canvas>
+						</div>
 					</div>
+
+					<!-- GPR 3 CHART -->
+					<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 3">
+						<div class="col-md-4">
+							<div class="row">
+								<label>{{'GPR_1_TH_SCHOOL'| translate}}</label>
+								<ui-select ng-model="vm.chart.schools" ng-change="vm.schoolSelection(vm.chart.schools)">
+									<ui-select-match placeholder="Select School">
+										<span ng-bind="$select.selected.schoolName"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="item in (vm.tableData | filter: $select.search)">
+										<span ng-bind="item.schoolName"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+							<div class="row">
+								<label>{{'GPR_1_TH_SCHOOL_YEAR'| translate}}</label>
+								<ui-select ng-model="vm.chart.SelectedYears" ng-change="vm.drawChartQ3(vm.chart.SelectedYears)">
+									<ui-select-match placeholder="Select Year">
+										<span ng-bind="$select.selected.schoolYear"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="item in (vm.chart.schools.years | filter: $select.search)">
+										<span ng-bind="item.schoolYear"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<canvas id="chart3" class="chart chart-pie" chart-data="vm.chart.data" chart-labels="vm.chart.labels" chart-legend="true" >
+							</canvas>
+						</div>
+					</div>
+
+					<!-- GPR 4 CHART -->
+					<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 4">
+						<div class="col-md-4">
+							<div class="row">
+								<label>{{'GPR_1_TH_SCHOOL'| translate}}</label>
+								<ui-select ng-model="vm.chart.schools" ng-change="vm.schoolSelection(vm.chart.schools)">
+									<ui-select-match placeholder="Select School">
+										<span ng-bind="$select.selected.schoolName"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="item in (vm.tableData | filter: $select.search)">
+										<span ng-bind="item.schoolName"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+							<div class="row">
+								<label>{{'GPR_1_TH_SCHOOL_YEAR'| translate}}</label>
+								<ui-select ng-model="vm.chart.SelectedYears" ng-change="vm.yearSelection(vm.chart.SelectedYears)">
+									<ui-select-match placeholder="Select Year">
+										<span ng-bind="$select.selected.academicYear"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="item in (vm.chart.schools.years | filter: $select.search)">
+										<span ng-bind="item.academicYear"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+							<div class="row">
+								<label>{{'PROGRAM'| translate}}</label>
+								<ui-select ng-model="vm.chart.SelectedProgram" ng-change="vm.drawChartQ4(vm.chart.SelectedProgram)">
+									<ui-select-match placeholder="Select Program">
+										<span ng-bind="$select.selected.programmeName"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="item in (vm.chart.SelectedYears.programmes | filter: $select.search)">
+										<span ng-bind="item.programmeName"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<canvas id="chart5" class="chart chart-doughnut" chart-data="vm.chart.data" chart-labels="vm.chart.labels" chart-legend="true" >
+							</canvas>
+						</div>
+					</div>
+
+					<!-- GPR 5 CHART -->
+					<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 5">
+						<div class="col-md-4">
+							<div class="row">
+								<label>{{'GPR_1_TH_SCHOOL'| translate}}</label>
+								<ui-select ng-model="vm.chart.schools" ng-change="vm.schoolSelection(vm.chart.schools)">
+									<ui-select-match placeholder="Select School">
+										<span ng-bind="$select.selected.schoolName"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="item in (vm.tableData | filter: $select.search)">
+										<span ng-bind="item.schoolName"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+							<div class="row">
+								<label>{{'GPR_1_TH_SCHOOL_YEAR'| translate}}</label>
+								<ui-select ng-model="vm.chart.SelectedYears" ng-change="vm.drawChartQ5(vm.chart.SelectedYears)">
+									<ui-select-match placeholder="Select Year">
+										<span ng-bind="$select.selected.schoolYear"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="item in (vm.chart.schools.years | filter: $select.search)">
+										<span ng-bind="item.schoolYear"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<canvas id="chart5" class="chart chart-pie" chart-data="vm.chart.data" chart-labels="vm.chart.labels" chart-legend="true" >
+							</canvas>
+						</div>
+					</div>
+
+					<!-- GPR 6 CHART -->
+					<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 6">
+						<div class="col-md-4">
+							<div class="row">
+								<label>{{'GPR_1_TH_SCHOOL'| translate}}</label>
+								<ui-select ng-model="vm.chart.schools" ng-change="vm.schoolSelection(vm.chart.schools)">
+									<ui-select-match placeholder="Select School">
+										<span ng-bind="$select.selected.schoolName"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="item in (vm.tableData | filter: $select.search)">
+										<span ng-bind="item.schoolName"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+							<div class="row">
+								<label>{{'GPR_1_TH_SCHOOL_YEAR'| translate}}</label>
+								<ui-select ng-model="vm.chart.SelectedYears" ng-change="vm.yearSelection(vm.chart.SelectedYears)">
+									<ui-select-match placeholder="Select Year">
+										<span ng-bind="$select.selected.schoolYear"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="item in (vm.chart.schools.years | filter: $select.search)">
+										<span ng-bind="item.schoolYear"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+							<div class="row">
+								<label>{{'PROGRAM'| translate}}</label>
+								<ui-select ng-model="vm.chart.SelectedProgram" ng-change="vm.drawChartQ6(vm.chart.SelectedProgram)">
+									<ui-select-match placeholder="Select Program">
+										<span ng-bind="$select.selected.programmeName"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="item in (vm.chart.SelectedYears.programmes | filter: $select.search)">
+										<span ng-bind="item.programmeName"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<canvas id="chart6" class="chart chart-doughnut" chart-data="vm.chart.data" chart-labels="vm.chart.labels" chart-legend="true" >
+							</canvas>
+						</div>
+					</div>
+					
+					
+					<!-- GPR 7 CHART -->
+					<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 7">
+						<div class="col-md-4">
+							<div class="row">
+								<label>{{'GPR_1_TH_SCHOOL'| translate}}</label>
+								<ui-select ng-model="vm.chart.schools" ng-change="vm.schoolSelection(vm.chart.schools)">
+									<ui-select-match placeholder="Select School">
+										<span ng-bind="$select.selected.schoolName"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="item in (vm.tableData | filter: $select.search)">
+										<span ng-bind="item.schoolName"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+							<div class="row">
+								<label>{{'GPR_1_TH_SCHOOL_YEAR'| translate}}</label>
+								<ui-select ng-model="vm.chart.SelectedYears" ng-change="vm.drawChartQ7(vm.chart.SelectedYears)">
+									<ui-select-match placeholder="Select Year">
+										<span ng-bind="$select.selected.schoolYear"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="item in (vm.chart.schools.years | filter: $select.search)">
+										<span ng-bind="item.schoolYear"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<canvas id="chart7" class="chart chart-pie" chart-data="vm.chart.data" chart-labels="vm.chart.labels" chart-series ="vm.chart.series"  chart-legend="true" >
+							</canvas>
+						</div>
+					</div>
+
+					<!-- GPR 8 CHART -->
+					<div class="row" ng-show="vm.hasData && vm.filter.question.gpr == 8">
+						<div class="col-md-4">
+							<div class="row">
+								<label>{{'GPR_1_TH_SCHOOL'| translate}}</label>
+								<ui-select ng-model="vm.chart.schools" ng-change="vm.schoolSelection(vm.chart.schools)">
+									<ui-select-match placeholder="Select School">
+										<span ng-bind="$select.selected.schoolName"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="item in (vm.tableData | filter: $select.search)">
+										<span ng-bind="item.schoolName"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+							<div class="row">
+								<label>{{'GPR_1_TH_SCHOOL_YEAR'| translate}}</label>
+								<ui-select ng-model="vm.chart.SelectedYears" ng-change="vm.yearSelection(vm.chart.SelectedYears)">
+									<ui-select-match placeholder="Select Year">
+										<span ng-bind="$select.selected.schoolYear"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="item in (vm.chart.schools.years | filter: $select.search)">
+										<span ng-bind="item.schoolYear"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+							<div class="row">
+								<label>{{'PROGRAM'| translate}}</label>
+								<ui-select ng-model="vm.chart.SelectedProgram" ng-change="vm.drawChartQ8(vm.chart.SelectedProgram)">
+									<ui-select-match placeholder="Select Program">
+										<span ng-bind="$select.selected.programmeName"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="item in (vm.chart.SelectedYears.programmes | filter: $select.search)">
+										<span ng-bind="item.programmeName"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<canvas id="chart8" class="chart chart-doughnut" chart-data="vm.chart.data" chart-labels="vm.chart.labels" chart-series ="vm.chart.series" chart-legend="true" >
+							</canvas>
+						</div>
+					</div>
+
 				</div>
-				
+				<!--END OF SECOND TAB -->
+					<!-- <canvas id="chart1" class="chart chart-bar" chart-data="vm.chart.data"
+							chart-labels="vm.chart.labels" chart-legend="true" chart-series="vm.chart.series" >
+					</canvas> -->
+				</div>
 			</div>
 		</div>
 	</div>
