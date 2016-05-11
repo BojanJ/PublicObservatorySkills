@@ -25,6 +25,9 @@ angular
         'ngTable',
         'angularjs-dropdown-multiselect',
     ])
+    .config(function (ChartJsProvider) {
+  ChartJsProvider.setOptions({ colours : [ '#00ADF9', '#803690', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'] });
+})
     .config(function($routeProvider) {
         $routeProvider
         .when('/', {

@@ -33,3 +33,6 @@
 table {
 	font-size: 11px !important;
 }
+.horizontal-menu {
+	border-bottom: solid 3px #803690 !important;
+}

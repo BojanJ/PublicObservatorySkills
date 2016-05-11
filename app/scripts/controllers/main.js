@@ -8,6 +8,44 @@
  * Controller of the skillsApp
  */
 angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTableParams, utility, $translate) {
+
+    //MAIN CHARTS START
+
+    $scope.labels1 = ["Стручно образование", "Гимназија", "Уметничко училиште"];
+    $scope.data1 = [300, 500, 100];
+
+    $scope.labels2 = ["Стручно образование", "Гимназија", "Уметничко училиште"];
+
+    $scope.data2 = [
+        [44, 13, 35],
+        [68, 55, 84]
+    ];
+
+    $scope.series2 = ["Завршени", "Вработени"];
+
+    $scope.labels3 = ["Стручно образование", "Гимназија", "Уметничко училиште"];
+
+    $scope.data3 = [
+        [65, 59, 90],
+        [38, 48, 40]
+    ];
+
+    $scope.series3 = ["Завршени 2015", "Запишани 2016"];
+
+
+    $scope.labels4 = ["Дипломирани", "Вработени"];
+    $scope.series4 = ['Машки', 'Женски'];
+    $scope.data4 = [
+        [65, 59],
+        [28, 48]
+    ];
+
+
+
+    //MAIN CHARTS END
+
+
+
     var vm = this;
     vm.reportData = {
         q1: null,
@@ -23,7 +61,7 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
             tab: 1,
             labels: [],
             series: [],
-            data:[]
+            data: []
         },
         q3: {
             tab: 1,
@@ -31,25 +69,35 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
             schools: [],
             labels: [],
             series: [],
-            data:[]
+            data: []
         },
         q5: {
             tab: 1,
             labels: [],
             series: [$translate.instant("GPR_5_TH_MALE"), $translate.instant("GPR_5_TH_FEMALE")],
-            data:[[],[]]
+            data: [
+                [],
+                []
+            ]
         },
         q7: {
             tab: 1,
             selectedSchool: null,
             schools: [],
             labels: [],
-            series: [$translate.instant("GPR_7_TH_GRAD"), 
-            $translate.instant("GPR_7_TH_UNIENROLLED"),
-             $translate.instant("GPR_7_TH_EMPLOYED"),
-             $translate.instant("GPR_7_TH_UNEMPLOYED"), 
-             $translate.instant("GPR_7_TH_UNKNOWN")],
-            data:[[],[],[],[],[]]
+            series: [$translate.instant("GPR_7_TH_GRAD"),
+                $translate.instant("GPR_7_TH_UNIENROLLED"),
+                $translate.instant("GPR_7_TH_EMPLOYED"),
+                $translate.instant("GPR_7_TH_UNEMPLOYED"),
+                $translate.instant("GPR_7_TH_UNKNOWN")
+            ],
+            data: [
+                [],
+                [],
+                [],
+                [],
+                []
+            ]
         },
         q9: {
             tab: 1,
@@ -57,7 +105,10 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
             universities: [],
             labels: [],
             series: [$translate.instant("GPR_1_TH_APPLIED"), $translate.instant("GPR_1_TH_ENROLLED")],
-            data:[[],[]]
+            data: [
+                [],
+                []
+            ]
         },
         q11: {
             tab: 1,
@@ -67,7 +118,7 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
             faculties: [],
             labels: [],
             series: [],
-            data:[]
+            data: []
         },
         q13: {
             tab: 1,
@@ -76,7 +127,10 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
             selectedYear: null,
             labels: [],
             series: [$translate.instant("GPR_5_TH_MALE"), $translate.instant("GPR_5_TH_FEMALE")],
-            data:[[],[]]
+            data: [
+                [],
+                []
+            ]
         },
         activeTab: 0,
         activeQuestion: 1
@@ -155,25 +209,24 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
     vm.setQuestion1Chart = function() {
         var schoolYears = utility.getDistinctSchooldYearQ1(vm.reportData.q1);
         vm.questions.q1.series = schoolYears;
-        for(var i in schoolYears) {
+        for (var i in schoolYears) {
             vm.questions.q1.data.push([]);
         }
-        for(var i in vm.reportData.q1) {
+        for (var i in vm.reportData.q1) {
             var school = vm.reportData.q1[i];
             var perSchoolData = [];
-            for(var j in vm.reportData.q1) {
+            for (var j in vm.reportData.q1) {
                 var schoolIttr = vm.reportData.q1[j];
-                if(school.schoolId == schoolIttr.schoolId) {
+                if (school.schoolId == schoolIttr.schoolId) {
                     perSchoolData.push(schoolIttr);
                 }
             }
 
             vm.questions.q1.labels.push(school.schoolName.substr(0, 15) + "...");
-            for(var s in perSchoolData) {
+            for (var s in perSchoolData) {
                 var index = 0;
-                for(var i in schoolYears){
-                    if(schoolYears[i] == perSchoolData[s].schoolYear)
-                    {
+                for (var i in schoolYears) {
+                    if (schoolYears[i] == perSchoolData[s].schoolYear) {
                         index = parseInt(i);
                         break;
                     }
@@ -188,14 +241,14 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
         $http.get('http://sdis-upload.grabit.mk/apisecondary/enrolled_students_per_nationality').
         success(function(data, status, headers, config) {
             data = data.response;
-            
+
             //vm.reportData.q3.distinctNat = utility.getDistinctNationalityQ3(data);
-            for(var i in data) {
+            for (var i in data) {
                 var school = data[i];
-                for(var j in school.nationalities) {
+                for (var j in school.nationalities) {
                     var nationality = school.nationalities[j];
                     var enrolledPerNationality = 0;
-                    for(var p in nationality.programmes) {
+                    for (var p in nationality.programmes) {
                         enrolledPerNationality += nationality.programmes[p].studentsEnrolled;
                     }
                     nationality.enrolledPerNationality = enrolledPerNationality;
@@ -231,7 +284,7 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
         console.log(school);
         var labels = [];
         var data = [];
-        for(var n in school.nationalities) {
+        for (var n in school.nationalities) {
             labels.push(school.nationalities[n].nationality);
             data.push(school.nationalities[n].enrolledPerNationality);
         }
@@ -241,12 +294,11 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
 
     vm.getSchoolById = function(id, array) {
         var school = null;
-        for(var i in array) {
-            if(array[i].schoolId == id) {
-                if(school == null) {
+        for (var i in array) {
+            if (array[i].schoolId == id) {
+                if (school == null) {
                     school = array[i];
-                }
-                else if(school.schoolYear < array[i].schoolYear) {
+                } else if (school.schoolYear < array[i].schoolYear) {
                     school = array[i];
                 }
             }
@@ -300,7 +352,7 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
     };
 
     vm.setQuestion5Chart = function() {
-        for(var i in vm.reportData.q5) {
+        for (var i in vm.reportData.q5) {
             var school = vm.reportData.q5[i];
             vm.questions.q5.data[0].push(school.maleEnroled);
             vm.questions.q5.data[1].push(school.femaleEnroled);
@@ -340,7 +392,7 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
         vm.questions.q7.data[2] = [0];
         vm.questions.q7.data[3] = [0];
         vm.questions.q7.data[4] = [0];
-        for(var i in vm.questions.q7.selectedSchool.years) {
+        for (var i in vm.questions.q7.selectedSchool.years) {
             var year = vm.questions.q7.selectedSchool.years[i];
             vm.questions.q7.labels.push(year.schoolYear);
             vm.questions.q7.data[0].push(year.GraduatesNumber);
@@ -390,7 +442,7 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
         vm.questions.q9.labels = [];
         vm.questions.q9.data[0] = [];
         vm.questions.q9.data[1] = [];
-        for(var i in vm.questions.q9.selectedUni.years) {
+        for (var i in vm.questions.q9.selectedUni.years) {
             var year = vm.questions.q9.selectedUni.years[i];
             vm.questions.q9.labels.push(year.academicYear);
             vm.questions.q9.data[0].push(year.studentsApplied);
@@ -399,23 +451,23 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
     };
 
     vm.getQuestion11 = function() {
-       $http.get('http://sdis-upload.grabit.mk/apiuniversity/gpr/11').
-       success(function(data, status, headers, config) {
+        $http.get('http://sdis-upload.grabit.mk/apiuniversity/gpr/11').
+        success(function(data, status, headers, config) {
             vm.reportData.q11 = data = data.response;
             var totalRowSpan = 1;
 
-            for(var i in vm.reportData.q11) {
+            for (var i in vm.reportData.q11) {
                 var uniRowSpan = 1;
                 var uni = vm.reportData.q11[i].university[0];
-                for(var j in uni.faculty) {
+                for (var j in uni.faculty) {
                     var fax = uni.faculty[j];
                     var faxRowSpan = 1;
-                    for(var k in fax.years) {
+                    for (var k in fax.years) {
                         var year = fax.years[k];
                         var yearRowSpan = 1;
-                        for(var m in year.cycles) {
+                        for (var m in year.cycles) {
                             var cycle = year.cycles[m];
-                            yearRowSpan += cycle.nationality.length +1;
+                            yearRowSpan += cycle.nationality.length + 1;
                         }
                         year.rowSpan = yearRowSpan;
                         faxRowSpan += yearRowSpan + 1;
@@ -440,7 +492,7 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
                     $defer.resolve(data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                 }
             });
-            vm.setActiveQuestion = 5; 
+            vm.setActiveQuestion = 5;
         }).
         error(function(data, status, headers, config) {
 
@@ -455,18 +507,20 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
         console.log(vm.questions.q11.selectedYear);
         vm.questions.q11.labels = [""];
         vm.questions.q11.series = [];
-        vm.questions.q11.data = [[]];
-        for(var i in vm.questions.q11.selectedYear.cycles) {
+        vm.questions.q11.data = [
+            []
+        ];
+        for (var i in vm.questions.q11.selectedYear.cycles) {
             var cycle = vm.questions.q11.selectedYear.cycles[i];
             vm.questions.q11.labels.push(cycle.programCycle);
-            for(var j in cycle.nationality) {
+            for (var j in cycle.nationality) {
                 vm.questions.q11.data[0].push(0);
                 vm.questions.q11.data.push([0]);
             }
-            for(var j in cycle.nationality) {
+            for (var j in cycle.nationality) {
                 console.log("NAT J: " + j);
                 vm.questions.q11.series.push(cycle.nationality[j].nationalityName);
-                vm.questions.q11.data[parseInt(j)+1].push(cycle.nationality[j].studentsEnrolled);
+                vm.questions.q11.data[parseInt(j) + 1].push(cycle.nationality[j].studentsEnrolled);
             }
         }
         vm.questions.q11.data.push([]);
@@ -480,18 +534,18 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
             vm.reportData.q13 = data = data.response;
             var totalRowSpan = 1;
 
-            for(var i in vm.reportData.q13) {
+            for (var i in vm.reportData.q13) {
                 var uniRowSpan = 1;
                 var uni = vm.reportData.q13[i].university[0];
-                for(var j in uni.faculty) {
+                for (var j in uni.faculty) {
                     var fax = uni.faculty[j];
                     var faxRowSpan = 1;
-                    for(var k in fax.years) {
+                    for (var k in fax.years) {
                         var year = fax.years[k];
                         var yearRowSpan = 1;
-                        for(var m in year.cycles) {
+                        for (var m in year.cycles) {
                             var cycle = year.cycles[m];
-                            yearRowSpan += cycle.gender.length +1;
+                            yearRowSpan += cycle.gender.length + 1;
                         }
                         year.rowSpan = yearRowSpan;
                         faxRowSpan += yearRowSpan + 1;
@@ -515,7 +569,7 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
                     $defer.resolve(vm.reportData.q13.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                 }
             });
-            vm.setActiveQuestion = 5; 
+            vm.setActiveQuestion = 5;
         }).
         error(function(data, status, headers, config) {
 
@@ -527,16 +581,18 @@ angular.module('skillsApp').controller('MainCtrl', function($scope, $http, ngTab
     };
 
     vm.setQuestion13Chart = function() {
-        vm.questions.q13.data = [[0],[0]];
+        vm.questions.q13.data = [
+            [0],
+            [0]
+        ];
         vm.questions.q13.labels = [""];
-        for(var i in vm.questions.q13.selectedYear.cycles) {
+        for (var i in vm.questions.q13.selectedYear.cycles) {
             var cycle = vm.questions.q13.selectedYear.cycles[i];
             //This check is made because the order of the series is 1: Male; 2: Female
-            if(cycle.gender[0].gender == "female") {
+            if (cycle.gender[0].gender == "female") {
                 vm.questions.q13.data[1].push(cycle.gender[0].studentsEnrolled);
                 vm.questions.q13.data[0].push(cycle.gender[1].studentsEnrolled);
-            }
-            else {
+            } else {
                 vm.questions.q13.data[0].push(cycle.gender[0].studentsEnrolled);
                 vm.questions.q13.data[1].push(cycle.gender[1].studentsEnrolled);
             }
